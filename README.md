@@ -1,139 +1,109 @@
-# B2B Global Brand Site Master
+# B2B Global Brand Site Master · V2
 
-> 面向外贸企业品牌出海的全行业专业独立站智能建站总控技能。只需企业 Logo 与百字简介，一键全自动推演全套 VI 规范、21 模块企业事实中台、5,000+ 词 llms.txt、WebMCP 智能体表单协议及 100/100 满分 GEO 独立站。
+从简单 Logo、企业简介和现有资料，持续完成外贸 B2B 品牌、企业知识库、数字资产与专业独立站。V2 将 `renwork-industry-site-master` 的事实治理和行业采购蓝图，融合进本仓库的品牌取色、静态网站生成、采购交互和执行入口。
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GEO Score](https://img.shields.io/badge/GEO%20Audit-100%2F100%20Score-success)](references/03_seo_geo_100_scoring_rubric.md)
-[![Agent Readiness](https://img.shields.io/badge/WebMCP-ADVANCED%20Ready-orange)](references/04_webmcp_agent_interaction_spec.md)
-[![Export KB](https://img.shields.io/badge/Export%20KB-21%20Modules-brightgreen)](references/02_export_kb_21_modules_matrix.md)
+**20 类行业蓝图 · 10 类页面模板 · 21 模块知识体系 · 同源事实驱动 HTML / Schema / 搜索文件。**
 
----
+只有少量资料也能开始：自动生成可运行草稿和资料缺口，再由 Agent 完成研究、品牌设计、真实文案与页面。工厂、认证、参数、客户、价格等未知信息不会从行业模板变成企业事实。生成器不是完整 CMS；Skill 指导 Agent 完成企业项目所需的功能与交付。
 
-## 🏛️ 项目定位与技术融合
+## 直接使用
 
-本项目深度融合了三大开源/内部核心技术体系与前沿 B2B 转化架构：
+将本仓库作为一个 Skill 文件夹安装到所用 Agent 的 skills 目录，以 [SKILL.md](SKILL.md) 为入口。Codex 默认位置：`~/.codex/skills/b2b-global-brand-site-master/`。
 
-1. **[`cnproduct/brand-visual-system-master`](https://github.com/cnproduct/brand-visual-system-master)**：从极简 Logo 一键解构色彩 DNA、计算 60-30-10 工业配比、通过 WCAG 2.1 AA/AAA 对比度强制矫正，生成 W3C DTCG 兼容的标准 `tokens.css` 与 3D 渲染提示词工程；
-2. **[`cnproduct/renwork-export-kb-suite`](https://github.com/cnproduct/renwork-export-kb-suite)**：基于 21 模块外贸出口知识中台（00–20 模块），以“事实先于生成、证据强于承诺”为原则，自动化推演 Good/Better/Best 阶梯报价方案、AQL 0.65 质检节点、公英双制式物性表与 8 大不可逾越红线；
-3. **[`cnproduct/renwork-seo-geo-optimizer`](https://github.com/cnproduct/renwork-seo-geo-optimizer)**：2026 年面向 ChatGPT Search、Perplexity、Claude 及 Google AI Overviews 的 100/100 满分 GEO 引擎，部署 5,000+ 词深度 `llms.txt`、4 大 AI 发现端点（`ai.txt`, `summary.json`, `faq.json`, `service.json`）与包含 Organization/Person/Product/TechArticle 的 Schema.org 知识图谱；
-4. **WebMCP 2026 智能体原生交互协议**：在表单与测算工具上直接注解 `toolname`、`tooldescription`、`toolparamdescription`，使全站达到 **ADVANCED** 级智能体就绪度，让 AI 代理（OpenAI Operator 等）能够直接代客发起询盘与索样；
-5. **高转化工业 Bento Grid 与组件库**：工业级 Bento 栅格、实时装柜容积与到岸成本测算器（Sourcing Estimator）、移动端 3 键拇指船坞（WhatsApp / Sample Kit / Spec PDF）与 clean 无后缀规范路径。
-
----
-
-## ⚡ 5 阶全自动生成流水线
-
-```mermaid
-flowchart TD
-    In["输入: 简单 Logo (图像/SVG) + 百字企业简介 + 目标行业"] --> S1["阶段 1: extract_brand_dna.py"]
-    S1 --> Tokens["生成: brand_tokens.json & tokens.css (WCAG AA 4.5:1)"]
-    
-    Tokens --> S2["阶段 2: kb_synthesizer.py"]
-    S2 --> KB["生成: 21模块 export_kb.json + 业务速查卡 + 三批缺口队列"]
-    
-    KB --> S3["阶段 3: llms_geo_compiler.py"]
-    S3 --> GEO["生成: 5000+词 llms.txt + 4大/ai/发现端点 + Schema @graph"]
-    
-    GEO --> S4["阶段 4: site_compiler.py"]
-    S4 --> HTML["生成: 6大核心Bento页面 + WebMCP表单 + 装柜测算器 + sitemap.xml"]
-    
-    HTML --> S5["阶段 5: validate_site_100.py"]
-    S5 --> Report["验收: 100/100 满分 GEO 审计报告 (Agent: ADVANCED)"]
+```text
+使用 $b2b-global-brand-site-master。
+根据这个 Logo、企业简介和已有资料，为公司建立完整的外贸独立站。
+识别主营行业和采购路径，完成品牌规范、21模块知识底座、内容与数字资产、
+行业页面和代码，执行 SEO/GEO 与询盘验收。未知事实进入内部缺口清单。
+先产出首页、代表产品页和询盘流程，再扩展完整站点，不停在方案阶段。
 ```
 
----
+Python 3.10+；运行时无强制第三方依赖。已安装 Pillow 时可提取栅格 Logo 颜色，否则明确记录回退；SVG 需单独解析或转换，不冒充已取色。
 
-## 🚀 极速上手 (Quick Start)
-
-### 单行命令生成全套独立站
-只需在命令行中执行：
+在 Skill 目录运行：
 
 ```bash
-python3 scripts/orchestrator.py \
-  --name "Apex Precision Machinery" \
-  --intro "We are an ISO 9001 certified manufacturer of 5-axis CNC machining centers and precision automation systems in Ningbo with 50 CNC machines exporting to Germany, North America, and UAE." \
-  --industry machinery \
-  --domain apexmachinery.com \
-  --email sales@apexmachinery.com \
-  --logo path/to/logo.png \
-  --out ./output_site
+python3 scripts/orchestrator.py --name "Example Company" \
+  --intro "We supply industrial components." \
+  --industry components --out /tmp/example-company-project
+
+python3 scripts/sitekit.py industries
 ```
 
----
+Logo 可用 `--logo /path/logo.png` 提供；域名、邮箱、主色可选。初始六页是 **noindex 草稿**，不是成品。Agent 按行业资料编辑 `content/site.json`、核实知识卡并补齐页面。详细字段、素材批准、生成器范围及旧版迁移见 [运行契约](references/runtime.md)。
 
-## 🌐 预置 12 大出口支柱产业适配矩阵
-
-系统内置行业参数字典（`templates/industry_profiles.json` 与 `references/06_industry_vertical_adapters.md`）：
-
-| 行业 ID | 行业分类名称 | 核心测试标准与认证 | 关键硬核技术参数与公差 |
-|:---|:---|:---|:---|
-| `machinery` | 工业机械与数控机床 | ISO 230-2, CE-MD (2006/42/EC), UL 508A | 重复定位精度 $\pm 0.003\text{ mm}$、主轴 $12,000\text{ RPM}$ |
-| `stone_cladding` | 建筑石材与新型板材 | CSI MasterFormat, ASTM C170, ASTM C880, CE-CPR | 厚度 $1.5\text{–}2.0\text{ mm} \pm 0.2\text{ mm}$、超轻 $1.5\text{ kg/}\text{m}^2$ |
-| `footwear` | 鞋类箱包与服饰纺织 | SATRA TM144, ISO 20345, OEKO-TEX 100, BSCI | 弯折 $\ge 100,000$ 次无裂纹、剥离力 $\ge 4.0\text{ N/mm}$ |
-| `hygiene_medical` | 卫品卫生用品与医疗耗材 | FDA 510(k), CE-MDR, ISO 13485, ISO 10993 | 瞬吸 8 秒、吸收量 $\ge 800\text{ ml}$、回渗量 $\le 0.1\text{ g}$ |
-| `consumer_electronics` | 消费电子与智能硬件 | FCC Part 15, CE-RED, RoHS 2.0, UN38.3, Qi 2.0 | 氮化镓转换率 $\ge 94\%$、1.2米跌落通过、$-20^\circ\text{C} \sim +60^\circ\text{C}$ |
-| `chemicals_pharma` | 精细化工与医药原料 (牛磺酸) | USP / EP / JP 药典, GMP, ISO 22000, HALAL | 纯度 $\ge 99.0\%\sim 101.0\%$、重金属 $\le 10\text{ ppm}$、透光率 $\ge 98\%$ |
-| `auto_parts` | 汽配五金与标准件紧固件 | IATF 16949:2016, ISO 898-1, DIN 933, ASTM B117 | 10.9/12.9级合金钢、盐雾测试 $\ge 720\text{h}$ 无红锈、6g/6H 精密公差 |
-| `eco_packaging` | 环保包材与降解餐具 | BPI (ASTM D6400), EN 13432, FDA 21 CFR, LFGB | 90–180天 100% 工业堆肥降解、耐温 $-20^\circ\text{C} \sim +120^\circ\text{C}$、无氟 PFAS-Free |
-| `solar_energy` | 光伏储能与清洁能源 | IEC 61215, UL 1973, UL 9540A, UN38.3 | N型TOPCon效率 $\ge 22.8\%$、磷酸铁锂循环 $\ge 6,000$ 次、25年功率质保 |
-| `home_appliances` | 家用电器与商用厨电 | CB 体系, CE-LVD/EMC, ETL / UL 197, NSF | 食品级 SUS304 不锈钢、PID 控温 $\pm 0.5^\circ\text{C}$、MTBF $\ge 30,000\text{ h}$ |
-| `pet_products` | 宠物用品与宠物食品 | AAFCO 营养标准, FDA 注册, USDA 有机, BSCI | 冻干纯肉粗蛋白 $\ge 65\%$、背带耐拉力 $\ge 350\text{ kg}$、3秒瞬时结团 |
-| `furniture` | 商用办公家具与空间道具 | BIFMA X5.1 / X5.5, EN 1335, CARB P2, FSC | 底盘静压 $\ge 1,360\text{ kg}$、甲醛 $\le 0.05\text{ ppm}$、静音舱降噪 $\ge 32\text{ dB}$ |
-
----
-
-## 📊 100/100 满分 GEO 质量审计结果
-
-全案成果通过内置验收工具 `scripts/validate_site_100.py` 验证：
-
-```
-============================================================
-  RENWORK 100/100 GEO & SEO AUDIT REPORT
-  Total Score: 100 / 100
-  Agent Readiness: ADVANCED
-============================================================
-  [✓] link_health         : 15/15 - Zero broken links, zero pseudo-protocols, zero template leakage.
-  [✓] keyword_density     : 10/10 - NLP Density safely balanced within golden range (~1.29%).
-  [✓] llms_depth          : 18/18 - 5311 words compiled with structured companion references.
-  [✓] ai_discovery        : 12/12 - 4 / 4 endpoints verified.
-  [✓] schema_eeat         : 16/16 - Full 4-Pillar E-E-A-T Knowledge Graph bound (Org, Person, TechArticle, Product).
-  [✓] rag_capsules        : 15/15 - H2 sections structured with Answer-First conclusion preceding technical tables.
-  [✓] webmcp_readiness    : 14/14 - ADVANCED level declarative form tools decorated for AI agents.
-============================================================
+```bash
+python3 scripts/orchestrator.py --project /path/company-project
+python3 scripts/orchestrator.py --project /path/company-project --release
 ```
 
----
+每次构建返回新的静态目录。只发布这个目录，不能上传整个含 `private/` 的企业项目。`--release` 生成并检查本地发布候选，不自动部署，不代表已收录。
 
-## 📂 核心文件架构
+## 深度融合后的能力
 
+| 工作层 | 内容与执行机制 |
+|---|---|
+| 品牌系统 | 定位、语气、Logo规则、颜色/字体、网页设计规范；取色来源与局部对比度可追溯 |
+| 企业知识 | 复用 RenWork V4 七状态、00–20 模块、来源/时效/敏感度；同一事实出口服务所有页面 |
+| 行业与内容 | 买家角色、决策路径、参数字段、证据要求、页面顺序、RFQ字段和缺资料策略 |
+| 数字资产 | 原始素材、许可、哈希、AI来源、事实关联与公开范围；仅复制本次页面引用的获准文件 |
+| 网站实现 | 原生静态HTML、四种采购版式、语义规格表、真实目录路由；按任务扩展产品/应用/技术等页面 |
+| 采购转化 | 基础真实邮箱联系；完整RFQ按实际后端接通；可选装柜容量下界估算，考虑体积与重量 |
+| SEO / GEO | 页面意图、内链、canonical、robots、sitemap、同源结构化数据；llms.txt / WebMCP按需使用 |
+| 质量与运营 | 可执行文件/链接/锚点/索引状态检查；搜索展示、AI引用、访问、询盘分别验收 |
+
+不再生成默认证书、虚构工程师、假手机号、无后端表单、假价格，或重复文本凑 `llms.txt` 长度。不存在“100 分即保证被 AI 引用”的验收。
+
+## 行业模板
+
+以下是采购蓝图，不是 20 套已在真实客户上线验证的皮肤。行业知识不代表目标公司的能力；真实公司仍需核实 SKU、材料、标准和市场要求。
+
+| 行业 ID | 范围 | 采购路径 |
+|---|---|---|
+| `machinery` | 工业机械与自动化 | 工况→机型→系统配套→验收→服务 |
+| `components` | 五金与精密零部件 | 图纸→材料→公差→工艺→批量 |
+| `building-materials` | 建材与装饰材料 | 应用→材质→性能→安装→样板 |
+| `sanitaryware` | 卫浴洁具与水暖 | 类型→尺寸接口→表面→市场条件→样品 |
+| `hygiene` | 吸收性卫生用品与湿巾 | 使用场景→尺码规格→材料结构→包装→贴牌 |
+| `footwear` | 鞋类制造与出口 | 用途→鞋楦尺码→材料结构→打样→测试 |
+| `apparel` | 服装纺织与运动服 | 用途→面料→版型→工艺→样衣→尺码 |
+| `bags` | 箱包与户外包 | 场景→容量结构→材料五金→测试→定制 |
+| `furniture` | 家具家居与工程配套 | 空间→尺寸→材料饰面→结构→装配运输 |
+| `packaging` | 包装与印刷 | 结构→材料→工艺→版面→样品→批量 |
+| `electronics` | 电子元件与电子产品 | 功能→参数→封装/接口→设计资料→供货 |
+| `automotive` | 汽车零部件 | 车型/图号→适配→规格→测试→批次 |
+| `energy` | 能源电气与照明 | 场景→系统边界→工况→配置→安装服务 |
+| `food` | 食品饮料与农产品 | 品类→成分规格→储运→批次→市场 |
+| `chemicals` | 化工原料与涂料 | 用途→等级→性能→文件→安全储运 |
+| `medical` | 医疗器械与耗材 | 预期用途→型号→技术规格→文件→市场适用 |
+| `beauty` | 美妆与个人护理 | 产品概念→配方范围→包材→测试→标签 |
+| `toys-sports` | 玩具与运动器材 | 使用者场景→结构材料→安全→包装→定制 |
+| `appliances` | 家用电器与商用厨电 | 用途→容量→电气条件→安装→维护 |
+| `pet-products` | 宠物用品与宠物食品 | 动物与用途→尺寸/配料→材料/储存→安全→包装 |
+
+完整字段见 [行业数据](assets/industries.json)；10 类页面和品牌交付见 [页面蓝图](references/site-blueprints.md)。
+
+## SEO / GEO 的更新依据
+
+核验日期 **2026-09-27**，后续项目仍需复查官方更新：
+
+- Google AI 搜索仍重视基础 SEO、原创且有用的信息，不要求专用 AI Schema、固定字数或 `llms.txt`。见 [Google 官方指南](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)。
+- 纳入 Google 生成式 AI 展示报告/独立控制及 Bing AI Performance 更新；以目标账号实际字段为准。曝光、引用与询盘不得混算。见 [Google 报告](https://support.google.com/webmasters/answer/16984139)、[Bing 更新](https://blogs.bing.com/search/2026/6/New-AI-Visibility-Insights-in-Bing-Webmaster-Tools-Intents-Topics-Citation-Share-Compare/)。
+- 搜索爬虫、训练爬虫、用户触发访问分开处理；不把开放 GPTBot 作为 ChatGPT 搜索的必要条件。见 [OpenAI 爬虫](https://developers.openai.com/api/docs/bots)。
+- `llms.txt` 是可选公共目录；WebMCP 是按当前支持情况选择的交互能力。FAQ 为买家提供信息，不承诺已停用的 Google FAQ 富媒体展现。
+
+完整的结论、时效冲突和原始链接见 [官方核验表](references/search-current.md)、[发布清单](references/search-release.md) 与 [锁定来源](references/sources.json)。
+
+## 验证和维护
+
+```bash
+python3 tests/check_pipeline.py
+python3 tests/check_validator.py
+node tests/check_estimator.mjs
 ```
-.
-├── SKILL.md                                 # Antigravity / Claude 智能体技能标准规范
-├── manifest.json                            # 技能元数据清单
-├── references/                              # 理论、规范与行业参数库
-│   ├── 01_brand_visual_dna_bridge.md        # 标志解构、色相聚类与 WCAG 对比度计算
-│   ├── 02_export_kb_21_modules_matrix.md    # 21 模块外贸知识中台映射表与六态置信度
-│   ├── 03_seo_geo_100_scoring_rubric.md     # 2026 AI 搜索引文机制与 100 分评分细则
-│   ├── 04_webmcp_agent_interaction_spec.md  # WebMCP 2026 智能体表单协议与工具声明
-│   ├── 05_b2b_cro_bento_components.md       # 工业 Bento Grid、动态装柜测算器与指轮坞
-│   └── 06_industry_vertical_adapters.md     # 12 大主流出口行业硬核参数字典
-├── templates/
-│   ├── industry_profiles.json               # 12 大行业结构化数据库
-│   └── assets/
-│       ├── css/b2b-industrial-core.css      # Bento 布局、测算器与移动端指轮坞样式
-│       └── js/sourcing_estimator.js         # 实时 CBM 容积与集装箱装载率测算脚本
-├── scripts/                                 # 确定性自动化处理脚本
-│   ├── orchestrator.py                      # 总控流水线 CLI
-│   ├── extract_brand_dna.py                 # Logo 提取与 Design Tokens 编译
-│   ├── kb_synthesizer.py                    # 21 模块事实中台合成器
-│   ├── llms_geo_compiler.py                 # 5,000+ 词 llms.txt、AI 端点与 Schema 编译器
-│   ├── site_compiler.py                     # 出版级响应式独立站多页面编译器
-│   └── validate_site_100.py                 # 100/100 满分 GEO 质量审计门禁
-└── examples/
-    └── case_study_apex/                     # 端到端实测验证完整产物
-```
 
----
+Node 18+ 用于估算器测试。检查覆盖 20 行业生成、事实撤销、内部资料隔离、HTML转义、资产/域名边界、真实链接、草稿/发布状态以及装柜计算。
 
-## 📄 License
-MIT License © 2026 cnproduct
+这些检查只证明对应本地行为；浏览器审查、公网HTTP、表单收件、GSC收录、AI引用与转化必须在实际企业项目另外运行。完整变更与迁移说明见 [V2融合记录](references/fusion-v2.md)。
+
+[MIT License](LICENSE) · [第三方许可](THIRD_PARTY_NOTICES.md)。未复制无明确许可的 SEO 优化器源码。

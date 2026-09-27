@@ -1,91 +1,80 @@
 #!/usr/bin/env python3
-"""
-Master Orchestrator Pipeline
-One-command synthesis from:
-- Logo (image/SVG)
-- Brief intro text (50-100 words)
-- Brand name
-- Industry ID (one of 12 supported or custom)
-- Domain & contact email
-
-Outputs:
-1. Full Brand Visual Identity Tokens & CSS (tokens.css, brand_tokens.json)
-2. Complete 21-Module Export KB Suite (export_kb.json, 00_cheat_sheet.md, missing_data_queues.json)
-3. 5,000+ Word LLMS.txt & 4 AI Discovery Endpoints
-4. High-conversion Bento Grid HTML Pages (index, capabilities, products, certifications, oem_odm, contact)
-5. WebMCP 2026 Declarative Forms & Live Sourcing Estimator JS
-6. 100/100 GEO Audit Verification Report
-"""
-
-import os
-import sys
+"""One entry point: private evidence -> brand -> static pages -> local validation."""
 import argparse
-import subprocess
+import json
+import sys
+import tempfile
+from pathlib import Path
+import sitekit
+from site_compiler import build, origin, starter, EMAIL
+from validate_site import audit_site
 
-
-def run_cmd(cmd: list):
-    res = subprocess.run(cmd, capture_output=True, text=True)
-    if res.returncode != 0:
-        print(f"Error running {' '.join(cmd)}:")
-        print(res.stderr)
-        sys.exit(res.returncode)
-    else:
-        if res.stdout.strip():
-            print(res.stdout.strip())
+ALIASES = {'stone_cladding':'building-materials','consumer_electronics':'electronics',
+           'auto_parts':'automotive','eco_packaging':'packaging','solar_energy':'energy',
+           'home_appliances':'appliances','pet_products':'pet-products'}
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Master B2B Export Brand Website Generator")
-    parser.add_argument("--name", required=True, help="Brand Name (e.g. Apex Precision Machinery)")
-    parser.add_argument("--intro", required=True, help="Brief company introduction (50-100 words)")
-    parser.add_argument("--industry", default="machinery", help="Target industry ID (e.g. machinery, stone_cladding, footwear, etc.)")
-    parser.add_argument("--domain", default="apexmachinery.com", help="Target official domain")
-    parser.add_argument("--email", default="sales@apexmachinery.com", help="Official contact email")
-    parser.add_argument("--logo", default="dummy_logo.png", help="Path to company logo image (optional)")
-    parser.add_argument("--out", default="./output_brand_site", help="Output directory")
-
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--project', help='Rebuild an existing V2 project into a fresh site directory')
+    parser.add_argument('--name')
+    intro = parser.add_mutually_exclusive_group()
+    intro.add_argument('--intro')
+    intro.add_argument('--intro-file')
+    parser.add_argument('--industry')
+    parser.add_argument('--domain')
+    parser.add_argument('--email')
+    parser.add_argument('--logo')
+    parser.add_argument('--out', help='New private project directory; refuses to overwrite')
+    parser.add_argument('--site-out', help='Optional new static output directory; refuses to overwrite')
+    parser.add_argument('--brand-color')
+    parser.add_argument('--release', action='store_true', help='Require editorial/fact approvals; does not deploy')
     args = parser.parse_args()
-    scripts_dir = os.path.dirname(os.path.abspath(__file__))
-    out_dir = os.path.abspath(args.out)
-    os.makedirs(out_dir, exist_ok=True)
+    try:
+        if args.project:
+            if any((args.name,args.intro,args.intro_file,args.industry,args.domain,args.email,args.logo,args.out,args.brand_color)):
+                raise ValueError('edit the existing project files, then use --project without initialization options')
+            project = Path(args.project)
+        else:
+            if not args.name or not args.industry or not args.out or not (args.intro or args.intro_file):
+                raise ValueError('new project requires --name --industry --out and --intro/--intro-file')
+            if args.release:
+                raise ValueError('initialize a draft first; review evidence and content before release')
+            domain = origin(args.domain)
+            if args.email and not EMAIL.fullmatch(args.email):
+                raise ValueError('invalid email')
+            industry = ALIASES.get(args.industry,args.industry)
+            if industry in ('hygiene_medical','chemicals_pharma'):
+                raise ValueError('ambiguous legacy industry; choose hygiene/medical or chemicals/food explicitly')
+            with tempfile.TemporaryDirectory() as temporary:
+                intro_path = Path(args.intro_file) if args.intro_file else Path(temporary)/'intro.txt'
+                if not args.intro_file:
+                    intro_path.write_text(args.intro, encoding='utf-8')
+                project = sitekit.project_init(args.name,industry,intro_path,args.logo,args.out)
+            meta = sitekit.read(project/'project.json')
+            meta.update(domain=domain,contact=args.email)
+            sitekit.write(project/'project.json',meta)
+            config = starter(project)
+            config['primary_color'] = args.brand_color
+            sitekit.write(project/'content/site.json',config)
+        destination = build(project,args.release,args.site_out)
+        meta = sitekit.read(project/'project.json')
+        report = audit_site(destination,args.release,origin(meta.get('domain')))
+        sitekit.write(project/'private/local-validation.json',report)
+        state=sitekit.read(project/'private/latest-build.json');state['status']=report['status']
+        sitekit.write(project/'private/latest-build.json',state)
+        (project/'acceptance.md').write_text('# Build acceptance\n\n'
+            f'Local static checks: {report["status"]}\n\nSite directory: {destination}\n\n'
+            'Mode: '+('reviewed release candidate' if args.release else 'noindex draft')+'\n\n'
+            'Browser review, HTTP deployment, inquiry receipt, indexing, AI visibility and conversion: NOT_RUN.\n'
+            'Only deploy the reported site directory, never the whole project.\n',encoding='utf-8')
+        print(json.dumps({'site_directory':str(destination),'local_checks':report['status'],
+                          'mode':'release_candidate' if args.release else 'draft','deployed':False},ensure_ascii=False,indent=2))
+        return 0 if report['status']=='PASS' else 1
+    except (OSError,ValueError,TypeError,KeyError) as error:
+        print('ERROR: '+str(error),file=sys.stderr)
+        return 1
 
-    print("\n" + "="*70)
-    print(f"  LAUNCHING B2B GLOBAL BRAND SITE MASTER GENERATOR")
-    print(f"  Brand: {args.name} | Industry: {args.industry} | Domain: {args.domain}")
-    print("="*70 + "\n")
 
-    # Step 1: Extract Brand DNA & Tokens
-    print(">>> [Step 1/5] Extracting Brand DNA & Generating Design Tokens...")
-    extract_script = os.path.join(scripts_dir, "extract_brand_dna.py")
-    run_cmd([sys.executable, extract_script, args.logo, args.name, out_dir])
-
-    # Step 2: Synthesize 21-Module Export KB
-    print("\n>>> [Step 2/5] Synthesizing 21-Module RenWork Export Knowledge Base...")
-    kb_script = os.path.join(scripts_dir, "kb_synthesizer.py")
-    run_cmd([sys.executable, kb_script, args.name, args.intro, args.industry, args.domain, args.email, out_dir])
-
-    # Step 3: Compile LLMS.txt, AI Endpoints & Schema.org
-    print("\n>>> [Step 3/5] Compiling 5,000+ Word LLMS.txt & 4 AI Discovery Endpoints...")
-    llms_script = os.path.join(scripts_dir, "llms_geo_compiler.py")
-    kb_json = os.path.join(out_dir, "export_kb.json")
-    run_cmd([sys.executable, llms_script, kb_json, args.domain, out_dir])
-
-    # Step 4: Compile High-Conversion B2B Responsive Pages
-    print("\n>>> [Step 4/5] Compiling Responsive Bento Pages & WebMCP Components...")
-    site_script = os.path.join(scripts_dir, "site_compiler.py")
-    tokens_json = os.path.join(out_dir, "brand_tokens.json")
-    run_cmd([sys.executable, site_script, kb_json, tokens_json, args.domain, out_dir])
-
-    # Step 5: Execute 100/100 SEO & GEO Quality Audit
-    print("\n>>> [Step 5/5] Executing 100/100 SEO & GEO Automated Verification Gate...")
-    val_script = os.path.join(scripts_dir, "validate_site_100.py")
-    run_cmd([sys.executable, val_script, out_dir])
-
-    print("\n" + "="*70)
-    print(f"  SUCCESS! FULL B2B BRAND INDEPENDENT SITE GENERATED AT:")
-    print(f"  {out_dir}")
-    print("="*70 + "\n")
-
-
-if __name__ == "__main__":
-    main()
+if __name__=='__main__':
+    sys.exit(main())

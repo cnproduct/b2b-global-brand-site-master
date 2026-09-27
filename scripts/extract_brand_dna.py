@@ -1,202 +1,191 @@
 #!/usr/bin/env python3
-"""
-Brand DNA Extraction Engine
-Extracts primary & accent colors from Logo (PNG/JPG/WEBP/SVG), calculates 60-30-10 palette,
-enforces WCAG 2.1 AA/AAA contrast ratios, and outputs brand_tokens.json and tokens.css.
-"""
-
-import os
-import sys
+"""Create suggested brand colors and CSS; does not certify site accessibility."""
+import argparse
 import json
-import math
-from typing import Dict, Any, Tuple
+import re
+from collections import Counter
+from pathlib import Path
 
-try:
-    from PIL import Image
-except ImportError:
-    Image = None
+NEUTRAL = '#334155'
 
 
-def hex_to_rgb(hex_str: str) -> Tuple[int, int, int]:
-    hex_str = hex_str.lstrip('#')
-    if len(hex_str) == 3:
-        hex_str = ''.join([c * 2 for c in hex_str])
-    return int(hex_str[0:2], 16), int(hex_str[2:4], 16), int(hex_str[4:6], 16)
+def hex_to_rgb(value):
+    if not isinstance(value, str) or not re.fullmatch(r'#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?', value):
+        raise ValueError('Color must be #RGB or #RRGGBB hexadecimal notation')
+    value = value[1:]
+    if len(value) == 3:
+        value = ''.join(c * 2 for c in value)
+    return tuple(int(value[i:i + 2], 16) for i in (0, 2, 4))
 
 
-def rgb_to_hex(r: int, g: int, b: int) -> str:
-    return f"#{r:02X}{g:02X}{b:02X}"
+def rgb_to_hex(r, g, b):
+    if any(type(v) is not int or not 0 <= v <= 255 for v in (r, g, b)):
+        raise ValueError('RGB channels must be integers between 0 and 255')
+    return f'#{r:02X}{g:02X}{b:02X}'
 
 
-def relative_luminance(r: int, g: int, b: int) -> float:
-    def channel_lum(c: float) -> float:
-        c_norm = c / 255.0
-        return c_norm / 12.92 if c_norm <= 0.03928 else ((c_norm + 0.055) / 1.055) ** 2.4
-
-    return 0.2126 * channel_lum(r) + 0.7152 * channel_lum(g) + 0.0722 * channel_lum(b)
-
-
-def contrast_ratio(rgb1: Tuple[int, int, int], rgb2: Tuple[int, int, int]) -> float:
-    l1 = relative_luminance(*rgb1)
-    l2 = relative_luminance(*rgb2)
-    lighter = max(l1, l2)
-    darker = min(l1, l2)
-    return (lighter + 0.05) / (darker + 0.05)
+def relative_luminance(r, g, b):
+    def channel(c):
+        value = c / 255
+        return value / 12.92 if value <= 0.04045 else ((value + 0.055) / 1.055) ** 2.4
+    return sum(weight * channel(value) for weight, value in zip((0.2126, 0.7152, 0.0722), (r, g, b)))
 
 
-def extract_colors_from_image(image_path: str) -> Tuple[str, str]:
-    """Extract dominant brand color and calculate high-converting accent color."""
-    if not Image or not os.path.exists(image_path):
-        # Fallback to high-authority German Industrial Navy & Energetic Safety Orange
-        return "#0F52BA", "#FF6B35"
-
-    try:
-        im = Image.open(image_path).convert("RGBA")
-        im = im.resize((150, 150))
-        pixels = list(im.getdata())
-        color_counts = {}
-
-        for r, g, b, a in pixels:
-            if a < 120:  # Skip transparent
-                continue
-            # Skip extreme white or extreme black backgrounds
-            if (r > 240 and g > 240 and b > 240) or (r < 20 and g < 20 and b < 20):
-                continue
-            quantized = (r // 20 * 20, g // 20 * 20, b // 20 * 20)
-            color_counts[quantized] = color_counts.get(quantized, 0) + 1
-
-        if not color_counts:
-            return "#0F52BA", "#FF6B35"
-
-        sorted_colors = sorted(color_counts.items(), key=lambda x: x[1], reverse=True)
-        primary_rgb = sorted_colors[0][0]
-        primary_hex = rgb_to_hex(*primary_rgb)
-
-        # Calculate complementary or triadic accent for CTA buttons (Hue shift +150 deg)
-        r, g, b = primary_rgb
-        # Inverted contrast accent
-        accent_rgb = (255 - r, int(g * 0.7 + (255 - g) * 0.3), int(b * 0.4 + 40))
-        # Ensure high saturation and contrast
-        accent_rgb = (max(min(accent_rgb[0] + 50, 255), 0), max(min(accent_rgb[1] // 2, 220), 40), 30)
-        accent_hex = rgb_to_hex(*accent_rgb)
-
-        return primary_hex, accent_hex
-    except Exception as e:
-        sys.stderr.write(f"Warning extracting logo: {e}, using default industrial palette.\n")
-        return "#0F52BA", "#FF6B35"
+def contrast_ratio(rgb1, rgb2):
+    a, b = sorted((relative_luminance(*rgb1), relative_luminance(*rgb2)))
+    return (b + 0.05) / (a + 0.05)
 
 
-def generate_tokens(primary_hex: str, accent_hex: str, brand_name: str) -> Dict[str, Any]:
-    p_rgb = hex_to_rgb(primary_hex)
-    a_rgb = hex_to_rgb(accent_hex)
-    white = (255, 255, 255)
-    dark_text = (15, 23, 42)
+def _text_color(background):
+    bg = hex_to_rgb(background)
+    color = max(('#000000', '#FFFFFF'), key=lambda c: contrast_ratio(bg, hex_to_rgb(c)))
+    ratio = contrast_ratio(bg, hex_to_rgb(color))
+    if ratio < 4.5:
+        raise ValueError('No accessible text color for supplied background')
+    return color, ratio
 
-    # Check WCAG contrast
-    p_white_contrast = contrast_ratio(p_rgb, white)
-    a_white_contrast = contrast_ratio(a_rgb, white)
 
-    text_on_primary = "#FFFFFF" if p_white_contrast >= 4.0 else "#0F172A"
-    text_on_accent = "#FFFFFF" if a_white_contrast >= 4.0 else "#0F172A"
-
-    tokens = {
-        "brand_name": brand_name,
-        "colors": {
-            "primary": primary_hex,
-            "primary_rgb": f"{p_rgb[0]}, {p_rgb[1]}, {p_rgb[2]}",
-            "accent": accent_hex,
-            "accent_rgb": f"{a_rgb[0]}, {a_rgb[1]}, {a_rgb[2]}",
-            "surface_bg": "#F8FAFC",
-            "surface_card": "#FFFFFF",
-            "border": "#E2E8F0",
-            "text_primary": "#0F172A",
-            "text_secondary": "#475569",
-            "text_muted": "#94A3B8",
-            "text_on_primary": text_on_primary,
-            "text_on_accent": text_on_accent
+def generate_tokens(primary, accent, brand_name):
+    primary = rgb_to_hex(*hex_to_rgb(primary))
+    accent = rgb_to_hex(*hex_to_rgb(accent))
+    primary_text, primary_ratio = _text_color(primary)
+    accent_text, accent_ratio = _text_color(accent)
+    return {
+        'brand_name': str(brand_name),
+        'color_source': 'supplied_color',
+        'color_note': 'Suggested palette; confirm brand usage before publication.',
+        'colors': {
+            'primary': primary, 'primary_rgb': ', '.join(map(str, hex_to_rgb(primary))),
+            'accent': accent, 'accent_rgb': ', '.join(map(str, hex_to_rgb(accent))),
+            'surface_bg': '#F8FAFC', 'surface_card': '#FFFFFF', 'border': '#CBD5E1',
+            'text_primary': '#0F172A', 'text_secondary': '#475569', 'text_muted': '#475569',
+            'text_on_primary': primary_text, 'text_on_accent': accent_text,
         },
-        "typography": {
-            "font_display": "'IBM Plex Sans Condensed', 'Inter', -apple-system, sans-serif",
-            "font_body": "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
-            "font_mono": "'IBM Plex Mono', 'SF Mono', monospace"
+        'typography': {
+            'font_display': "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+            'font_body': "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+            'font_mono': "ui-monospace, 'SFMono-Regular', Consolas, monospace",
         },
-        "wcag_compliance": {
-            "primary_contrast": round(p_white_contrast, 2),
-            "accent_contrast": round(a_white_contrast, 2),
-            "status": "PASS" if p_white_contrast >= 3.0 and a_white_contrast >= 3.0 else "ADJUSTED"
-        }
+        'contrast_checks': {
+            'scope': 'Opaque primary/accent button background and chosen black/white text only',
+            'minimum_ratio': 4.5,
+            'primary_text_ratio': round(primary_ratio, 3),
+            'accent_text_ratio': round(accent_ratio, 3),
+            'status': 'PASS',
+            'site_wcag_status': 'NOT_TESTED',
+        },
     }
+
+
+def _sample_logo(logo_path):
+    if not logo_path:
+        return NEUTRAL, 'neutral_fallback', 'No logo supplied; neutral starter color selected.'
+    path = Path(logo_path)
+    if not path.is_file():
+        return NEUTRAL, 'neutral_fallback', 'Logo file missing or not a regular file; neutral starter color selected.'
+    if path.suffix.lower() == '.svg':
+        return NEUTRAL, 'neutral_fallback', 'SVG is not rasterized by this tool; supply a reviewed color or raster logo.'
+    try:
+        from PIL import Image
+    except ImportError:
+        return NEUTRAL, 'neutral_fallback', 'Optional Pillow is unavailable; supply --primary or install Pillow for raster sampling.'
+    try:
+        with Image.open(path) as source:
+            source.thumbnail((128, 128))
+            rgba = source.convert('RGBA')
+            # ponytail: quantized dominant pixel sampling is a proposal; use reviewed colors for complex logos.
+            counts = Counter((r // 16 * 16, g // 16 * 16, b // 16 * 16)
+                             for r, g, b, a in rgba.getdata()
+                             if a >= 128 and min(r, g, b) < 245)
+        if not counts:
+            return NEUTRAL, 'neutral_fallback', 'Logo has no usable opaque nonwhite sample; neutral starter color selected.'
+        return rgb_to_hex(*counts.most_common(1)[0][0]), 'raster_sample', 'Dominant quantized raster color sampled; confirm with the brand owner.'
+    except (OSError, ValueError, Image.DecompressionBombError):
+        return NEUTRAL, 'neutral_fallback', 'Raster logo could not be decoded safely; neutral starter color selected.'
+
+
+def build_tokens(logo_path: str | None, brand_name: str, primary: str | None = None) -> dict:
+    if primary is not None:
+        color = rgb_to_hex(*hex_to_rgb(primary))
+        source, note = 'supplied_color', 'Explicit color supplied; the same color is used for action accents.'
+    else:
+        color, source, note = _sample_logo(logo_path)
+    tokens = generate_tokens(color, color, brand_name)
+    tokens.update(color_source=source, color_note=note)
     return tokens
 
 
-def write_tokens_css(tokens: Dict[str, Any], output_path: str):
-    c = tokens["colors"]
-    t = tokens["typography"]
-    css_content = f"""/**
- * Autogenerated B2B Design Tokens (W3C DTCG Compliant)
- * Brand: {tokens["brand_name"]}
- * WCAG AA Contrast Status: {tokens["wcag_compliance"]["status"]}
- */
-:root {{
-  /* Primary & Accent Palette */
-  --brand-primary: {c["primary"]};
-  --brand-primary-rgb: {c["primary_rgb"]};
-  --brand-accent: {c["accent"]};
-  --brand-accent-rgb: {c["accent_rgb"]};
-  
-  /* Surfaces & Borders (60-30-10 Balance) */
-  --brand-surface: {c["surface_bg"]};
-  --brand-surface-card: {c["surface_card"]};
-  --brand-border: {c["border"]};
-  
-  /* High-Legibility Typography */
-  --text-primary: {c["text_primary"]};
-  --text-secondary: {c["text_secondary"]};
-  --text-muted: {c["text_muted"]};
-  --text-on-primary: {c["text_on_primary"]};
-  --text-on-accent: {c["text_on_accent"]};
-  
-  --font-display: {t["font_display"]};
-  --font-body: {t["font_body"]};
-  --font-mono: {t["font_mono"]};
-  
-  /* Micro Radius & Clean Borders (Zero Bubble Gimmicks) */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
-  --radius-full: 9999px;
-  
-  --shadow-bento: 0 1px 3px rgba(0, 0, 0, 0.05), 0 0 0 1px var(--brand-border);
-  --shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--brand-border);
-}}
-"""
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(css_content)
+def extract_colors_from_image(image_path):
+    """Compatibility helper. Use build_tokens() to retain source and fallback status."""
+    color, _, _ = _sample_logo(image_path)
+    return color, color
+
+
+def write_tokens_css(tokens, path):
+    colors = tokens['colors']
+    # Validate every color again at the CSS boundary; do not interpolate brand names or freeform typography.
+    for key in ('primary', 'accent', 'surface_bg', 'surface_card', 'border', 'text_primary',
+                'text_secondary', 'text_muted', 'text_on_primary', 'text_on_accent'):
+        hex_to_rgb(colors[key])
+    names = {
+        'brand-primary': 'primary', 'brand-accent': 'accent', 'brand-surface': 'surface_bg',
+        'brand-surface-card': 'surface_card', 'brand-border': 'border',
+        'text-primary': 'text_primary', 'text-secondary': 'text_secondary', 'text-muted': 'text_muted',
+        'text-on-primary': 'text_on_primary', 'text-on-accent': 'text_on_accent',
+    }
+    lines = ['/* Suggested CSS variables; site accessibility requires separate verification. */', ':root {']
+    lines += [f'  --{name}: {rgb_to_hex(*hex_to_rgb(colors[key]))};' for name, key in names.items()]
+    lines += [f"  --brand-{name}-rgb: {', '.join(map(str, hex_to_rgb(colors[name])))};" for name in ('primary', 'accent')]
+    lines += [
+        '  --font-display: system-ui, -apple-system, sans-serif;',
+        '  --font-body: system-ui, -apple-system, sans-serif;',
+        '  --font-mono: ui-monospace, monospace;',
+        '  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 10px; --radius-full: 9999px;',
+        '  --shadow-bento: 0 1px 3px rgba(0,0,0,.05), 0 0 0 1px var(--brand-border);',
+        '  --shadow-hover: 0 10px 25px -5px rgba(0,0,0,.08), 0 0 0 1px var(--brand-border);',
+        '}', '',
+    ]
+    Path(path).write_text('\n'.join(lines), encoding='utf-8')
+
+
+def self_test():
+    for color in ('#fff', '#000', '#777777', '#767676', '#FFFF00', '#000080', '#FF6B35'):
+        tokens = build_tokens(None, 'Test', primary=color)
+        for name in ('primary', 'accent'):
+            assert contrast_ratio(hex_to_rgb(tokens['colors'][name]), hex_to_rgb(tokens['colors']['text_on_' + name])) >= 4.5
+        assert tokens['color_source'] == 'supplied_color'
+    for bad in ('red', '123456', '#12', '#abcd', '#1234567', '#123456; color:red', '', None, 123):
+        try:
+            generate_tokens(bad, '#fff', 'Test')
+        except ValueError:
+            pass
+        else:
+            raise AssertionError(f'Invalid color accepted: {bad!r}')
+    assert build_tokens(None, 'Test')['color_source'] == 'neutral_fallback'
+    assert build_tokens('/definitely-not-a-logo', 'Test')['color_source'] == 'neutral_fallback'
+    print('PASS: color validation, dark/light/midpoint button contrast, explicit fallback')
 
 
 def main():
-    if len(sys.argv) < 4:
-        print("Usage: python3 extract_brand_dna.py <logo_path_or_dummy> <brand_name> <output_dir>")
-        sys.exit(1)
-
-    logo_path = sys.argv[1]
-    brand_name = sys.argv[2]
-    out_dir = sys.argv[3]
-    os.makedirs(out_dir, exist_ok=True)
-
-    primary, accent = extract_colors_from_image(logo_path)
-    tokens = generate_tokens(primary, accent, brand_name)
-
-    tokens_json_path = os.path.join(out_dir, "brand_tokens.json")
-    with open(tokens_json_path, "w", encoding="utf-8") as f:
-        json.dump(tokens, f, indent=2, ensure_ascii=False)
-
-    tokens_css_path = os.path.join(out_dir, "tokens.css")
-    write_tokens_css(tokens, tokens_css_path)
-
-    print(f"✓ Brand DNA Extracted: Primary={primary}, Accent={accent}")
-    print(f"✓ Output: {tokens_json_path} & {tokens_css_path}")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('logo_path', nargs='?')
+    parser.add_argument('brand_name', nargs='?')
+    parser.add_argument('output_dir', nargs='?')
+    parser.add_argument('--primary')
+    parser.add_argument('--self-test', action='store_true')
+    args = parser.parse_args()
+    if args.self_test:
+        self_test()
+        return
+    if not args.brand_name or not args.output_dir:
+        parser.error('logo_path, brand_name, output_dir are required unless --self-test is supplied')
+    tokens = build_tokens(args.logo_path, args.brand_name, args.primary)
+    out = Path(args.output_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / 'brand_tokens.json').write_text(json.dumps(tokens, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    write_tokens_css(tokens, out / 'tokens.css')
+    print(f"Brand palette: {tokens['color_source']}. {tokens['color_note']}")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
