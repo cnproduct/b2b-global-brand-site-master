@@ -1,11 +1,13 @@
 import assert from "node:assert/strict";
 import { pathToFileURL } from "node:url";
+import { readFile } from "node:fs/promises";
 
 // Pass the installed module path as argv[2], or run against the adjacent file.
 const moduleURL = process.argv[2]
   ? pathToFileURL(process.argv[2])
   : new URL("../templates/assets/js/sourcing_estimator.js", import.meta.url);
-const { estimateLoad } = await import(moduleURL);
+// The browser consumes this .js as an ES module; retain that mode on Node 18 too.
+const { estimateLoad } = await import(`data:text/javascript;base64,${(await readFile(moduleURL)).toString("base64")}`);
 const inputs = { quantity: 10, unitVolumeM3: 2, unitWeightKg: 100, usableVolumeM3: 50, payloadKg: 400 };
 
 assert.deepEqual(estimateLoad({ ...inputs, quantity: 0 }), {
