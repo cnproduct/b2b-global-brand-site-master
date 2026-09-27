@@ -1,0 +1,1051 @@
+{
+  "version": "2.0.0",
+  "status": "design_blueprints_not_company_facts",
+  "industries": [
+    {
+      "id": "machinery",
+      "name": "工业机械与自动化",
+      "buyers": [
+        "工厂采购",
+        "工艺工程师",
+        "系统集成商"
+      ],
+      "decision_path": "工况→机型→系统配套→验收→服务",
+      "product_fields": [
+        "加工对象",
+        "工作范围",
+        "产能及测试条件",
+        "精度及条件",
+        "电压/功率",
+        "接口",
+        "尺寸重量",
+        "安装环境"
+      ],
+      "evidence": [
+        "型号数据表",
+        "实机演示",
+        "验收方法",
+        "安装图",
+        "售后范围"
+      ],
+      "homepage_sections": [
+        "工况入口",
+        "机型比较",
+        "运行演示",
+        "系统方案",
+        "质量与服务",
+        "技术咨询"
+      ],
+      "visual_direction": "工程选型：技术图与设备实拍主导，紧凑规格表，清晰工程层级",
+      "rfq_fields": [
+        "应用/加工对象",
+        "目标产出",
+        "电源",
+        "场地",
+        "自动化接口"
+      ],
+      "topic_clusters": [
+        "machine selection guide",
+        "automation line requirements",
+        "machine acceptance checklist"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编产能、精度、终身服务或自动回本周期",
+      "missing_data_fallback": "无机型数据时做工况需求指南和工程咨询草稿",
+      "layout": "engineering"
+    },
+    {
+      "id": "components",
+      "name": "五金与精密零部件",
+      "buyers": [
+        "OEM采购",
+        "机械设计师",
+        "采购代理"
+      ],
+      "decision_path": "图纸→材料→公差→工艺→批量",
+      "product_fields": [
+        "图号/版本",
+        "材料牌号",
+        "尺寸公差",
+        "表面处理",
+        "工艺",
+        "检测方式",
+        "包装"
+      ],
+      "evidence": [
+        "图纸授权",
+        "材料报告",
+        "尺寸检测",
+        "样品记录",
+        "追溯文件"
+      ],
+      "homepage_sections": [
+        "工艺入口",
+        "材料能力",
+        "零件图库",
+        "尺寸/质量控制",
+        "图纸询价"
+      ],
+      "visual_direction": "工程选型：材料细节与可读技术图纸，数据表密度较高",
+      "rfq_fields": [
+        "图纸/版本",
+        "材料",
+        "关键公差",
+        "数量",
+        "表面处理"
+      ],
+      "topic_clusters": [
+        "CNC material selection",
+        "fastener specifications",
+        "surface finish comparison"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不把可讨论公差写成已保证能力，不公开客户图纸",
+      "missing_data_fallback": "先做加工需求表与材料/工艺说明，不展示虚构加工案例",
+      "layout": "engineering"
+    },
+    {
+      "id": "building-materials",
+      "name": "建材与装饰材料",
+      "buyers": [
+        "建筑师",
+        "承包商",
+        "经销商"
+      ],
+      "decision_path": "应用→材质→性能→安装→样板",
+      "product_fields": [
+        "材质",
+        "尺寸",
+        "厚度",
+        "表面",
+        "重量",
+        "安装基材",
+        "维护",
+        "包装"
+      ],
+      "evidence": [
+        "样板实拍",
+        "安装节点",
+        "测试方法与报告",
+        "项目授权",
+        "维护说明"
+      ],
+      "homepage_sections": [
+        "空间应用",
+        "材质系列",
+        "规格选型",
+        "安装节点",
+        "性能文件",
+        "样板咨询"
+      ],
+      "visual_direction": "材料与空间：大幅授权应用图和微距纹理，侧栏工程参数",
+      "rfq_fields": [
+        "应用位置",
+        "项目面积",
+        "基材",
+        "室内/室外",
+        "目标市场"
+      ],
+      "topic_clusters": [
+        "cladding material comparison",
+        "panel installation guide",
+        "building material sample"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不猜防火等级、防水性能、LEED贡献或真实项目归属",
+      "missing_data_fallback": "缺项目图时用明确示意的选材版式和安装问题清单",
+      "layout": "materials"
+    },
+    {
+      "id": "sanitaryware",
+      "name": "卫浴洁具与水暖",
+      "buyers": [
+        "进口商",
+        "品牌商",
+        "酒店工程采购"
+      ],
+      "decision_path": "类型→尺寸接口→表面→市场条件→样品",
+      "product_fields": [
+        "安装尺寸",
+        "接口",
+        "材料",
+        "表面工艺",
+        "用水条件",
+        "配件",
+        "包装"
+      ],
+      "evidence": [
+        "尺寸图",
+        "安装手册",
+        "表面/寿命试验",
+        "市场适用文件"
+      ],
+      "homepage_sections": [
+        "产品系列",
+        "安装兼容",
+        "表面细节",
+        "OEM选项",
+        "质量文件",
+        "选型咨询"
+      ],
+      "visual_direction": "材料与空间：洁净实物特写加尺寸图，表面色卡可比较",
+      "rfq_fields": [
+        "产品类型",
+        "接口/尺寸",
+        "表面",
+        "目的国",
+        "数量"
+      ],
+      "topic_clusters": [
+        "faucet installation dimensions",
+        "sanitaryware OEM options",
+        "bathroom fixture finish"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不混同卫生用品，不编节水认证或某市场准入",
+      "missing_data_fallback": "先输出安装与尺寸需求，不填通用接口为本企业参数",
+      "layout": "materials"
+    },
+    {
+      "id": "hygiene",
+      "name": "吸收性卫生用品与湿巾",
+      "buyers": [
+        "品牌商",
+        "批发商",
+        "商超采购"
+      ],
+      "decision_path": "使用场景→尺码规格→材料结构→包装→贴牌",
+      "product_fields": [
+        "类型",
+        "尺寸/尺码",
+        "材料结构",
+        "单位重量",
+        "吸收测试条件",
+        "包装片数",
+        "箱规"
+      ],
+      "evidence": [
+        "产品实拍",
+        "材料/性能报告",
+        "包装版面",
+        "批次质量记录"
+      ],
+      "homepage_sections": [
+        "产品系列",
+        "使用者选型",
+        "结构与材料",
+        "贴牌/包装",
+        "质量控制",
+        "样品咨询"
+      ],
+      "visual_direction": "OEM项目：真实产品层次和包装版面，柔和但保持技术可读性",
+      "rfq_fields": [
+        "品类/尺码",
+        "目标市场",
+        "包装数量",
+        "定制品牌",
+        "预估数量"
+      ],
+      "topic_clusters": [
+        "private label diaper specifications",
+        "wet wipes packaging options",
+        "absorbency testing methods"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编吸收量、抑菌/医疗功效、无刺激或认证",
+      "missing_data_fallback": "有品类无测试时讲选型问题和贴牌步骤，留出报告清单",
+      "layout": "oem"
+    },
+    {
+      "id": "footwear",
+      "name": "鞋类制造与出口",
+      "buyers": [
+        "鞋类品牌",
+        "专业渠道",
+        "批发商"
+      ],
+      "decision_path": "用途→鞋楦尺码→材料结构→打样→测试",
+      "product_fields": [
+        "用途",
+        "鞋面",
+        "中底/外底",
+        "鞋楦",
+        "尺码表",
+        "结构工艺",
+        "重量及尺码条件"
+      ],
+      "evidence": [
+        "实物多角度图",
+        "尺码表",
+        "材料说明",
+        "对应测试",
+        "样品流程"
+      ],
+      "homepage_sections": [
+        "用途系列",
+        "结构与材料",
+        "尺码/鞋楦",
+        "打样流程",
+        "质量测试",
+        "项目简报"
+      ],
+      "visual_direction": "OEM项目：鞋面/鞋底/鞋楦细节，不套普通消费电商促销页",
+      "rfq_fields": [
+        "用途",
+        "尺码范围",
+        "材料",
+        "数量",
+        "品牌工艺",
+        "目的国"
+      ],
+      "topic_clusters": [
+        "OEM footwear development",
+        "shoe material comparison",
+        "footwear size grading"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不默认500双MOQ、7天样品、SATRA测试或10万次耐折",
+      "missing_data_fallback": "先做开发brief与材料结构指南，隐藏未知数值",
+      "layout": "oem"
+    },
+    {
+      "id": "apparel",
+      "name": "服装纺织与运动服",
+      "buyers": [
+        "服装品牌",
+        "团体订制",
+        "零售采购"
+      ],
+      "decision_path": "用途→面料→版型→工艺→样衣→尺码",
+      "product_fields": [
+        "面料成分",
+        "克重",
+        "织法",
+        "版型",
+        "尺码/公差",
+        "装饰工艺",
+        "洗护"
+      ],
+      "evidence": [
+        "面料实拍",
+        "技术包",
+        "尺码表",
+        "色牢度/缩水报告",
+        "授权样衣图"
+      ],
+      "homepage_sections": [
+        "用途/系列",
+        "面料库",
+        "工艺细节",
+        "打样与放码",
+        "质量检查",
+        "开发咨询"
+      ],
+      "visual_direction": "OEM项目：面料微距和工艺信息，编辑式版面与参数并置",
+      "rfq_fields": [
+        "tech pack",
+        "面料",
+        "尺码",
+        "装饰工艺",
+        "数量",
+        "交付窗口"
+      ],
+      "topic_clusters": [
+        "private label sportswear",
+        "fabric GSM selection",
+        "garment sampling process"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编防晒/抗菌/吸湿性能、再生成分或品牌合作",
+      "missing_data_fallback": "没tech pack时生成需求模板，缺模特图用真实平铺图",
+      "layout": "oem"
+    },
+    {
+      "id": "bags",
+      "name": "箱包与户外包",
+      "buyers": [
+        "品牌商",
+        "促销礼品采购",
+        "户外渠道"
+      ],
+      "decision_path": "场景→容量结构→材料五金→测试→定制",
+      "product_fields": [
+        "外形尺寸",
+        "容量测量方式",
+        "面料",
+        "里料",
+        "五金",
+        "分仓",
+        "重量",
+        "承重条件"
+      ],
+      "evidence": [
+        "结构图",
+        "细节实拍",
+        "拉链/承重报告",
+        "包装规格"
+      ],
+      "homepage_sections": [
+        "使用场景",
+        "结构拆解",
+        "材料/五金",
+        "定制位置",
+        "测试与包装",
+        "项目询价"
+      ],
+      "visual_direction": "OEM项目：结构剖解与携带场景并重，容量比较表",
+      "rfq_fields": [
+        "用途",
+        "尺寸/容量",
+        "材料",
+        "功能仓位",
+        "Logo位置",
+        "数量"
+      ],
+      "topic_clusters": [
+        "custom backpack compartments",
+        "bag fabric comparison",
+        "luggage durability test"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编防水等级、承重、专利或知名品牌代工",
+      "missing_data_fallback": "优先结构需求收集，不把渲染样包当量产产品",
+      "layout": "oem"
+    },
+    {
+      "id": "furniture",
+      "name": "家具家居与工程配套",
+      "buyers": [
+        "酒店项目方",
+        "家具进口商",
+        "设计师"
+      ],
+      "decision_path": "空间→尺寸→材料饰面→结构→装配运输",
+      "product_fields": [
+        "尺寸",
+        "主体材料",
+        "饰面",
+        "五金",
+        "结构",
+        "包装",
+        "装配方式"
+      ],
+      "evidence": [
+        "尺寸图",
+        "材料实拍",
+        "安装文件",
+        "对应测试",
+        "项目授权"
+      ],
+      "homepage_sections": [
+        "空间方案",
+        "产品系列",
+        "饰面库",
+        "尺寸/定制",
+        "装配运输",
+        "项目询价"
+      ],
+      "visual_direction": "材料与空间：真实空间比例及饰面细节，图纸/装配入口清楚",
+      "rfq_fields": [
+        "项目类型",
+        "房间/套数",
+        "尺寸",
+        "饰面",
+        "目的地",
+        "时间窗口"
+      ],
+      "topic_clusters": [
+        "hospitality furniture specification",
+        "furniture finish options",
+        "flat pack assembly"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编实木种类、阻燃等级、FSC证书或酒店案例",
+      "missing_data_fallback": "无案例时提供项目规格模板和真实单品图",
+      "layout": "materials"
+    },
+    {
+      "id": "packaging",
+      "name": "包装与印刷",
+      "buyers": [
+        "消费品牌",
+        "采购代理",
+        "产品开发"
+      ],
+      "decision_path": "结构→材料→工艺→版面→样品→批量",
+      "product_fields": [
+        "展开/成品尺寸",
+        "材料",
+        "厚度/克重",
+        "结构",
+        "印刷",
+        "表面工艺",
+        "包装用途"
+      ],
+      "evidence": [
+        "刀模图",
+        "实样图",
+        "打样确认",
+        "材料文件",
+        "色彩控制记录"
+      ],
+      "homepage_sections": [
+        "结构选型",
+        "材料/工艺",
+        "印刷与色彩",
+        "打样过程",
+        "行业应用",
+        "包装brief"
+      ],
+      "visual_direction": "OEM项目：平面刀模与立体结构并列，工艺微距代替装饰图",
+      "rfq_fields": [
+        "尺寸",
+        "用途",
+        "材料",
+        "数量",
+        "印刷色数",
+        "设计文件"
+      ],
+      "topic_clusters": [
+        "custom packaging dieline",
+        "paper box material selection",
+        "packaging prototype process"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编食品接触、可堆肥、再生比例或环保认证",
+      "missing_data_fallback": "先做包装需求清单与工艺说明，不承诺具体环保属性",
+      "layout": "oem"
+    },
+    {
+      "id": "electronics",
+      "name": "电子元件与电子产品",
+      "buyers": [
+        "电子工程师",
+        "采购工程师",
+        "分销商"
+      ],
+      "decision_path": "功能→参数→封装/接口→设计资料→供货",
+      "product_fields": [
+        "型号",
+        "功能",
+        "电气范围",
+        "接口",
+        "封装",
+        "工作温度",
+        "生命周期",
+        "包装方式"
+      ],
+      "evidence": [
+        "原厂/自有数据表",
+        "封装图",
+        "测试条件",
+        "授权渠道证明",
+        "版本"
+      ],
+      "homepage_sections": [
+        "功能分类",
+        "参数选型",
+        "型号资料",
+        "应用说明",
+        "质量/溯源",
+        "选型支持"
+      ],
+      "visual_direction": "工程选型：可扫描参数表、型号搜索、数据手册版本和单位",
+      "rfq_fields": [
+        "型号/功能",
+        "电气条件",
+        "封装",
+        "数量",
+        "用途",
+        "替代需求"
+      ],
+      "topic_clusters": [
+        "component parametric selection",
+        "electronic package dimensions",
+        "component sourcing traceability"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不推断pin-to-pin兼容、车规资质、授权代理或现货",
+      "missing_data_fallback": "无完整数据时做功能分类与规格咨询，不提供猜测参数",
+      "layout": "engineering"
+    },
+    {
+      "id": "automotive",
+      "name": "汽车零部件",
+      "buyers": [
+        "汽配渠道",
+        "维修供应链",
+        "OEM采购"
+      ],
+      "decision_path": "车型/图号→适配→规格→测试→批次",
+      "product_fields": [
+        "产品号",
+        "交叉参考号",
+        "车型/年款/发动机",
+        "尺寸",
+        "材料",
+        "安装条件"
+      ],
+      "evidence": [
+        "适配数据库来源",
+        "产品图",
+        "测试报告",
+        "批次追溯",
+        "安装说明"
+      ],
+      "homepage_sections": [
+        "按品类/车型",
+        "适配核对",
+        "规格资料",
+        "测试与追溯",
+        "询价"
+      ],
+      "visual_direction": "工程选型：适配检索优先，明确图号与年款，避免泛汽车背景遮盖数据",
+      "rfq_fields": [
+        "图号",
+        "车型/年款",
+        "发动机",
+        "数量",
+        "市场"
+      ],
+      "topic_clusters": [
+        "auto parts fitment guide",
+        "OEM reference cross check",
+        "automotive parts traceability"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "OE参考号不代表原厂授权，不编兼容或安全性能",
+      "missing_data_fallback": "缺适配证据时要求图号核对，不显示自动兼容结论",
+      "layout": "engineering"
+    },
+    {
+      "id": "energy",
+      "name": "能源电气与照明",
+      "buyers": [
+        "工程商",
+        "系统集成商",
+        "项目采购"
+      ],
+      "decision_path": "场景→系统边界→工况→配置→安装服务",
+      "product_fields": [
+        "额定值及条件",
+        "电压/电流",
+        "效率及条件",
+        "尺寸",
+        "接口",
+        "工作环境",
+        "保护范围"
+      ],
+      "evidence": [
+        "数据表",
+        "接线图",
+        "测试/认证范围",
+        "安装维护文件"
+      ],
+      "homepage_sections": [
+        "应用系统",
+        "产品选型",
+        "技术参数",
+        "安装配套",
+        "性能证据",
+        "项目咨询"
+      ],
+      "visual_direction": "工程选型/证据：系统图与实际设备，性能曲线必须有来源",
+      "rfq_fields": [
+        "应用",
+        "负载/容量",
+        "电源",
+        "环境",
+        "目的国",
+        "系统接口"
+      ],
+      "topic_clusters": [
+        "electrical system sizing inputs",
+        "lighting specification guide",
+        "energy product operating conditions"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编年发电量、收益期、循环寿命、IP等级或并网资格",
+      "missing_data_fallback": "无性能曲线则列选型输入，不提供虚构收益计算器",
+      "layout": "engineering"
+    },
+    {
+      "id": "food",
+      "name": "食品饮料与农产品",
+      "buyers": [
+        "进口商",
+        "食品品牌",
+        "餐饮/零售采购"
+      ],
+      "decision_path": "品类→成分规格→储运→批次→市场",
+      "product_fields": [
+        "成分",
+        "过敏原",
+        "规格",
+        "净含量",
+        "储存条件",
+        "保质期及条件",
+        "产地",
+        "包装"
+      ],
+      "evidence": [
+        "标签版本",
+        "批次检验",
+        "产地来源",
+        "追溯",
+        "市场相关文件"
+      ],
+      "homepage_sections": [
+        "产品与用途",
+        "规格/配料",
+        "包装",
+        "质量追溯",
+        "储运",
+        "采购咨询"
+      ],
+      "visual_direction": "证据与应用：真实产品/包装加清晰成分与储运表",
+      "rfq_fields": [
+        "品类/规格",
+        "目的国",
+        "包装",
+        "数量",
+        "储运要求"
+      ],
+      "topic_clusters": [
+        "food private label specification",
+        "food ingredient documentation",
+        "food storage requirements"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编有机/清真资格、健康功效、保质期或市场准入",
+      "missing_data_fallback": "先准备规格需求与文件目录，未核实标签不公开",
+      "layout": "evidence"
+    },
+    {
+      "id": "chemicals",
+      "name": "化工原料与涂料",
+      "buyers": [
+        "配方工程师",
+        "工业采购",
+        "分销商"
+      ],
+      "decision_path": "用途→等级→性能→文件→安全储运",
+      "product_fields": [
+        "化学/商品名称",
+        "等级",
+        "成分范围",
+        "关键指标及方法",
+        "包装",
+        "储存",
+        "适用条件"
+      ],
+      "evidence": [
+        "当前SDS/TDS",
+        "批次CoA",
+        "规格依据",
+        "适用性试验"
+      ],
+      "homepage_sections": [
+        "应用/等级",
+        "参数选型",
+        "技术文件",
+        "质量批次",
+        "储运说明",
+        "技术咨询"
+      ],
+      "visual_direction": "证据与应用：规格表和文件优先，清晰版本与条件",
+      "rfq_fields": [
+        "用途",
+        "等级",
+        "关键指标",
+        "数量",
+        "目的地",
+        "文件需求"
+      ],
+      "topic_clusters": [
+        "chemical grade comparison",
+        "TDS SDS documentation",
+        "coating application conditions"
+      ],
+      "primary_cta": "Discuss Your Requirements",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不从相似化学品复制危险分类、SDS或性能，不冒称无毒",
+      "missing_data_fallback": "资料不足时只展示核实身份与咨询入口，不生成替代SDS",
+      "layout": "evidence"
+    },
+    {
+      "id": "medical",
+      "name": "医疗器械与耗材",
+      "buyers": [
+        "医疗进口商",
+        "机构采购",
+        "经销商"
+      ],
+      "decision_path": "预期用途→型号→技术规格→文件→市场适用",
+      "product_fields": [
+        "预期用途",
+        "型号",
+        "规格",
+        "材料",
+        "无菌状态及证据",
+        "包装",
+        "储存",
+        "适用范围"
+      ],
+      "evidence": [
+        "产品资料",
+        "标签/说明书",
+        "检测记录",
+        "相关市场文件",
+        "有效期"
+      ],
+      "homepage_sections": [
+        "产品/用途",
+        "型号规格",
+        "质量文件",
+        "适用边界",
+        "合作咨询"
+      ],
+      "visual_direction": "证据与应用：清晰克制、可读性优先，证据范围就近展示",
+      "rfq_fields": [
+        "型号/用途",
+        "目标市场",
+        "数量",
+        "文件要求",
+        "包装"
+      ],
+      "topic_clusters": [
+        "medical device specification",
+        "medical consumable documentation",
+        "device intended use"
+      ],
+      "primary_cta": "Discuss Your Requirements",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编疗效、FDA approval、CE状态或无菌保证，不把注册等同批准",
+      "missing_data_fallback": "缺证据时保持资料收集和本地草稿，不发布功效/合规承诺",
+      "layout": "evidence"
+    },
+    {
+      "id": "beauty",
+      "name": "美妆与个人护理",
+      "buyers": [
+        "美容品牌",
+        "品牌孵化方",
+        "渠道采购"
+      ],
+      "decision_path": "产品概念→配方范围→包材→测试→标签",
+      "product_fields": [
+        "产品类型",
+        "成分/INCI版本",
+        "肤感",
+        "包材",
+        "容量",
+        "稳定性条件",
+        "标签"
+      ],
+      "evidence": [
+        "配方授权范围",
+        "检测资料",
+        "标签审核",
+        "实样",
+        "包材兼容试验"
+      ],
+      "homepage_sections": [
+        "品类/概念",
+        "研发范围",
+        "包材选择",
+        "样品流程",
+        "质量测试",
+        "产品brief"
+      ],
+      "visual_direction": "OEM项目：实样/质地/包材近景，品牌气质与技术说明并存",
+      "rfq_fields": [
+        "品类",
+        "市场",
+        "配方偏好",
+        "包材",
+        "数量",
+        "目标时间"
+      ],
+      "topic_clusters": [
+        "private label skincare development",
+        "cosmetic packaging compatibility",
+        "cosmetic product brief"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编功效、医学背书、纯天然/零过敏或认证",
+      "missing_data_fallback": "无配方资料则做产品概念brief，不生成最终成分表",
+      "layout": "oem"
+    },
+    {
+      "id": "toys-sports",
+      "name": "玩具与运动器材",
+      "buyers": [
+        "品牌商",
+        "渠道采购",
+        "礼品采购"
+      ],
+      "decision_path": "使用者场景→结构材料→安全→包装→定制",
+      "product_fields": [
+        "年龄/使用者适用范围",
+        "材料",
+        "尺寸",
+        "结构",
+        "使用条件",
+        "包装",
+        "维护"
+      ],
+      "evidence": [
+        "产品实拍",
+        "测试范围",
+        "标签",
+        "说明书",
+        "样品记录"
+      ],
+      "homepage_sections": [
+        "使用场景",
+        "产品结构",
+        "材料/工艺",
+        "安全与使用说明",
+        "包装定制",
+        "样品咨询"
+      ],
+      "visual_direction": "OEM项目：功能演示和细节优先，年龄/适用性标签可见",
+      "rfq_fields": [
+        "使用者",
+        "用途",
+        "材料",
+        "数量",
+        "市场",
+        "包装/品牌"
+      ],
+      "topic_clusters": [
+        "toy product specification",
+        "sports equipment sourcing",
+        "toy testing documentation"
+      ],
+      "primary_cta": "Request a Quote",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不编年龄安全、承重、无毒或法规达标；玩具与运动用品分别核实用途",
+      "missing_data_fallback": "先拆分具体品类，收集测试与用途，再决定可公开字段",
+      "layout": "oem"
+    },
+    {
+      "id": "appliances",
+      "name": "家用电器与商用厨电",
+      "layout": "engineering",
+      "buyers": [
+        "进口商",
+        "品牌采购",
+        "工程集成商"
+      ],
+      "decision_path": "用途→容量→电气条件→安装→维护",
+      "product_fields": [
+        "型号",
+        "容量及条件",
+        "额定功率",
+        "电压频率",
+        "材料",
+        "安装尺寸",
+        "清洁维护"
+      ],
+      "evidence": [
+        "数据表",
+        "安装说明",
+        "测试报告及适用型号",
+        "使用维护资料"
+      ],
+      "homepage_sections": [
+        "产品用途",
+        "规格选型",
+        "安装尺寸",
+        "定制范围",
+        "质量资料",
+        "咨询"
+      ],
+      "visual_direction": "实物操作与安装尺寸并重，不用泛科技渲染代替产品结构",
+      "rfq_fields": [
+        "用途",
+        "容量",
+        "电气条件",
+        "数量",
+        "市场"
+      ],
+      "topic_clusters": [
+        "commercial appliance specifications",
+        "appliance installation requirements",
+        "OEM appliance development"
+      ],
+      "primary_cta": "Discuss Your Requirements",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不默认食品接触认证、能效、温控精度、寿命或市场准入",
+      "missing_data_fallback": "缺型号时生成安装/使用条件收集brief"
+    },
+    {
+      "id": "pet-products",
+      "name": "宠物用品与宠物食品",
+      "layout": "oem",
+      "buyers": [
+        "宠物品牌",
+        "零售进口商",
+        "渠道采购"
+      ],
+      "decision_path": "动物与用途→尺寸/配料→材料/储存→安全→包装",
+      "product_fields": [
+        "目标动物",
+        "用途",
+        "尺寸",
+        "材料或配料",
+        "使用/储存条件",
+        "包装",
+        "维护"
+      ],
+      "evidence": [
+        "实物图",
+        "对应测试",
+        "标签/使用说明",
+        "配料与批次文件"
+      ],
+      "homepage_sections": [
+        "宠物/用途入口",
+        "产品系列",
+        "材料/配料说明",
+        "使用边界",
+        "包装定制",
+        "需求咨询"
+      ],
+      "visual_direction": "真实产品尺寸与使用方式，食品和非食品内容分开",
+      "rfq_fields": [
+        "目标动物",
+        "用品/食品类别",
+        "规格",
+        "市场",
+        "数量"
+      ],
+      "topic_clusters": [
+        "pet product specification",
+        "pet food ingredient documentation",
+        "private label pet accessories"
+      ],
+      "primary_cta": "Discuss Your Requirements",
+      "secondary_cta": "View Specifications",
+      "red_lines": "不默认宠物食品营养适用性、治病功效、有机、无毒或承重数值；不得套儿童玩具标准",
+      "missing_data_fallback": "先区分食品/非食品，收集对应用途与文件"
+    }
+  ]
+}

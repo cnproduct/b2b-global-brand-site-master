@@ -1,0 +1,331 @@
+{
+  "checked_at": "2026-09-27",
+  "coverage": "5 repositories and the installed renwork-industry-site-master baseline; primary documentation and local skill references as listed. Not an exhaustive web survey.",
+  "sources": [
+    {
+      "id": "b2b-global-brand-site-master",
+      "type": "repository",
+      "url": "https://github.com/cnproduct/b2b-global-brand-site-master",
+      "commit": "f7c6307cb8f6d7943f64a26c4b61baec2bc8a722",
+      "license": "MIT",
+      "files_reviewed": [
+        "SKILL.md",
+        "README.md",
+        "scripts/",
+        "references/",
+        "templates/",
+        "examples/case_study_apex/"
+      ],
+      "use": "融合品牌提取、构建入口、采购组件；修复虚构事实与无效验收"
+    },
+    {
+      "id": "renwork-industry-site-master",
+      "type": "local_skill",
+      "version": "1.0.0",
+      "files_sha256": {
+        "THIRD_PARTY_NOTICES.md": "139f8f8dc1b811534bb38c5314efc7283e8f8533158901140759231f307d382e",
+        "SKILL.md": "68b29b61cafe1a8923802bb697cd72f249d020c3e116a08c82fbd72f4626681a",
+        "references/sources.json": "fc1e2c39f63b975a2e59ea2cff0fe48f9e30b83ed6269cdf8e1bc87c46e3be44",
+        "references/search-release.md": "b56f9da0b8de10bc13bccef4b5dccf75effe3b8e00c4ce03b2182a30ae10d5c0",
+        "references/knowledge-assets.md": "800612dc3dc29a2ea80b36d73377e43342272608728aa414224dc92ea22acbbf",
+        "references/site-blueprints.md": "3239b600bd6005464ff5fe1225fd1edb5a0bfe62e29fe4104ec1aaa72db4d4f6",
+        "references/research.md": "d21a576571fdb8bf2b7246b775974199d39dae8ea90549913a1db9af3266e2d1",
+        "references/industry-routing.md": "d5b40843511bb5ccd95f5c25f09cc68eb694e8b10da5ddeca883a69a2910d9e5",
+        "agents/openai.yaml": "822dc6db9aa40ed96e9e4551b1da71d2b471b9799b0324f357fa194737cc80f0",
+        "scripts/sitekit.py": "d1de1725548528eee31bdcc087fac7e6dccaa39722ebb543df3c787252cbeefb",
+        "assets/knowledge-card.schema.json": "2b9c9908d0944ac637810dee1f8253caf80414159da29329b8b4f76ef8ee5bf7",
+        "assets/module-catalog.json": "63b28209a51d7345a2241d441a48b83a18b1bac233af58254429d7dd1a5c02f1",
+        "assets/industries.json": "88e5dc0c47c694000527ad10867813f2e27b1a7f6c62f32c9164f3e6e961a438"
+      },
+      "use": "复用事实治理、21模块底座、18行业与10页面蓝图并深度扩展"
+    },
+    {
+      "id": "brand-visual-system-master",
+      "type": "repository",
+      "url": "https://github.com/cnproduct/brand-visual-system-master",
+      "commit": "10908551ccb4a439615d806a68761d2a081661ca",
+      "files_reviewed": [
+        "SKILL.md",
+        "README.md"
+      ],
+      "license": "MIT",
+      "use": "参考品牌流水线，自行重写建站范围"
+    },
+    {
+      "id": "renwork-export-kb-suite",
+      "type": "repository",
+      "url": "https://github.com/cnproduct/renwork-export-kb-suite",
+      "commit": "f0d524815db52283044f3e5a988c037ccb8d79ff",
+      "files_reviewed": [
+        "skills/renwork-export-kb-orchestrator/SKILL.md",
+        "skills/renwork-kb-governance-auditor/SKILL.md",
+        "knowledge-base/schemas/knowledge-card.schema.json",
+        "knowledge-base/module-catalog.json"
+      ],
+      "license": "MIT",
+      "use": "复用Schema与模块目录，保留MIT许可"
+    },
+    {
+      "id": "renwork-seo-geo-optimizer",
+      "type": "repository",
+      "url": "https://github.com/cnproduct/renwork-seo-geo-optimizer",
+      "commit": "f1e40f72171fd70833f4afffcd07ee66a9c14e6a",
+      "files_reviewed": [
+        "SKILL.md",
+        "scripts/geo_audit_runner.py"
+      ],
+      "license": "not_found",
+      "use": "参考工作流，纠正未经平台证明的门槛，不分发源码"
+    },
+    {
+      "id": "marketingskills",
+      "type": "repository",
+      "url": "https://github.com/coreyhaines31/marketingskills",
+      "commit": "5b2c0007766c6a1cf1d53fd8fc73e979e0821022",
+      "files_reviewed": [
+        "skills/site-architecture/SKILL.md",
+        "skills/cro/SKILL.md",
+        "skills/programmatic-seo/SKILL.md",
+        "skills/ai-seo/SKILL.md"
+      ],
+      "license": "MIT",
+      "use": "参考IA/CRO/页面价值框架，不分发源码"
+    },
+    {
+      "id": "google-ai-2026",
+      "type": "primary_web",
+      "url": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+      "use": "官方AI优化指南，优先于旧版口径",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "google-ai-legacy",
+      "type": "primary_web",
+      "url": "https://developers.google.com/search/docs/appearance/ai-features",
+      "use": "旧版AI说明，测量部分与新版有差异",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "gsc-generative",
+      "type": "primary_web",
+      "url": "https://support.google.com/webmasters/answer/16984139",
+      "use": "GSC生成式AI曝光报告及可见性条件",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "google-updates",
+      "type": "primary_web",
+      "url": "https://developers.google.com/search/updates",
+      "use": "FAQ富结果停用与llms说明更新",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "bing-ai",
+      "type": "primary_web",
+      "url": "https://blogs.bing.com/webmaster/2026/2/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview/",
+      "use": "Bing AI引用观测范围",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "openai-crawlers",
+      "type": "primary_web",
+      "url": "https://developers.openai.com/api/docs/bots",
+      "use": "搜索、训练、用户访问用途区分",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "llms-proposal",
+      "type": "primary_web",
+      "url": "https://llmstxt.org/",
+      "use": "可选Agent索引提案v2",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "webmcp",
+      "type": "primary_web",
+      "url": "https://webmachinelearning.github.io/webmcp/",
+      "use": "草案状态及按需采用",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "wcag",
+      "type": "primary_web",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "use": "可访问性标准",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "web-vitals",
+      "type": "primary_web",
+      "url": "https://web.dev/articles/vitals",
+      "use": "性能阈值和现场/实验室差异",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "hreflang",
+      "type": "primary_web",
+      "url": "https://developers.google.com/search/docs/specialty/international/localized-versions",
+      "use": "多语言对应URL",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "product-schema",
+      "type": "primary_web",
+      "url": "https://developers.google.com/search/docs/appearance/structured-data/product-snippet",
+      "use": "商品富结果资格与属性",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "spam-policies",
+      "type": "primary_web",
+      "url": "https://developers.google.com/search/docs/essentials/spam-policies",
+      "use": "防规模化低价值内容与门页",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "dtcg",
+      "type": "primary_web",
+      "url": "https://www.designtokens.org/tr/drafts/format/",
+      "use": "可选跨工具设计变量",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "astro",
+      "type": "primary_web",
+      "url": "https://docs.astro.build/en/concepts/islands/",
+      "use": "可选静态与局部交互模式",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "indexnow",
+      "type": "primary_web",
+      "url": "https://www.indexnow.org/documentation",
+      "use": "可选URL更新通知，不保证收录",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "geo-paper",
+      "type": "academic",
+      "url": "https://arxiv.org/abs/2311.09735",
+      "use": "论文摘要及实验边界，不迁移其最高收益承诺",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "ti-products",
+      "type": "primary_web",
+      "url": "https://www.ti.com/product-category/overview.html",
+      "use": "真实制造商产品选型信息结构",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "ti-packages",
+      "type": "primary_web",
+      "url": "https://www.ti.com/packaging/docs/searchproductbypackage.tsp",
+      "use": "封装/型号资料路径",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "protolabs",
+      "type": "primary_web",
+      "url": "https://www.protolabs.com/Services/",
+      "use": "制造服务的参数与设计分析路径",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "hengan",
+      "type": "primary_web",
+      "url": "https://en.hengan.com/column/78/",
+      "use": "企业质量证据结构观察",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "portwest",
+      "type": "primary_web",
+      "url": "https://www.portwest.com/products/view/DX420/ABR",
+      "use": "服装产品技术信息观察",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "frontend-design-deslop",
+      "type": "local_skill",
+      "sha256": "2c8405ae7489e56c5b71e3f5b83c08b5aabeda0237b2c909396240d9a3273237",
+      "use": "仅参考并批判性重写，不作为硬依赖"
+    },
+    {
+      "id": "industry-brand-adapt",
+      "type": "local_skill",
+      "sha256": "ebbaacd7905b2dc1847d4ae919c7982a2e7062513f2db47694c53433be2da4bb",
+      "use": "仅参考并批判性重写，不作为硬依赖"
+    },
+    {
+      "id": "footwear-export-site-builder",
+      "type": "local_skill",
+      "sha256": "cf6734936716099275441d7a9099db450de5aa06987a05b95633198a36e4097f",
+      "use": "仅参考并批判性重写，不作为硬依赖"
+    },
+    {
+      "id": "google-generative-announcement",
+      "type": "primary_web",
+      "url": "https://developers.google.com/search/blog/2026/06/gen-ai-performance-reports",
+      "checked_at": "2026-09-27",
+      "use": "2026-06新报告公告与旧文档差异",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "google-generative-controls",
+      "type": "primary_web",
+      "url": "https://support.google.com/webmasters/answer/16908024",
+      "checked_at": "2026-09-27",
+      "use": "生成式展示有效控制值与继承，独立于训练",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "bing-ai-june",
+      "type": "primary_web",
+      "url": "https://blogs.bing.com/search/2026/6/New-AI-Visibility-Insights-in-Bing-Webmaster-Tools-Intents-Topics-Citation-Share-Compare/",
+      "checked_at": "2026-09-27",
+      "use": "2026-06引用份额/主题/意图预览与测量边界",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "perplexity-crawlers",
+      "type": "primary_web",
+      "url": "https://docs.perplexity.ai/docs/resources/perplexity-crawlers",
+      "checked_at": "2026-09-27",
+      "use": "搜索与用户访问爬虫、官方IP和WAF",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "lighthouse-llms",
+      "type": "primary_web",
+      "url": "https://developer.chrome.com/docs/lighthouse/agentic-browsing/llms-txt",
+      "checked_at": "2026-09-27",
+      "use": "可选llms文件及N/A语义",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "webmcp-origin-trial",
+      "type": "primary_web",
+      "url": "https://developer.chrome.com/blog/ai-webmcp-origin-trial",
+      "checked_at": "2026-09-27",
+      "use": "2026-06 Chrome149试验状态",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "webmcp-september",
+      "type": "primary_web",
+      "url": "https://www.w3.org/2026/09/03-webmachinelearning-minutes.html",
+      "checked_at": "2026-09-27",
+      "use": "2026-09实施状态，不等同搜索标准",
+      "access": "web_search_or_page_read"
+    },
+    {
+      "id": "webmcp-chrome",
+      "type": "primary_web",
+      "url": "https://developer.chrome.com/docs/ai/webmcp",
+      "checked_at": "2026-09-27",
+      "use": "实施时核验API兼容性",
+      "access": "web_search_or_page_read"
+    }
+  ]
+}

@@ -1,51 +1,70 @@
 /**
- * Interactive Sourcing & Container Freight Estimator
- * Zero-dependency real-time CBM, Gross Weight & Container Fill Rate calculation.
+ * Optional capacity estimator. Supply verified packed-unit volume/weight and
+ * usable container volume/payload in consistent units; no assumed defaults.
+ * Load in the browser with <script type="module">.
  */
-document.addEventListener("DOMContentLoaded", () => {
-  const quantityInput = document.getElementById("orderQty");
-  const containerSelect = document.getElementById("containerType");
-  const skuSelect = document.getElementById("targetSku");
-
-  if (!quantityInput || !containerSelect) return;
-
-  function recalculate() {
-    const qty = parseInt(quantityInput.value, 10) || 1000;
-    const container = containerSelect.value; // '20GP' or '40HQ'
-    
-    // Read dynamic dataset attributes from sku option or fallback defaults
-    const activeOption = skuSelect ? skuSelect.options[skuSelect.selectedIndex] : null;
-    const unitCbm = activeOption && activeOption.dataset.cbm ? parseFloat(activeOption.dataset.cbm) : 0.015;
-    const unitWeightKg = activeOption && activeOption.dataset.weight ? parseFloat(activeOption.dataset.weight) : 1.2;
-
-    const totalCbm = (qty * unitCbm).toFixed(2);
-    const totalWeightKg = (qty * unitWeightKg).toFixed(1);
-    const totalWeightLbs = (totalWeightKg * 2.20462).toFixed(1);
-
-    const containerCbmCapacity = container === "20GP" ? 28.0 : 68.0;
-    const maxWeightCapacityKg = container === "20GP" ? 18000 : 26000;
-
-    const fillRateVol = Math.min(100, Math.round((totalCbm / containerCbmCapacity) * 100));
-    const fillRateWeight = Math.min(100, Math.round((totalWeightKg / maxWeightCapacityKg) * 100));
-    const maxFillRate = Math.max(fillRateVol, fillRateWeight);
-
-    const estContainers = (totalCbm / containerCbmCapacity).toFixed(1);
-
-    // Update DOM fields
-    const resCbm = document.getElementById("resCbm");
-    const resWeight = document.getElementById("resWeight");
-    const resFill = document.getElementById("resFill");
-    const resContainers = document.getElementById("resContainers");
-
-    if (resCbm) resCbm.textContent = `${totalCbm} m³ (${(totalCbm * 35.3147).toFixed(1)} cu ft)`;
-    if (resWeight) resWeight.textContent = `${totalWeightKg} kg (${totalWeightLbs} lbs)`;
-    if (resFill) resFill.textContent = `${maxFillRate}% Capacity`;
-    if (resContainers) resContainers.textContent = `${estContainers} × ${container}`;
+export function estimateLoad({ quantity, unitVolumeM3, unitWeightKg, usableVolumeM3, payloadKg }) {
+  if (!Number.isSafeInteger(quantity) || quantity < 0) {
+    throw new RangeError("quantity must be a non-negative safe integer.");
   }
+  for (const [name, value] of Object.entries({ unitVolumeM3, unitWeightKg, usableVolumeM3, payloadKg })) {
+    if (!Number.isFinite(value) || value <= 0) {
+      throw new RangeError(`${name} must be a finite positive number.`);
+    }
+  }
+  const totalVolumeM3 = quantity * unitVolumeM3;
+  const totalWeightKg = quantity * unitWeightKg;
+  const volumeRatio = totalVolumeM3 / usableVolumeM3;
+  const weightRatio = totalWeightKg / payloadKg;
+  const volumeFillPercent = volumeRatio * 100;
+  const weightFillPercent = weightRatio * 100;
+  const containers = Math.ceil(Math.max(volumeRatio, weightRatio));
+  if (![totalVolumeM3, totalWeightKg, volumeFillPercent, weightFillPercent].every(Number.isFinite)
+      || (quantity > 0 && (volumeRatio === 0 || weightRatio === 0))
+      || !Number.isSafeInteger(containers)) {
+    throw new RangeError("Calculation exceeds the supported numeric range.");
+  }
+  // ponytail: aggregate capacity lower bound; use a stowage planner for geometry and load distribution.
+  return { totalVolumeM3, totalWeightKg, volumeFillPercent, weightFillPercent, containers };
+}
 
-  quantityInput.addEventListener("input", recalculate);
-  containerSelect.addEventListener("change", recalculate);
-  if (skuSelect) skuSelect.addEventListener("change", recalculate);
+const limitation = "Capacity lower bound only; not a 3D packing plan, load-distribution assessment, or freight quote.";
 
-  recalculate();
-});
+function bindEstimators() {
+  document.querySelectorAll("form[data-load-estimator]").forEach((form) => {
+    const output = form.querySelector("output") || form.appendChild(document.createElement("output"));
+    output.setAttribute("aria-live", "polite");
+    output.setAttribute("aria-atomic", "true");
+    const recalculate = () => {
+      try {
+        const inputs = {};
+        for (const name of ["quantity", "unitVolumeM3", "unitWeightKg", "usableVolumeM3", "payloadKg"]) {
+          const value = form.elements.namedItem(name)?.value?.trim();
+          if (!value) throw new RangeError(`Enter ${name}; no assumed value is used.`);
+          inputs[name] = Number(value);
+        }
+        const result = estimateLoad(inputs);
+        output.textContent = `Volume: ${result.totalVolumeM3} m³. Weight: ${result.totalWeightKg} kg. `
+          + `Single-container volume utilization: ${result.volumeFillPercent}%. `
+          + `Single-container payload utilization: ${result.weightFillPercent}%. `
+          + `Minimum containers by aggregate capacity: ${result.containers}. ${limitation}`;
+      } catch (error) {
+        output.textContent = `${error.message} ${limitation}`;
+      }
+    };
+    form.addEventListener("input", recalculate);
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      recalculate();
+    });
+    recalculate();
+  });
+}
+
+if (typeof document !== "undefined") {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bindEstimators, { once: true });
+  } else {
+    bindEstimators();
+  }
+}
