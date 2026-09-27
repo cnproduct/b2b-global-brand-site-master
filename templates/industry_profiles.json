@@ -1,0 +1,343 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "2026.1",
+  "description": "12 Core Export Vertical Industry Profiles Matrix for Autonomous B2B Site Generation",
+  "industries": {
+    "machinery": {
+      "id": "machinery",
+      "name_en": "Industrial Machinery & CNC Automation",
+      "name_cn": "工业机械与数控自动化",
+      "keywords": ["CNC Machining Center", "Precision Lathe", "Servo Press", "Industrial Robotics", "Automated Tooling"],
+      "standards": ["ISO 230-2", "CE-MD (2006/42/EC)", "ISO 9001:2015", "UL 508A"],
+      "hs_code_prefix": "8457",
+      "metrics": {
+        "accuracy": "±0.003 mm (±0.00012\")",
+        "spindle_speed": "12,000 RPM",
+        "spindle_power": "15 kW (20.1 HP)",
+        "rapid_traverse": "48 m/min (1,890 IPM)",
+        "tool_change_time": "1.8 s"
+      },
+      "lead_time_days": 25,
+      "moq": "1 unit",
+      "sample_kit_name": "Precision Cut Test Coupon & CAD/STEP USB Dossier",
+      "buyer_personas": {
+        "technical_director": "Focuses on spindle runout (<0.002mm), thermal compensation, and 72h continuous burn-in reports.",
+        "procurement_officer": "Focuses on CIF ocean shipping vacuum packaging, 24-month comprehensive warranty, and wear-and-tear spare parts packs.",
+        "regional_distributor": "Focuses on local maintenance training, white-label chassis branding, and tier-1 CNC controller compatibility (FANUC/Siemens)."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 18.5,
+        "unit_weight_kg": 6500,
+        "max_units_40hq": 2
+      }
+    },
+    "stone_cladding": {
+      "id": "stone_cladding",
+      "name_en": "Architectural Cladding & Cultural Stone",
+      "name_cn": "建筑石材与新型板材",
+      "keywords": ["Flexible Stone Veneer", "Architectural Cladding", "Natural Slate Panels", "Exterior Rainscreen", "Quartz Slabs"],
+      "standards": ["CSI MasterFormat (09 75 00 / 04 43 16)", "ASTM C170", "ASTM C880", "CE-CPR", "LEED v4.1 EPD/HPD"],
+      "hs_code_prefix": "6802",
+      "metrics": {
+        "thickness": "1.5–2.0 mm ±0.2 mm (1/16\" ± 1/128\")",
+        "surface_weight": "1.5–1.8 kg/m² (0.31–0.37 lbs/sq ft)",
+        "freeze_thaw": "100 cycles 0% delamination (-40°C to +80°C)",
+        "fire_rating": "Class A (ASTM E84) / EN 13501-1 A2-s1,d0",
+        "bending_radius": "R ≥ 50 mm (2\")"
+      },
+      "lead_time_days": 15,
+      "moq": "500 m² (5,380 sq ft)",
+      "sample_kit_name": "Architectural Master Swatch Box (12 Authentic Textures + ASTM Reports)",
+      "buyer_personas": {
+        "lead_architect": "Requires 4K PBR material maps, Revit BIM family files, and curved column wrapping flexibility.",
+        "facade_contractor": "Requires 3000h QUV weathering test dossiers, structural adhesive compatibility, and clip anchoring engineering guides.",
+        "building_material_importer": "Requires maximum 20GP container loading (~4,000 m² / container) to lower ocean freight per square meter."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.002,
+        "unit_weight_kg": 1.7,
+        "max_units_40hq": 15000
+      }
+    },
+    "footwear": {
+      "id": "footwear",
+      "name_en": "Footwear, Leather & Apparel",
+      "name_cn": "鞋类箱包与服饰纺织",
+      "keywords": ["B2B Footwear Manufacturer", "Performance Running Shoes", "Private Label Sneakers", "Tactical Boots", "OEM Apparel"],
+      "standards": ["SATRA TM144", "SATRA TM2", "ISO 20345", "OEKO-TEX Standard 100", "BSCI Audit"],
+      "hs_code_prefix": "6404",
+      "metrics": {
+        "flex_fatigue": "≥ 100,000 cycles with zero cracking",
+        "bonding_strength": "≥ 4.0 N/mm (22.8 lbf/in)",
+        "pair_weight": "≤ 230 g (8.1 oz) per shoe (Size 42)",
+        "energy_return": "≥ 65% supercritical foam midsole",
+        "rapid_proto": "7–10 days certified pre-production sample"
+      },
+      "lead_time_days": 20,
+      "moq": "500 pairs per colorway",
+      "sample_kit_name": "Factory Production Sample Pair + Material Swatch Card (SATRA Certified)",
+      "buyer_personas": {
+        "brand_product_manager": "Demands ergonomic last precision, high-rebound cushioning, and strict Pantone color matching (ΔE ≤ 0.8).",
+        "merchandising_officer": "Demands inline needle detector safety, daily line output capacity (3,000 pairs/line/day), and on-time shipment SLA.",
+        "chain_retailer_buyer": "Demands private label packaging, FSC-certified recycled shoeboxes, and low MOQ trial flexibility."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.015,
+        "unit_weight_kg": 0.85,
+        "max_units_40hq": 4500
+      }
+    },
+    "hygiene_medical": {
+      "id": "hygiene_medical",
+      "name_en": "Absorbent Hygiene & Medical Consumables",
+      "name_cn": "卫品卫生用品与医疗耗材",
+      "keywords": ["Disposable Baby Diapers", "Adult Incontinence Pants", "Medical Nonwoven Drape", "Sterile Surgical Packs"],
+      "standards": ["FDA 510(k) / Device Listing", "CE-MDR (EU 2017/745)", "ISO 13485", "ISO 10993"],
+      "hs_code_prefix": "9619",
+      "metrics": {
+        "absorbency_rate": "8 seconds rapid acquisition",
+        "total_absorption": "≥ 800 ml (27.1 fl oz)",
+        "rewet_amount": "≤ 0.1 g under 5kg pressure",
+        "cleanroom_level": "Class 100,000 GMP certified cleanroom",
+        "sterilization": "EO Sterilization (Residuals < 10 ppm)"
+      },
+      "lead_time_days": 18,
+      "moq": "100,000 pcs (1x 40HQ container)",
+      "sample_kit_name": "Sealed Medical Demonstration Kit (Cross-section Core + Absorption Dossier)",
+      "buyer_personas": {
+        "hospital_tender_board": "Demands full sterilization batch records, sterile barrier integrity testing, and biocompatibility safety dossiers.",
+        "private_label_brand": "Demands ultra-thin non-clumping SAP composite cores, breathable backsheet printing, and micro-embossed topsheets.",
+        "national_distributor": "Demands high-compression bale packaging to maximize 40HQ container piece counts and minimize landed freight."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.0006,
+        "unit_weight_kg": 0.045,
+        "max_units_40hq": 110000
+      }
+    },
+    "consumer_electronics": {
+      "id": "consumer_electronics",
+      "name_en": "Consumer Electronics & Smart Hardware",
+      "name_cn": "消费电子与智能硬件",
+      "keywords": ["TWS Earbuds", "GaN Fast Chargers", "Smart IoT Sensors", "Precision Enclosures", "Qi 2.0 Wireless Chargers"],
+      "standards": ["FCC Part 15", "CE-RED", "RoHS 2.0", "REACH", "UN38.3", "Qi 2.0"],
+      "hs_code_prefix": "8504",
+      "metrics": {
+        "efficiency": "≥ 94% peak conversion (GaN Architecture)",
+        "standby_power": "≤ 0.05 W",
+        "drop_test": "1.2 m 6-face concrete drop surviving",
+        "temp_range": "-20°C to +60°C operational",
+        "connector_durability": "≥ 10,000 Type-C mating cycles"
+      },
+      "lead_time_days": 22,
+      "moq": "1,000 units",
+      "sample_kit_name": "Functional Prototype Unit + Calibrated SMT Verification Board (FCC/CE Dossier)",
+      "buyer_personas": {
+        "hardware_product_director": "Demands proprietary private tooling, customized firmware VID/PID, and ultra-low latency (<40ms).",
+        "ecommerce_supply_chain": "Demands Amazon FBA drop-test packaging compliance, certified battery MSDS/UN38.3 air cargo documentation.",
+        "consumer_tech_distributor": "Demands certified return rate < 0.3% and 1% free spare units included with each master shipment."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.0012,
+        "unit_weight_kg": 0.18,
+        "max_units_40hq": 55000
+      }
+    },
+    "chemicals_pharma": {
+      "id": "chemicals_pharma",
+      "name_en": "Chemicals & Active Pharmaceutical Ingredients",
+      "name_cn": "精细化工与医药原料",
+      "keywords": ["Bulk Taurine Raw Material", "Food Grade Amino Acids", "Pharma Intermediates", "USP Grade Synthetics"],
+      "standards": ["USP / EP / JP / CP Standards", "GMP", "ISO 22000", "HACCP", "HALAL", "KOSHER", "REACH"],
+      "hs_code_prefix": "2921",
+      "metrics": {
+        "purity_assay": "99.0% – 101.0% (HPLC method)",
+        "heavy_metals": "≤ 10 ppm",
+        "loss_on_drying": "≤ 0.2%",
+        "transmittance": "≥ 98.0% clarity in aqueous solution",
+        "annual_capacity": "50,000 Metric Tons"
+      },
+      "lead_time_days": 14,
+      "moq": "1,000 kg (1 Metric Ton)",
+      "sample_kit_name": "500g Certified Laboratory Analytical Sample (Sealed with Batch COA & DMF Summary)",
+      "buyer_personas": {
+        "pharma_qa_auditor": "Demands full audit trail, impurity profile breakdown, and validated stability testing across 3 climatic zones.",
+        "beverage_nutrition_procurement": "Demands long-term contract price indexing, GMO-free/Allergen-free declarations, and Kosher/Halal traceability.",
+        "international_chemical_trader": "Demands 25kg fiber drums with dual PE liner vacuum seals, pallet shrink wrapping, and certified non-DG maritime declaration."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.045,
+        "unit_weight_kg": 26.5,
+        "max_units_40hq": 800
+      }
+    },
+    "auto_parts": {
+      "id": "auto_parts",
+      "name_en": "Automotive Parts & Fasteners",
+      "name_cn": "汽配五金与标准件紧固件",
+      "keywords": ["High Tensile Fasteners", "Wheel Hub Bearings", "Automotive Stamping", "Brake Rotors", "IATF 16949"],
+      "standards": ["IATF 16949:2016", "ISO 898-1", "DIN 933 / ASTM A325", "ASTM B117 Salt Spray (720h-1000h)"],
+      "hs_code_prefix": "7318",
+      "metrics": {
+        "strength_grade": "Grade 8.8 / 10.9 / 12.9 Alloy Steel",
+        "salt_spray": "≥ 720 hours without red rust (Dacromet/Geomet)",
+        "thread_tolerance": "6g / 6H precision class (100% optical check)",
+        "fatigue_life": "2,000,000 pulsation tension cycles without crack",
+        "ppm_defect_rate": "≤ 15 PPM"
+      },
+      "lead_time_days": 20,
+      "moq": "5,000 pcs",
+      "sample_kit_name": "Master Finish Comparison Kit + PPAP Level 3 Documentation Binder",
+      "buyer_personas": {
+        "tier1_automotive_engineer": "Demands PPAP Level 3 submission, IMDS material data entry, and torque-tension clamp load consistency.",
+        "industrial_mro_contractor": "Demands ANSI/DIN interchangeability, emergency spot inventory dispatch, and traceable lot numbers.",
+        "hardware_distributor_chain": "Demands retail blister pack barcode labeling, fumigation-free wooden pallet strapping, and heavy cargo load safety."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.0001,
+        "unit_weight_kg": 0.08,
+        "max_units_40hq": 250000
+      }
+    },
+    "eco_packaging": {
+      "id": "eco_packaging",
+      "name_en": "Packaging & Biodegradable Containers",
+      "name_cn": "环保包材与降解餐具",
+      "keywords": ["Sugarcane Bagasse Tableware", "Compostable Clamshell", "PLA Straws", "Kraft Food Containers"],
+      "standards": ["BPI Certified (ASTM D6400)", "OK Compost Home / Industrial (EN 13432)", "FDA 21 CFR 176.170", "LFGB"],
+      "hs_code_prefix": "4823",
+      "metrics": {
+        "biodegradability": "100% compostable within 90–180 days",
+        "thermal_resistance": "-20°C to +120°C (-4°F to +248°F)",
+        "oil_water_proof": "Zero leakage with 100°C boiling oil for 2 hours",
+        "pfas_free": "Certified 100% Fluorine-Free (PFAS-Free)",
+        "edge_crush_test": "≥ 4.5 kN/m stacking strength"
+      },
+      "lead_time_days": 16,
+      "moq": "50,000 pcs",
+      "sample_kit_name": "Complete Eco Foodservice Assortment Box (Leak-Tested Samples + BPI Certificate)",
+      "buyer_personas": {
+        "qsr_restaurant_chain": "Demands snap-lock lid spill prevention, microwave safe warming, and custom embossed logo branding.",
+        "environmental_compliance_lead": "Demands Single-Use Plastic ban exemptions, LCA carbon footprint reports, and certified PFAS-free guarantees.",
+        "foodservice_master_wholesaler": "Demands nested high-density packing design (saving 30% shipping volume) and container consolidation."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.0005,
+        "unit_weight_kg": 0.028,
+        "max_units_40hq": 120000
+      }
+    },
+    "solar_energy": {
+      "id": "solar_energy",
+      "name_en": "Solar PV, Energy Storage & Power Systems",
+      "name_cn": "光伏储能与清洁能源",
+      "keywords": ["Tier-1 PV Modules", "LiFePO4 Storage Batteries", "Hybrid Inverters", "Commercial Solar Racking"],
+      "standards": ["IEC 61215 / IEC 61730", "UL 1973 / UL 9540A", "CE-LVD/EMC", "UN38.3"],
+      "hs_code_prefix": "8541",
+      "metrics": {
+        "pv_efficiency": "≥ 22.8% (N-Type TOPCon Cell)",
+        "battery_cycles": "≥ 6,000 cycles (@80% DoD, 25°C)",
+        "bms_balancing": "Active 2A current balancing with millisecond cutoff",
+        "ingress_protection": "IP65 / IP67 outdoor weather resistance",
+        "warranty": "25-Year Linear Power Warranty"
+      },
+      "lead_time_days": 25,
+      "moq": "100 kW / 10 MWh Storage",
+      "sample_kit_name": "Miniature Storage Battery Architecture Demonstrator + Third-Party Flash Test Reports",
+      "buyer_personas": {
+        "epc_solar_contractor": "Demands Tier-1 bankability rating, low LCOE calculations, and 25-year performance insurance backing.",
+        "commercial_installer": "Demands plug-and-play RS485/CAN inverter protocol matching, cloud app telemetry, and lightweight mounting rails.",
+        "regional_energy_distributor": "Demands dangerous goods (DG) container shipping booking assistance and bonded warehouse buffer parts."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.065,
+        "unit_weight_kg": 32.0,
+        "max_units_40hq": 720
+      }
+    },
+    "home_appliances": {
+      "id": "home_appliances",
+      "name_en": "Home & Commercial Appliances",
+      "name_cn": "家用电器与商用厨电",
+      "keywords": ["Commercial Blast Chillers", "Smart Kitchen Equipment", "Induction Cooktops", "Air Fryers"],
+      "standards": ["CB Scheme", "CE-LVD/EMC", "ETL / UL 197", "NSF International", "RoHS 2.0"],
+      "hs_code_prefix": "8418",
+      "metrics": {
+        "material_grade": "Food Grade SUS304 Brushed Stainless Steel",
+        "temp_precision": "PID Microprocessor control (±0.5°C tolerance)",
+        "mtbf": "≥ 30,000 hours continuous heavy-duty operation",
+        "noise_level": "≤ 48 dB(A) at maximum airflow",
+        "compressor_warranty": "5 Years Core Compressor Warranty"
+      },
+      "lead_time_days": 25,
+      "moq": "200 units",
+      "sample_kit_name": "Working Benchtop Sample Unit + PCBA Diagnostic Rig (NSF/ETL Verified)",
+      "buyer_personas": {
+        "hospitality_kitchen_planner": "Demands rapid thermal pulldown recovery times, heavy-duty hinges, and sanitary coved corners.",
+        "retail_appliance_oem": "Demands EU Energy Class A rating, proprietary aesthetic injection molds, and 4-color gift packaging.",
+        "equipment_dealer_network": "Demands multi-voltage dual frequency (110V/60Hz and 230V/50Hz) configurations and 1% warranty spares."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.45,
+        "unit_weight_kg": 65.0,
+        "max_units_40hq": 140
+      }
+    },
+    "pet_products": {
+      "id": "pet_products",
+      "name_en": "Pet Products & Animal Nutrition",
+      "name_cn": "宠物用品与宠物食品",
+      "keywords": ["Freeze-Dried Pet Food", "Tactical Dog Harness", "Smart Automatic Pet Feeders", "Bentonite Cat Litter"],
+      "standards": ["AAFCO Profile Compliant", "FDA Registration", "USDA Organic", "BSCI Audit", "CE Mark"],
+      "hs_code_prefix": "2309",
+      "metrics": {
+        "crude_protein": "≥ 65% (Pure Meat Freeze-Dried Recipe)",
+        "harness_tensile": "≥ 350 kg (770 lbs) sudden pull resistance",
+        "feeder_safety": "5V low-voltage anti-chew cable & wireless induction pump",
+        "clumping_speed": "≤ 3 seconds clumping with ≤ 0.5% dust rate",
+        "shelf_life": "24 Months with nitrogen-flushed packaging"
+      },
+      "lead_time_days": 18,
+      "moq": "1,000 units / 500 kg Food",
+      "sample_kit_name": "Tasting & Durability Evaluation Box (Sealed Recipe Pouches + Tensile Tested Strap Swatches)",
+      "buyer_personas": {
+        "pet_retail_supermarket_buyer": "Demands vibrant shelf packaging with hang-holes, barcode integrity, and healthy gross margin spread (>50%).",
+        "dtc_pet_brand_founder": "Demands flexible custom recipe prototyping, low initial MOQ trial runs, and certified non-toxic test reports.",
+        "master_pet_distributor": "Demands phytosanitary and veterinary export health documentation assistance for smooth customs entry."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.003,
+        "unit_weight_kg": 1.2,
+        "max_units_40hq": 22000
+      }
+    },
+    "furniture": {
+      "id": "furniture",
+      "name_en": "Commercial Furniture & Interior Fixtures",
+      "name_cn": "商用办公家具与空间道具",
+      "keywords": ["Ergonomic Office Chairs", "Standing Desks", "Acoustic Pods", "Contract Hotel Furniture"],
+      "standards": ["BIFMA X5.1 / X5.5", "EN 1335", "CARB Phase 2 / EPA TSCA Title VI", "FSC Certified"],
+      "hs_code_prefix": "9403",
+      "metrics": {
+        "static_load": "≥ 1,360 kg (3,000 lbs) base compression rating",
+        "desk_speed_noise": "38 mm/s dual-motor speed, ≤ 45 dB whisper quiet",
+        "formaldehyde": "≤ 0.05 ppm (CARB P2 / E0 Standard)",
+        "acoustic_reduction": "NIC ≥ 32 dB sound isolation in silence pods",
+        "assembly_time": "Tool-free fast assembly in < 15 minutes"
+      },
+      "lead_time_days": 25,
+      "moq": "50 sets",
+      "sample_kit_name": "Contract Specifier Sample Kit (Hardwood Finishes + Fire-Retardant Fabric Swatches + BIFMA Reports)",
+      "buyer_personas": {
+        "commercial_interior_designer": "Demands CAL 117 / BS 5852 fire-rated fabric binders, curated stain finishes, and 3D Max/Revit BIM models.",
+        "corporate_facility_director": "Demands 10-year structural frame warranty, anti-collision sensor responsiveness, and modular reconfigurability.",
+        "contract_furniture_dealer": "Demands flat-pack knockdown (KD) 5-ply export carton packaging to minimize overseas freight breakage."
+      },
+      "sourcing_calculator": {
+        "unit_cbm": 0.18,
+        "unit_weight_kg": 24.0,
+        "max_units_40hq": 360
+      }
+    }
+  }
+}

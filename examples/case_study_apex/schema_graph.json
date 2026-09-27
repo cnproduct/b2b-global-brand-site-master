@@ -1,0 +1,106 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://apexmachinery.com/#organization",
+      "name": "Apex Precision Machinery",
+      "url": "https://apexmachinery.com",
+      "logo": "https://apexmachinery.com/images/logo.png",
+      "description": "Apex Precision Machinery is an ISO 9001 certified global manufacturer of high-performance Industrial Machinery & CNC Automation engineered to exceed international standards.",
+      "email": "sales@apexmachinery.com",
+      "sameAs": [
+        "https://www.linkedin.com/company/apex-precision-machinery",
+        "https://www.wikidata.org/wiki/Special:Search?search=Apex+Precision+Machinery",
+        "https://www.crunchbase.com/organization/apex-precision-machinery"
+      ],
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": [
+          "US",
+          "DE",
+          "GB",
+          "AE",
+          "AU"
+        ],
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnFees": "https://schema.org/FreeReturn"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://apexmachinery.com/#chief-engineer",
+      "name": "Dr. Marcus Vance",
+      "jobTitle": "Chief Engineering Director & Head of Quality Assurance",
+      "worksFor": {
+        "@id": "https://apexmachinery.com/#organization"
+      },
+      "knowsAbout": [
+        "Industrial Machinery & CNC Automation",
+        "ISO 9001:2015",
+        "AQL Sampling",
+        "Precision Fabrication"
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://apexmachinery.com/#tech-whitepaper",
+      "headline": "Apex Precision Machinery 2026 Engineering Guide and Technical Specification Dossier",
+      "author": {
+        "@id": "https://apexmachinery.com/#chief-engineer"
+      },
+      "publisher": {
+        "@id": "https://apexmachinery.com/#organization"
+      },
+      "datePublished": "2026-01-15",
+      "dateModified": "2026-09-27",
+      "description": "Authoritative technical specifications, material tolerances, and laboratory testing benchmarks for Industrial Machinery & CNC Automation."
+    },
+    {
+      "@type": "Product",
+      "@id": "https://apexmachinery.com/products_catalog#flagship",
+      "name": "Apex Precision Machinery Industrial Industrial Machinery & CNC Automation Prime Series",
+      "brand": {
+        "@id": "https://apexmachinery.com/#organization"
+      },
+      "sku": "APE-9000-SERIES",
+      "description": "Heavy-duty export-grade Industrial Machinery & CNC Automation with certified mechanical and environmental durability.",
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "USD",
+        "lowPrice": "15.00",
+        "highPrice": "450.00",
+        "offerCount": "100",
+        "availability": "https://schema.org/InStock",
+        "shippingDetails": {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {
+            "@type": "MonetaryAmount",
+            "value": "0",
+            "currency": "USD"
+          },
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": "US"
+          },
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "handlingTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 1,
+              "maxValue": 3,
+              "unitCode": "d"
+            },
+            "transitTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 3,
+              "maxValue": 7,
+              "unitCode": "d"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

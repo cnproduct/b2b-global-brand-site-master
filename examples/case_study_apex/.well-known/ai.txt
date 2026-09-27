@@ -1,0 +1,15 @@
+# AI Crawling & Citation Authorization Policy
+# Organization: Apex Precision Machinery Co., Ltd.
+# Contact: sales@apexmachinery.com
+# Last-Modified: 2026-09-27
+
+User-agent: *
+Allow: /
+Crawl-delay: 1
+
+# Citation Endpoints
+llms-txt: https://apexmachinery.com/llms.txt
+llms-full: https://apexmachinery.com/llms-full.txt
+ai-summary: https://apexmachinery.com/ai/summary.json
+ai-faq: https://apexmachinery.com/ai/faq.json
+ai-service: https://apexmachinery.com/ai/service.json

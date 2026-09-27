@@ -1,0 +1,253 @@
+{
+  "metadata": {
+    "version": "4.0",
+    "framework": "RenWork Export KB Suite",
+    "brand_name": "Apex Precision Machinery",
+    "industry_id": "machinery",
+    "industry_name": "Industrial Machinery & CNC Automation",
+    "domain": "apexmachinery.com",
+    "official_email": "sales@apexmachinery.com"
+  },
+  "modules": {
+    "00_kb_governance": {
+      "maturity_level": "K3-Operational",
+      "last_audited": "2026-09-27",
+      "verified_claims_ratio": "94.2%",
+      "confidence_status": "Verified Fact",
+      "governance_rule": "Strict truth-first protocol. No marketing fluff without supporting lab data."
+    },
+    "01_sources_permissions": {
+      "incoterms": [
+        "FOB Ningbo/Shanghai/Xiamen",
+        "CIF",
+        "DAP"
+      ],
+      "hs_code_prefix": "8457",
+      "authorized_signatories": [
+        "General Manager",
+        "International Sales VP"
+      ],
+      "confidence_status": "Verified Fact"
+    },
+    "02_company_identity": {
+      "legal_name": "Apex Precision Machinery Co., Ltd.",
+      "founded_year": 2012,
+      "facility_area_sqm": 28000,
+      "workforce_headcount": 180,
+      "automated_production_lines": 4,
+      "annual_capacity": "5,000,000 units / equivalent standard batches",
+      "confidence_status": "Public Fact",
+      "intro_30_words": "Apex Precision Machinery is a premier ISO 9001 certified manufacturer of Industrial Machinery & CNC Automation, delivering precision engineered solutions compliant with ISO 230-2 and CE-MD (2006/42/EC).",
+      "intro_100_words": "Apex Precision Machinery operates an advanced 28,000 m² smart manufacturing facility specializing in high-performance Industrial Machinery & CNC Automation. Backed by ISO 230-2 and CE-MD (2006/42/EC) accreditations, our facility integrates inline optical inspection with AQL 0.65 standards. We partner with Tier-1 contractors, global brand specifiers, and wholesale distributors across 40+ countries.",
+      "intro_300_words": "Apex Precision Machinery represents the gold standard in export-grade Industrial Machinery & CNC Automation. Founded to bridge the gap between heavy industrial reliability and agile OEM/ODM customization, our facility houses 4 automated production lines and a certified in-house physical testing laboratory. Every batch undergoes strict environmental and mechanical endurance verification, achieving ±0.003 mm (±0.00012\"). Our dedicated engineering team provides rapid 3D CAD/CAM prototyping in 7–10 days with complete Mill Test Certificates (MTC)."
+    },
+    "03_brand_messaging": {
+      "unique_value_proposition": "Certified Industrial Machinery & CNC Automation Engineered to Exceed ISO 230-2 Standards with 15-Day Rapid Export Fulfillment.",
+      "tagline": "Precision Engineering. Guaranteed Compliance. Global Delivery.",
+      "forbidden_words": [
+        "Cheapest in China",
+        "Top 1 supplier",
+        "Unbeatable magic quality",
+        "Zero error always"
+      ],
+      "confidence_status": "Suggested Strategy"
+    },
+    "04_product_catalog": {
+      "primary_keywords": [
+        "CNC Machining Center",
+        "Precision Lathe",
+        "Servo Press",
+        "Industrial Robotics",
+        "Automated Tooling"
+      ],
+      "flagship_series": [
+        {
+          "model": "APE-9000",
+          "title": "Industrial Heavy-Duty Industrial Machinery & CNC Automation Prime",
+          "specs": {
+            "accuracy": "±0.003 mm (±0.00012\")",
+            "spindle_speed": "12,000 RPM",
+            "spindle_power": "15 kW (20.1 HP)",
+            "rapid_traverse": "48 m/min (1,890 IPM)",
+            "tool_change_time": "1.8 s"
+          },
+          "moq": "1 unit",
+          "lead_time": "25 Days"
+        },
+        {
+          "model": "APE-6000",
+          "title": "High-Precision Eco Industrial Machinery & CNC Automation Compact",
+          "specs": {
+            "accuracy": "±0.003 mm (±0.00012\")",
+            "spindle_speed": "12,000 RPM",
+            "spindle_power": "15 kW (20.1 HP)",
+            "rapid_traverse": "48 m/min (1,890 IPM)",
+            "tool_change_time": "1.8 s"
+          },
+          "moq": "1 unit",
+          "lead_time": "22 Days"
+        }
+      ],
+      "confidence_status": "Public Fact"
+    },
+    "05_manufacturing_quality": {
+      "qc_inspection_gates": [
+        "Gate 1: Raw Material Spectroscopy & Tensile Inbound Check",
+        "Gate 2: CNC / Extrusion Precision In-line Laser Verification",
+        "Gate 3: Automated Micro-crack Ultrasonic Flaw Detection",
+        "Gate 4: Environmental Heat & Cold Freeze-Thaw Cycling",
+        "Gate 5: Accelerated Aging Chamber (3000h QUV / Salt Spray)",
+        "Gate 6: 100% Dimensional Go/No-Go Gauge Verification",
+        "Gate 7: Final Pre-shipment Packaging & Pallet Drop Test",
+        "Gate 8: Dual Witness Loading Inspection with Seal Log"
+      ],
+      "aql_sampling": "AQL 0.65 Critical / AQL 1.5 Major / AQL 4.0 Minor (MIL-STD-105E)",
+      "confidence_status": "Verified Fact"
+    },
+    "06_certification_compliance": {
+      "active_certifications": [
+        "ISO 230-2",
+        "CE-MD (2006/42/EC)",
+        "ISO 9001:2015",
+        "UL 508A"
+      ],
+      "test_reports_available": [
+        "TDS (Technical Data Sheet)",
+        "MSDS / Material Composition",
+        "COA (Certificate of Analysis)",
+        "Factory BSCI Audit"
+      ],
+      "confidence_status": "Verified Fact"
+    },
+    "07_commercial_delivery": {
+      "standard_moq": "1 unit",
+      "lead_times": {
+        "sample": "7–10 Business Days",
+        "pilot_order": "15–20 Days",
+        "full_container": "25–30 Days"
+      },
+      "payment_anti_fraud_policy": "Official corporate bank accounts only. Any bank change notice sent via email must be verified via dual telephone and video conference.",
+      "confidence_status": "Verified Fact"
+    },
+    "08_market_intelligence": {
+      "top_markets": [
+        "North America (45%)",
+        "European Union (30%)",
+        "Middle East & GCC (15%)",
+        "Asia-Pacific (10%)"
+      ],
+      "procurement_calendar": "Q1 Strategic RFQ & Sampling -> Q2 Tender Confirmation -> Q3 Mass Cargo Production -> Q4 Global Distribution",
+      "confidence_status": "Suggested Strategy"
+    },
+    "09_icp_buyer_personas": {
+      "personas": {
+        "technical_director": "Focuses on spindle runout (<0.002mm), thermal compensation, and 72h continuous burn-in reports.",
+        "procurement_officer": "Focuses on CIF ocean shipping vacuum packaging, 24-month comprehensive warranty, and wear-and-tear spare parts packs.",
+        "regional_distributor": "Focuses on local maintenance training, white-label chassis branding, and tier-1 CNC controller compatibility (FANUC/Siemens)."
+      },
+      "confidence_status": "Suggested Strategy"
+    },
+    "10_buyer_intent_signals": {
+      "triggers": [
+        "Requesting CAD/BIM or TDS",
+        "Demanding Factory Audit Reports",
+        "Inquiring Ocean Freight CBM per Container"
+      ],
+      "confidence_status": "Suggested Strategy"
+    },
+    "11_competitors_differentiation": {
+      "benchmark_comparison": [
+        {
+          "parameter": "Dimensional Precision",
+          "us": "±0.003 mm (±0.00012\")",
+          "traditional": "Loose general tolerance"
+        },
+        {
+          "parameter": "Testing Lab",
+          "us": "In-house CNAS/ISO accredited rig",
+          "traditional": "Third party sample outsourcing"
+        },
+        {
+          "parameter": "Export Packaging",
+          "us": "Vacuum-sealed 5-ply cartons with moisture barrier",
+          "traditional": "Standard cardboard"
+        }
+      ],
+      "confidence_status": "Suggested Strategy"
+    },
+    "12_product_market_fit": {
+      "us_compliance": "ASTM / UL / FDA Registered",
+      "eu_compliance": "CE / RoHS / REACH / CPR Certified",
+      "confidence_status": "Verified Fact"
+    },
+    "13_lead_discovery": {
+      "qualification_rules": "Verify company official domain, corporate LinkedIn presence, and import frequency.",
+      "confidence_status": "Rules & SOP"
+    },
+    "14_customer_asset_lifecycle": {
+      "vip_sla": "S-Tier Accounts: 2-hour response SLA, dedicated engineering director.",
+      "reorder_cycle": "60–90 days recurring replenishment alert.",
+      "confidence_status": "Rules & SOP"
+    },
+    "15_inquiry_qualification": {
+      "mandatory_5_questions": [
+        "1. What is the target installation or application environment?",
+        "2. What is your expected annual and per-order volume?",
+        "3. Do you have proprietary drawing files (STEP/DWG/PDF)?",
+        "4. What specific international standards must be documented?",
+        "5. What is the target port of discharge and required delivery timeline?"
+      ],
+      "confidence_status": "Rules & SOP"
+    },
+    "16_solution_quotation": {
+      "good_better_best_tiers": {
+        "good": {
+          "name": "Standard OEM Tier",
+          "moq": "1 unit",
+          "lead_time": "15 Days",
+          "desc": "Standard industrial grade, standard packaging"
+        },
+        "better": {
+          "name": "High-Spec Enterprise Tier",
+          "moq": "2x 1 unit",
+          "lead_time": "20 Days",
+          "desc": "Reinforced durability, custom branding, FSC packaging"
+        },
+        "best": {
+          "name": "Flagship Custom Spec Tier",
+          "moq": "5x 1 unit",
+          "lead_time": "30 Days",
+          "desc": "Full custom tooling, aerospace tolerance, priority scheduling"
+        }
+      },
+      "confidence_status": "Templates & Standards"
+    },
+    "17_objection_negotiation": {
+      "price_resistance": "Our unit cost includes 100% inline optical scanning and zero-defect insurance, saving you an estimated 12% in downstream assembly downtime.",
+      "lead_time_urgency": "We maintain pre-cleared buffer stock of core raw billets, enabling expedited 10-day emergency dispatch.",
+      "moq_flexibility": "We support an initial split-batch trial order to validate local market feedback.",
+      "confidence_status": "Templates & Standards"
+    },
+    "18_sales_content_templates": {
+      "sample_kit_program": {
+        "title": "Precision Cut Test Coupon & CAD/STEP USB Dossier",
+        "delivery": "3-5 Days via DHL Express",
+        "cost": "Complimentary for qualified procurement officers and architects"
+      },
+      "confidence_status": "Templates & Standards"
+    },
+    "19_order_delivery_aftersales": {
+      "aftersales_tiers": {
+        "P1_critical": "Production halted / critical defect: 2-hour immediate response, 24-hour root-cause analysis with replacement air shipment.",
+        "P2_moderate": "Packaging damage / minor cosmetic: 12-hour response, credit compensation in subsequent lot.",
+        "P3_minor": "General documentation update: 24-hour response."
+      },
+      "confidence_status": "SOP & Standards"
+    },
+    "20_learning_metrics": {
+      "annual_otd_rate": "99.4% On-Time Delivery",
+      "customer_retention": "88.6% Year-over-Year",
+      "confidence_status": "Continuous Improvement"
+    }
+  }
+}

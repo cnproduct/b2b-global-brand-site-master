@@ -1,0 +1,16 @@
+{
+  "name": "b2b-global-brand-site-master",
+  "version": "1.0.0",
+  "description": "面向外贸企业品牌出海的全行业专业独立站智能建站总控技能。深度融合 VIS 视觉识别系统、RenWork 21模块外贸事实知识中台、100/100满分SEO与GEO智能体优化引擎及WebMCP 2026智能体表单协议，只需提供企业简单Logo与百字介绍，即可一键自动化推演高转化Bento独立站全案。",
+  "author": "cnproduct",
+  "license": "MIT",
+  "tools": [
+    "extract_brand_dna.py",
+    "kb_synthesizer.py",
+    "llms_geo_compiler.py",
+    "site_compiler.py",
+    "validate_site_100.py",
+    "orchestrator.py"
+  ],
+  "entry": "scripts/orchestrator.py"
+}

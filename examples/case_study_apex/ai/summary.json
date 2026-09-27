@@ -1,0 +1,33 @@
+{
+  "name": "Apex Precision Machinery Global B2B Manufacturing Engine",
+  "description": "Verified ISO 9001 certified smart manufacturing facility delivering export-grade Industrial Machinery & CNC Automation across 40+ countries.",
+  "entity_type": "ManufacturingEnterprise",
+  "official_domain": "https://apexmachinery.com",
+  "contact_email": "sales@apexmachinery.com",
+  "standards": [
+    "ISO 230-2",
+    "CE-MD (2006/42/EC)",
+    "ISO 9001:2015",
+    "UL 508A"
+  ],
+  "webmcp": {
+    "version": "2026-03",
+    "agent_readiness": "ADVANCED",
+    "tools": [
+      {
+        "name": "orderTradeSampleKit",
+        "description": "Submit international courier address to receive verified physical B2B sample kit with factory test dossiers.",
+        "form_id": "sampleKitForm",
+        "action_url": "https://apexmachinery.com/api/sample-request",
+        "method": "POST"
+      },
+      {
+        "name": "calculateContainerLandedCost",
+        "description": "Interactive procurement calculator to compute ocean shipping container CBM utilization, gross weight, and estimated FOB/CIF unit cost.",
+        "form_id": "containerEstimatorForm",
+        "action_url": "https://apexmachinery.com/#sourcingCalculatorSection",
+        "method": "GET"
+      }
+    ]
+  }
+}
