@@ -369,6 +369,20 @@
       "use": "24px AA及例外；44px为增强设计目标",
       "checked_at": "2026-09-27",
       "access": "web_page_read"
+    },
+    {
+      "id": "default-site-protection-v2.2",
+      "type": "official_documentation",
+      "checked_at": "2026-09-27",
+      "urls": [
+        "https://developers.cloudflare.com/workers/static-assets/binding/",
+        "https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/",
+        "https://developers.cloudflare.com/workers/runtime-apis/request/",
+        "https://developers.cloudflare.com/bots/get-started/bot-fight-mode/",
+        "https://developers.google.com/search/docs/crawling-indexing/verifying-googlebot",
+        "https://developers.openai.com/api/docs/bots"
+      ],
+      "use": "Default edge protection with crawler parity; no UA-based authentication, no global AI-block assumption."
     }
   ]
 }

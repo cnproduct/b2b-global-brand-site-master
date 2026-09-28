@@ -25,7 +25,9 @@ company-project/
     site.json                   # 唯一可编辑页面模型
     public-facts.json           # 每次构建从知识卡重新生成，勿手改
     page-manifest.json          # 页面与claim/asset映射
-  builds/site-<unique>/          # 本次唯一可部署目录
+  builds/site-<unique>/          # 本次唯一公开静态资产目录
+  private/deploy/edge-<unique>/  # 默认防护发布包，引用上述静态资产
+  private/protection-status.json # 配置生成和运行时防护状态分开
   acceptance.md
 ```
 
@@ -89,7 +91,9 @@ release 所需配置：project.json 中明确 domain（HTTPS源站）、contact�
 python3 scripts/orchestrator.py --project /path/company-project --release
 ```
 
-`--release` 生成可审查的本地发布候选，并不自动部署、发消息或修改爬虫策略。draft 含 noindex、禁止抓取及空sitemap；release输出规范URL与索引文件。`llms=true` 只生成精简公共导航，不导出完整内部卡。
+`--release` 生成可审查的本地发布候选，并不自动部署、发消息或修改云端爬虫策略。draft 含 noindex、禁止抓取及空sitemap；release输出规范URL与索引文件。`llms=true` 只生成精简公共导航，不导出完整内部卡。
+
+V2.2 所有构建默认生成 `deployment_directory`：Worker先执行、公开路径白名单、边缘限流和安全响应头。默认通过它部署所引用的静态资产；只上传HTML没有运行时防护。新增 `protection_runtime` 输出恒为NOT_RUN直到实际部署另行验证。旧V2内容模型无需加字段；每次生成新防护配置，已有线上额度/服务绑定/域名配置由发布流程有意识地保留并重新验证。详见 [默认防护与托管契约](site-protection.md)。
 
 training_bot_policy 为 unspecified/allow/disallow，仅控制额外 GPTBot 规则；其它平台/Google独立控制由项目检查当前规则后配置。unspecified 不写额外训练bot指令，并不构成禁止训练。搜索目标与训练意愿都应在发布清单写明。
 

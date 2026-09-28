@@ -18,3 +18,4 @@ ENV/
 dist/
 build/
 *.egg-info/
+.wrangler/

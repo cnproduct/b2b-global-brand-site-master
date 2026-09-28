@@ -3,6 +3,7 @@
 import hashlib
 import html
 import json
+import os
 import re
 import shutil
 import uuid
@@ -156,10 +157,48 @@ def check_claims(claims, facts):
         raise ValueError('reference to unavailable or revoked facts')
 
 
+def protection_bundle(project, destination, meta, inquiry):
+    """Default edge deployment, separate from the public directory and private sources."""
+    paths = set()
+    for file in destination.rglob('*'):
+        if file.is_file():
+            path = '/' + file.relative_to(destination).as_posix()
+            paths.add(path)
+            if path.endswith('/index.html'):
+                directory = path[:-10]
+                paths.add(directory)
+                if directory != '/':
+                    paths.add(directory.rstrip('/'))
+    endpoint = inquiry.get('endpoint', '') if inquiry['mode'] == 'http' else ''
+    inquiry_path = endpoint if endpoint.startswith('/') else None
+    if inquiry_path in paths:
+        raise ValueError('inquiry endpoint conflicts with a public page or asset')
+    directory = project / 'private/deploy' / ('edge-' + uuid.uuid4().hex[:12])
+    directory.mkdir(parents=True)
+    site_id = hashlib.sha256(meta['tenant_id'].encode()).hexdigest()[:12]
+    sitekit.write(directory/'policy.json', {'siteId': site_id, 'paths': sorted(paths), 'inquiryPath': inquiry_path})
+    shutil.copy2(ROOT/'templates/edge-worker.mjs', directory/'worker.mjs')
+    sitekit.write(directory/'wrangler.json', {
+        'name': 'b2b-site-' + site_id, 'main': 'worker.mjs', 'compatibility_date': '2026-09-25',
+        'assets': {'directory': os.path.relpath(destination, directory), 'binding': 'ASSETS',
+                   'run_worker_first': True, 'html_handling': 'auto-trailing-slash', 'not_found_handling': 'none'},
+        'ratelimits': [
+            {'name': name, 'namespace_id': str(int(site_id, 16) * 2 + index + 1),
+             'simple': {'limit': limit, 'period': 60}}
+            for index, (name, limit) in enumerate([('READ_LIMITER', 300), ('INQUIRY_LIMITER', 5)])]})
+    shutil.copy2(ROOT/'references/site-protection.md', directory/'DEPLOY.md')
+    sitekit.write(project/'private/protection-status.json', {
+        'default_enabled': True, 'configuration': 'GENERATED', 'runtime': 'NOT_RUN',
+        'deployment_directory': str(directory), 'site_directory': str(destination),
+        'provider': 'cloudflare-workers', 'external_inquiry_protection': 'NOT_RUN' if endpoint and not inquiry_path else 'NOT_APPLICABLE'})
+    return directory
+
+
 def build(project, release=False, site_out=None):
     project = Path(project).resolve()
     sitekit.write(project / 'private/latest-build.json', {'status': 'NOT_READY'})
     sitekit.write(project / 'private/local-validation.json', {'status': 'NOT_RUN'})
+    sitekit.write(project / 'private/protection-status.json', {'configuration': 'NOT_READY', 'runtime': 'NOT_RUN'})
     (project / 'acceptance.md').write_text('# Build status\n\nNOT_READY: current inputs have not passed a new build and validation.\n', encoding='utf-8')
     meta = sitekit.read(project / 'project.json')
     layout = sitekit.read(project / 'industry.json').get('layout', 'engineering')
@@ -335,7 +374,7 @@ def build(project, release=False, site_out=None):
 <link rel="stylesheet" href="/css/tokens.css"><link rel="stylesheet" href="/css/site.css">{schema_html}</head>
 <body><a class="skip" href="#main">Skip to content</a>{draft_banner}<header><a class="brand" href="/">{brand}</a><nav aria-label="Main navigation">{nav}</nav>{header_action}</header>
 <main id="main" tabindex="-1" data-layout="{layout}">{hero}{section_nav}{''.join(content)}</main>
-<footer><p>{e(meta['company'])}</p>{f'<a href="{e(mailto(email))}">{e(email)}</a>' if email else ''}</footer></body></html>''', encoding='utf-8')
+<footer><p>© {e(meta['company'])}</p>{f'<a href="{e(mailto(email))}">{e(email)}</a>' if email else ''}</footer></body></html>''', encoding='utf-8')
         manifest.append({'url': urls[page['slug']], 'type': page['type'], 'language': language, 'claim_ids': sorted(set(claim_ids)), 'asset_ids': sorted(set(page_assets + ([config['logo_asset_id']] if selected_logo else []))), 'status': 'release' if release else 'draft'})
     sitemap = ET.Element('urlset', xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
     if release:
@@ -365,5 +404,6 @@ def build(project, release=False, site_out=None):
             'Typography: local/system fallbacks, fluid display and section roles, language-aware reading widths.\n\n'
             'Review 320/390/768/1440 widths, text resizing, keyboard path and inquiry errors before release.\n'
             'Browser, inquiry backend, inbox delivery and conversion validation: NOT_RUN.\n', encoding='utf-8')
-    sitekit.write(project/'private/latest-build.json', {'status':'BUILT_UNVALIDATED', 'directory':str(destination), 'release':release, 'domain':domain, 'page_count':len(pages)})
+    deployment = protection_bundle(project, destination, meta, inquiry)
+    sitekit.write(project/'private/latest-build.json', {'status':'BUILT_UNVALIDATED', 'directory':str(destination), 'deployment_directory':str(deployment), 'release':release, 'domain':domain, 'page_count':len(pages)})
     return destination

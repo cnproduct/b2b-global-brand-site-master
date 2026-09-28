@@ -36,7 +36,11 @@ def run():
             assert not any('INTERNAL_CANARY' in f.read_text() for f in site.rglob('*') if f.is_file())
             assert not (site/'private').exists()
             assert (p/'DESIGN.md').is_file()
+            protection = sitekit.read(p/'private/protection-status.json')
+            assert protection['default_enabled'] is True and protection['runtime'] == 'NOT_RUN'
+            assert Path(protection['deployment_directory'], 'wrangler.json').is_file()
             rejected(lambda: build(p,True))
+            assert sitekit.read(p/'private/protection-status.json')['configuration'] == 'NOT_READY'
         p=root/'machinery'
         cards=sitekit.read(p/'private/knowledge-cards.json');card=cards[0]
         card.update(title='Test specimen width',conclusion='40 mm <script>not executable</script>',conditions='Synthetic fixture only',status='verified_fact',sensitivity='public',public_claim_approved=True)
