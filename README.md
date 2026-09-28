@@ -1,4 +1,4 @@
-# B2B Global Brand Site Master · V2.1
+# B2B Global Brand Site Master · V2.2
 
 从简单 Logo、企业简介和现有资料，持续完成外贸 B2B 品牌、企业知识库、数字资产与专业独立站。V2.1 将 `renwork-industry-site-master` 的事实治理、行业采购蓝图与 `renwork-web-design-master` 的视觉、排版和交互验收融合为同一执行入口，服务清晰的产品选择与询盘路径。
 
@@ -37,7 +37,9 @@ python3 scripts/orchestrator.py --project /path/company-project
 python3 scripts/orchestrator.py --project /path/company-project --release
 ```
 
-每次构建返回新的静态目录。只发布这个目录，不能上传整个含 `private/` 的企业项目。`--release` 生成并检查本地发布候选，不自动部署，不代表已收录。
+每次构建返回新的静态目录和 `deployment_directory` 防护发布包。默认用发布包部署其引用的静态资产，不能上传整个含 `private/` 的企业项目。`--release` 生成并检查本地发布候选，不自动部署，不代表已收录或线上防护已启用。
+
+V2.2 对所有行业默认生成 Cloudflare Workers 边缘防护：仅访问本次公开文件、匿名读取限流、询盘独立限流/请求边界、防iframe镜像嵌套和版权标识。保持公开正文、图片及搜索文件正常可抓取，不禁右键、不隐藏正文、不按自报爬虫名放行；公开内容无法彻底禁止复制。其他主机按现有栈落实同等防护，不能把静态上传当防护部署。运行范围、正规爬虫、询盘后端与实测要求见 [默认防护契约](references/site-protection.md)。
 
 ## 深度融合后的能力
 
@@ -107,10 +109,13 @@ python3 tests/check_pipeline.py
 python3 tests/check_validator.py
 node tests/check_estimator.mjs
 node tests/check_inquiry.mjs
+node tests/check_protection.mjs
 python3 scripts/design_math.py self-test
 ```
 
 Node 18+ 用于估算器和询盘组件测试。检查覆盖 20 行业生成、事实撤销、内部资料隔离、HTML转义、资产/域名边界、真实链接、草稿/发布状态以及装柜计算。
+
+防护检查覆盖所有行业默认配置生成、公开内容一致、私有路径隔离、UA伪装、限流及故障恢复策略、询盘请求边界。V2.2另用 Wrangler 4.135.0 在本地 workerd 验证真实静态响应和原生限流；这不代表云端WAF或客户域名已验收。
 
 新增询盘检查覆盖产品预填、邮件草稿、HTTP实际回执、错误恢复、防重复和超时；网络只使用mock，未向第三方发送真实询盘。这些检查只证明对应本地行为；浏览器审查、公网HTTP、表单收件、GSC收录、AI引用与转化必须在实际企业项目另外运行。完整变更与迁移说明见 [融合记录](references/fusion-v2.md)。
 

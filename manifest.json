@@ -1,7 +1,7 @@
 {
   "name": "b2b-global-brand-site-master",
-  "version": "2.1.0",
-  "description": "从Logo与简介到行业品牌网站：20行业、21模块事实库、品牌设计与多语言排版、数字资产、可用询盘组件及SEO/GEO验收。",
+  "version": "2.2.0",
+  "description": "从Logo与简介到行业品牌网站：20行业、21模块事实库、品牌设计与多语言排版、数字资产、可用询盘组件及SEO/GEO验收。 默认边缘防抓取滥用、防镜像嵌套与抓取共存验收。",
   "author": "cnproduct",
   "license": "MIT",
   "entry": "scripts/orchestrator.py",

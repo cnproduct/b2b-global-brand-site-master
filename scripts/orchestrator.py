@@ -67,8 +67,10 @@ def main():
             f'Local static checks: {report["status"]}\n\nSite directory: {destination}\n\n'
             'Mode: '+('reviewed release candidate' if args.release else 'noindex draft')+'\n\n'
             'Browser review, HTTP deployment, inquiry receipt, indexing, AI visibility and conversion: NOT_RUN.\n'
-            'Only deploy the reported site directory, never the whole project.\n',encoding='utf-8')
+            f'Protection configuration: GENERATED. Runtime protection: NOT_RUN.\nDeployment bundle: {state["deployment_directory"]}\n'
+            'Use the edge bundle to deploy only its referenced site assets. Static-only uploads omit runtime protection. Never upload the whole project.\n',encoding='utf-8')
         print(json.dumps({'site_directory':str(destination),'local_checks':report['status'],
+                          'deployment_directory':state['deployment_directory'],'protection_runtime':'NOT_RUN',
                           'mode':'release_candidate' if args.release else 'draft','deployed':False},ensure_ascii=False,indent=2))
         return 0 if report['status']=='PASS' else 1
     except (OSError,ValueError,TypeError,KeyError) as error:

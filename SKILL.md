@@ -1,9 +1,9 @@
 ---
 name: b2b-global-brand-site-master
-description: 从公司 Logo、简介和可用资料构建外贸 B2B 独立站，按行业采购逻辑生成品牌规范、证据型企业知识库、数字资产、页面内容与代码，并执行 SEO/GEO、询盘和上线验收。适用于制造商、贸易商及 OEM/ODM 企业新站或改版；支持少资料启动与现有知识库融合。
+description: 从公司 Logo、简介和可用资料构建外贸 B2B 独立站，生成品牌规范、证据型知识库、数字资产与行业页面，默认加入兼顾 SEO/GEO 的防抓取滥用和防镜像嵌套配置，并执行询盘与上线验收。适用于制造商、贸易商及 OEM/ODM 企业新站或改版；支持少资料启动与现有知识库融合。
 ---
 
-# B2B Global Brand Site Master · V2.1 设计与询盘融合版
+# B2B Global Brand Site Master · V2.2 默认站点防护版
 
 将企业事实转化为买家能理解、能比较、能询盘，搜索系统能发现的品牌网站。交付实际文件与可运行的网站；用户只要方案时停在方案。不是给三个旧 Skill 排队执行，也不把生成字数当成企业专业程度。
 
@@ -22,6 +22,7 @@ description: 从公司 Logo、简介和可用资料构建外贸 B2B 独立站，
 2. 摄取事实及构建知识库：读 [知识与资产契约](references/knowledge-assets.md)。复用所附 RenWork V4 Schema 和 00–20 模块，不另建不兼容知识卡体系。
 3. 设计与实现：读 [品牌及页面模板](references/site-blueprints.md) 和 [网页设计、排版与交互验收](references/web-design.md)，用行业配置决定页面顺序、参数表、素材需求与询盘字段。已融合 renwork-web-design-master 的可用方法和数学工具，无需另装该 Skill。
 4. SEO/GEO 及上线：读 [搜索与发布验收](references/search-release.md)。已按 2026-09-27 官方资料复核，另读 [最新平台核验](references/search-current.md)；在下一次实际建站时检查相关官方更新。
+   每次新站/改版都读 [默认站点防护](references/site-protection.md)，落实到实际托管层；不等待用户再次提出防爬要求。
 5. 理解融合取舍或更新 Skill：读 [研究依据与融合差异](references/research.md) 及 [锁定来源](references/sources.json) 和 [V2 融合差异](references/fusion-v2.md)。
 
 ## 不可丢失的约束
@@ -62,6 +63,8 @@ description: 从公司 Logo、简介和可用资料构建外贸 B2B 独立站，
 
 ## 一条命令与可编辑内容模型
 
+所有本Skill建设的站点默认包含：公开文件白名单、恶意高频访问限流、询盘独立防滥用、防iframe镜像嵌套、版权/来源线索及私有资料隔离。共享生成器每次生成 Cloudflare Workers 防护发布包；其他托管环境由 Agent 在现有栈实现同等目标。正常买家与搜索/AI系统读取同一公开正文，不用禁右键、正文混淆、全站验证码或伪造UA豁免。公开网页不能保证禁止复制。具体运行能力、套餐限制、误伤调优与验收见 [防护契约](references/site-protection.md)。
+
 以本 Skill 目录为工作目录，先创建有独立私有资料目录的项目：
 
 ```bash
@@ -81,11 +84,12 @@ python3 tests/check_pipeline.py
 python3 tests/check_validator.py
 node tests/check_estimator.mjs
 node tests/check_inquiry.mjs
+node tests/check_protection.mjs
 python3 scripts/design_math.py contrast '#334155' '#ffffff'
 python3 scripts/design_math.py fluid 36 64 360 1440
 ```
 
-每次构建创建全新 site 输出目录，只有该目录可以部署。`--release` 是本地发布候选校验，不是授权部署，也不代表收录成功。未核实的企业身份、联系方式、事实卡、页面/素材会阻止发布候选构建；资料不足仍可继续生成草稿和其它成果。
+每次构建创建全新 site 输出目录与独立 deployment_directory；默认通过防护发布包部署其引用的静态目录，不能上传整个私有项目。仅上传静态文件会遗漏运行时防护。`--release` 是本地发布候选校验，不是授权部署，也不代表收录成功或防护已启用。未核实的企业身份、联系方式、事实卡、页面/素材会阻止发布候选构建；资料不足仍可继续生成草稿和其它成果。
 
 ## 可选采购交互
 
@@ -94,6 +98,8 @@ python3 scripts/design_math.py fluid 36 64 360 1440
 生成器内置渐进增强 RFQ：默认邮件草稿模式，实际 HTTP 接收服务采用显式配置及批准。服务端仍需做校验、反垃圾和接收记录；文件上传只有私有存储与权限齐备时另行实现。接通后再记录获准的发送测试和最终收件。WebMCP 按最新支持状态、业务需要和授权选择，作为可选交互模块，不是 SEO 验收门槛。见 [采购组件](references/procurement-components.md)。
 
 ## 验收与交付
+
+站点防护是默认发布验收项：配置已生成、边缘已部署、实际拦截/限流、正规抓取可达分别记录。`private/protection-status.json` 随构建重置，线上未测不得PASS；不要把robots当访问权限，不因防复制自动禁止全部AI访问。没有部署权限则完成可审查发布包并明确线上状态NOT_RUN。
 
 按 [搜索与发布验收](references/search-release.md) 给出项目实测结果。新页面检查320/390/768/1440宽度、目标语言长文本、200%文字放大、键盘与询盘错误/成功路径；检查真实行业字段、事实投影、内链、canonical、Schema。对比度工具只验证给定不透明色值，浏览器未测则写未测。涉及价格、换算、筛选等逻辑时留最小可运行检查。
 
