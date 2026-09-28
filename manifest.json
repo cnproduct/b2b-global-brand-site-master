@@ -1,7 +1,7 @@
 {
   "name": "b2b-global-brand-site-master",
-  "version": "2.0.0",
-  "description": "Logo与简介驱动的行业B2B建站：20行业蓝图、21模块事实库、品牌与资产治理、静态构建和证据型SEO/GEO验收。",
+  "version": "2.1.0",
+  "description": "从Logo与简介到行业品牌网站：20行业、21模块事实库、品牌设计与多语言排版、数字资产、可用询盘组件及SEO/GEO验收。",
   "author": "cnproduct",
   "license": "MIT",
   "entry": "scripts/orchestrator.py",
@@ -10,7 +10,8 @@
     "sitekit.py",
     "extract_brand_dna.py",
     "site_compiler.py",
-    "validate_site.py"
+    "validate_site.py",
+    "design_math.py"
   ],
   "standards_checked_at": "2026-09-27"
 }

@@ -1,8 +1,8 @@
-# B2B Global Brand Site Master · V2
+# B2B Global Brand Site Master · V2.1
 
-从简单 Logo、企业简介和现有资料，持续完成外贸 B2B 品牌、企业知识库、数字资产与专业独立站。V2 将 `renwork-industry-site-master` 的事实治理和行业采购蓝图，融合进本仓库的品牌取色、静态网站生成、采购交互和执行入口。
+从简单 Logo、企业简介和现有资料，持续完成外贸 B2B 品牌、企业知识库、数字资产与专业独立站。V2.1 将 `renwork-industry-site-master` 的事实治理、行业采购蓝图与 `renwork-web-design-master` 的视觉、排版和交互验收融合为同一执行入口，服务清晰的产品选择与询盘路径。
 
-**20 类行业蓝图 · 10 类页面模板 · 21 模块知识体系 · 同源事实驱动 HTML / Schema / 搜索文件。**
+**20 类行业蓝图 · 10 类页面模板 · 21 模块知识体系 · 四种采购版式 · 可用 RFQ 组件 · 同源事实驱动 HTML / Schema / 搜索文件。**
 
 只有少量资料也能开始：自动生成可运行草稿和资料缺口，再由 Agent 完成研究、品牌设计、真实文案与页面。工厂、认证、参数、客户、价格等未知信息不会从行业模板变成企业事实。生成器不是完整 CMS；Skill 指导 Agent 完成企业项目所需的功能与交付。
 
@@ -30,7 +30,7 @@ python3 scripts/orchestrator.py --name "Example Company" \
 python3 scripts/sitekit.py industries
 ```
 
-Logo 可用 `--logo /path/logo.png` 提供；域名、邮箱、主色可选。初始六页是 **noindex 草稿**，不是成品。Agent 按行业资料编辑 `content/site.json`、核实知识卡并补齐页面。详细字段、素材批准、生成器范围及旧版迁移见 [运行契约](references/runtime.md)。
+Logo 可用 `--logo /path/logo.png` 提供；域名、邮箱、主色可选。初始六页是 **noindex 草稿**，同时生成可编辑 `DESIGN.md`、字体/色彩/字阶 token 和可继续扩展的行业版式；完整品牌和内容由 Agent 根据企业资料完成。Agent 按行业资料编辑 `content/site.json`、核实知识卡并补齐页面。详细字段、素材批准、生成器范围及旧版迁移见 [运行契约](references/runtime.md)。
 
 ```bash
 python3 scripts/orchestrator.py --project /path/company-project
@@ -43,16 +43,22 @@ python3 scripts/orchestrator.py --project /path/company-project --release
 
 | 工作层 | 内容与执行机制 |
 |---|---|
-| 品牌系统 | 定位、语气、Logo规则、颜色/字体、网页设计规范；取色来源与局部对比度可追溯 |
+| 品牌与网页设计 | DESIGN.md、行业视觉、Logo/颜色来源、语义token、真实端点流式字阶、中英/日韩字体和RTL布局基础；浏览器验证阅读与操作 |
 | 企业知识 | 复用 RenWork V4 七状态、00–20 模块、来源/时效/敏感度；同一事实出口服务所有页面 |
 | 行业与内容 | 买家角色、决策路径、参数字段、证据要求、页面顺序、RFQ字段和缺资料策略 |
 | 数字资产 | 原始素材、许可、哈希、AI来源、事实关联与公开范围；仅复制本次页面引用的获准文件 |
-| 网站实现 | 原生静态HTML、四种采购版式、语义规格表、真实目录路由；按任务扩展产品/应用/技术等页面 |
-| 采购转化 | 基础真实邮箱联系；完整RFQ按实际后端接通；可选装柜容量下界估算，考虑体积与重量 |
+| 网站实现 | 四种差异化采购版式、获准首屏媒体、产品/资源链接区块、语义规格表、当前导航与区块锚点；产品CTA携带询盘上下文 |
+| 采购转化 | 默认整理邮件草稿；已配置服务用HTTP RFQ，持久标签、字段错误、失败保留与重试、请求防重和实际回执；可选装柜工具 |
 | SEO / GEO | 页面意图、内链、canonical、robots、sitemap、同源结构化数据；llms.txt / WebMCP按需使用 |
 | 质量与运营 | 可执行文件/链接/锚点/索引状态检查；搜索展示、AI引用、访问、询盘分别验收 |
 
-不再生成默认证书、虚构工程师、假手机号、无后端表单、假价格，或重复文本凑 `llms.txt` 长度。不存在“100 分即保证被 AI 引用”的验收。
+不生成默认证书、虚构工程师、假手机号、假价格，或重复文本凑 `llms.txt` 长度。无接收服务时明确使用邮件草稿模式，不能显示已发送或已收件。不存在“100 分即保证被 AI 引用”的验收。
+
+## 网页设计与询盘如何协同
+
+网页设计已落实到共享生成器：有素材时用获准图片建立首屏重点，无素材时用产品和资源导航；参数与条件可直接阅读，内链把买家带到实际产品页，产品上下文继续带入询盘。默认使用本地/系统字体，无新增前端框架、字体服务或跟踪脚本。
+
+设计目标是降低理解和提交需求的阻力。实际获客仍依赖真实产品、内容、流量、接收服务和销售跟进；完整RFQ后端、收件和有效询盘须按项目验证。工具不会承诺一键获得询盘。上游设计入口存在重复拼接，融合时采用经审读的方法和参考文件，未继承固定风格禁令或整站无障碍保证。
 
 ## 行业模板
 
@@ -81,7 +87,7 @@ python3 scripts/orchestrator.py --project /path/company-project --release
 | `appliances` | 家用电器与商用厨电 | 用途→容量→电气条件→安装→维护 |
 | `pet-products` | 宠物用品与宠物食品 | 动物与用途→尺寸/配料→材料/储存→安全→包装 |
 
-完整字段见 [行业数据](assets/industries.json)；10 类页面和品牌交付见 [页面蓝图](references/site-blueprints.md)。
+完整字段见 [行业数据](assets/industries.json)；10 类页面和品牌交付见 [页面蓝图](references/site-blueprints.md)；视觉、排版和操作验收见 [网页设计规范](references/web-design.md)。
 
 ## SEO / GEO 的更新依据
 
@@ -100,10 +106,12 @@ python3 scripts/orchestrator.py --project /path/company-project --release
 python3 tests/check_pipeline.py
 python3 tests/check_validator.py
 node tests/check_estimator.mjs
+node tests/check_inquiry.mjs
+python3 scripts/design_math.py self-test
 ```
 
-Node 18+ 用于估算器测试。检查覆盖 20 行业生成、事实撤销、内部资料隔离、HTML转义、资产/域名边界、真实链接、草稿/发布状态以及装柜计算。
+Node 18+ 用于估算器和询盘组件测试。检查覆盖 20 行业生成、事实撤销、内部资料隔离、HTML转义、资产/域名边界、真实链接、草稿/发布状态以及装柜计算。
 
-这些检查只证明对应本地行为；浏览器审查、公网HTTP、表单收件、GSC收录、AI引用与转化必须在实际企业项目另外运行。完整变更与迁移说明见 [V2融合记录](references/fusion-v2.md)。
+新增询盘检查覆盖产品预填、邮件草稿、HTTP实际回执、错误恢复、防重复和超时；网络只使用mock，未向第三方发送真实询盘。这些检查只证明对应本地行为；浏览器审查、公网HTTP、表单收件、GSC收录、AI引用与转化必须在实际企业项目另外运行。完整变更与迁移说明见 [融合记录](references/fusion-v2.md)。
 
 [MIT License](LICENSE) · [第三方许可](THIRD_PARTY_NOTICES.md)。未复制无明确许可的 SEO 优化器源码。

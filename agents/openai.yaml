@@ -1,4 +1,4 @@
 interface:
-  display_name: "B2B 品牌出海建站总控 V2"
+  display_name: "B2B 品牌出海建站总控 V2.1"
   short_description: "融合品牌、20行业模板、企业知识库、数字资产及当前 SEO/GEO 规范的建站流程"
   default_prompt: "使用 $b2b-global-brand-site-master，根据我的 Logo 与公司简介，完成事实核验、行业品牌设计、企业知识库、数字资产和可运行的 B2B 独立站，并报告真实验收结果。"
