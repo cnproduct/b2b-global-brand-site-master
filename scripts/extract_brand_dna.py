@@ -5,6 +5,7 @@ import json
 import re
 from collections import Counter
 from pathlib import Path
+from design_math import contrast, fluid_css
 
 NEUTRAL = '#334155'
 
@@ -24,16 +25,8 @@ def rgb_to_hex(r, g, b):
     return f'#{r:02X}{g:02X}{b:02X}'
 
 
-def relative_luminance(r, g, b):
-    def channel(c):
-        value = c / 255
-        return value / 12.92 if value <= 0.04045 else ((value + 0.055) / 1.055) ** 2.4
-    return sum(weight * channel(value) for weight, value in zip((0.2126, 0.7152, 0.0722), (r, g, b)))
-
-
 def contrast_ratio(rgb1, rgb2):
-    a, b = sorted((relative_luminance(*rgb1), relative_luminance(*rgb2)))
-    return (b + 0.05) / (a + 0.05)
+    return contrast(rgb_to_hex(*rgb1), rgb_to_hex(*rgb2))
 
 
 def _text_color(background):
@@ -121,7 +114,7 @@ def extract_colors_from_image(image_path):
     return color, color
 
 
-def write_tokens_css(tokens, path):
+def write_tokens_css(tokens, path, language='en', layout='engineering'):
     colors = tokens['colors']
     # Validate every color again at the CSS boundary; do not interpolate brand names or freeform typography.
     for key in ('primary', 'accent', 'surface_bg', 'surface_card', 'border', 'text_primary',
@@ -136,10 +129,31 @@ def write_tokens_css(tokens, path):
     lines = ['/* Suggested CSS variables; site accessibility requires separate verification. */', ':root {']
     lines += [f'  --{name}: {rgb_to_hex(*hex_to_rgb(colors[key]))};' for name, key in names.items()]
     lines += [f"  --brand-{name}-rgb: {', '.join(map(str, hex_to_rgb(colors[name])))};" for name in ('primary', 'accent')]
+    language = language.lower()
+    fallback = 'system-ui, -apple-system, "Segoe UI", sans-serif'
+    if language.startswith(('zh-hant', 'zh-tw', 'zh-hk')):
+        fallback = 'system-ui, "PingFang TC", "Noto Sans CJK TC", "Microsoft JhengHei", sans-serif'
+    elif language.startswith('zh'):
+        fallback = 'system-ui, "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif'
+    elif language.startswith('ja'):
+        fallback = 'system-ui, "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP", "Yu Gothic", sans-serif'
+    elif language.startswith('ko'):
+        fallback = 'system-ui, "Apple SD Gothic Neo", "Noto Sans CJK KR", "Malgun Gothic", sans-serif'
+    display = 'Georgia, "Times New Roman", serif' if layout == 'materials' and language.split('-')[0] in ('en','de','fr','es','it','pt') else fallback
+    tokens['typography'].update(font_display=display, font_body=fallback,
+        display_size=fluid_css(36,64,360,1440,16), section_size=fluid_css(26,36,360,1440,16),
+        root_assumption_px=16, font_loading='System/local fallbacks only; no font downloads')
     lines += [
-        '  --font-display: system-ui, -apple-system, sans-serif;',
-        '  --font-body: system-ui, -apple-system, sans-serif;',
+        f'  --font-display: {display};',
+        f'  --font-body: {fallback};',
         '  --font-mono: ui-monospace, monospace;',
+        f'  --text-display: {tokens["typography"]["display_size"]};',
+        f'  --text-section: {tokens["typography"]["section_size"]};',
+        '  --text-small: .875rem; --text-body: 1rem;',
+        '  --space-1: .5rem; --space-2: 1rem; --space-3: 1.5rem; --space-4: 2rem;',
+        '  --section-space: clamp(2.5rem, 5vw, 5rem);',
+        '  --content-width: 75rem; --reading-width: 65ch;',
+        '  --focus-color: #0F172A; --control-border: #64748B;',
         '  --radius-sm: 4px; --radius-md: 6px; --radius-lg: 10px; --radius-full: 9999px;',
         '  --shadow-bento: 0 1px 3px rgba(0,0,0,.05), 0 0 0 1px var(--brand-border);',
         '  --shadow-hover: 0 10px 25px -5px rgba(0,0,0,.08), 0 0 0 1px var(--brand-border);',
@@ -182,8 +196,8 @@ def main():
     tokens = build_tokens(args.logo_path, args.brand_name, args.primary)
     out = Path(args.output_dir)
     out.mkdir(parents=True, exist_ok=True)
-    (out / 'brand_tokens.json').write_text(json.dumps(tokens, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     write_tokens_css(tokens, out / 'tokens.css')
+    (out / 'brand_tokens.json').write_text(json.dumps(tokens, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(f"Brand palette: {tokens['color_source']}. {tokens['color_note']}")
 
 

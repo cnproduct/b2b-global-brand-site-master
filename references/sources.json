@@ -1,6 +1,6 @@
 {
   "checked_at": "2026-09-27",
-  "coverage": "5 repositories and the installed renwork-industry-site-master baseline; primary documentation and local skill references as listed. Not an exhaustive web survey.",
+  "coverage": "6 repositories plus installed Skill baselines and primary documentation listed below; not an exhaustive web survey.",
   "sources": [
     {
       "id": "b2b-global-brand-site-master",
@@ -326,6 +326,49 @@
       "checked_at": "2026-09-27",
       "use": "实施时核验API兼容性",
       "access": "web_search_or_page_read"
+    },
+    {
+      "id": "renwork-web-design-master",
+      "type": "repository",
+      "url": "https://github.com/cnproduct/renwork-web-design-master",
+      "commit": "457e9699167488e316d6e28400af2fed253283f7",
+      "license": "MIT",
+      "files_reviewed": [
+        "SKILL.md",
+        "references/design-layout.md",
+        "references/typography.md",
+        "references/verification.md",
+        "references/sources.md",
+        "assets/foundations.css",
+        "scripts/design_math.py",
+        "LICENSE"
+      ],
+      "use": "融合设计/跨语言排版/视觉验收；复用数学工具并统一颜色公式，按原token改编CSS；修正入口文件重复拼接与冲突硬规则，未整份复制SKILL",
+      "checked_at": "2026-09-27"
+    },
+    {
+      "id": "wcag-reflow",
+      "type": "primary_web",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+      "use": "320CSSpx重排及必要二维内容例外",
+      "checked_at": "2026-09-27",
+      "access": "web_page_read"
+    },
+    {
+      "id": "wcag-resize",
+      "type": "primary_web",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html",
+      "use": "200%文字放大实测与CSS公式边界",
+      "checked_at": "2026-09-27",
+      "access": "web_page_read"
+    },
+    {
+      "id": "wcag-target-size",
+      "type": "primary_web",
+      "url": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "use": "24px AA及例外；44px为增强设计目标",
+      "checked_at": "2026-09-27",
+      "access": "web_page_read"
     }
   ]
 }

@@ -3,7 +3,7 @@ name: b2b-global-brand-site-master
 description: 从公司 Logo、简介和可用资料构建外贸 B2B 独立站，按行业采购逻辑生成品牌规范、证据型企业知识库、数字资产、页面内容与代码，并执行 SEO/GEO、询盘和上线验收。适用于制造商、贸易商及 OEM/ODM 企业新站或改版；支持少资料启动与现有知识库融合。
 ---
 
-# B2B Global Brand Site Master · V2 深度融合版
+# B2B Global Brand Site Master · V2.1 设计与询盘融合版
 
 将企业事实转化为买家能理解、能比较、能询盘，搜索系统能发现的品牌网站。交付实际文件与可运行的网站；用户只要方案时停在方案。不是给三个旧 Skill 排队执行，也不把生成字数当成企业专业程度。
 
@@ -20,7 +20,7 @@ description: 从公司 Logo、简介和可用资料构建外贸 B2B 独立站，
 
 1. 启动及选择行业：读 [行业选择与交付规则](references/industry-routing.md)，从 [20 行业配置](assets/industries.json) 只取匹配项。混合企业选择主行业并合并必要字段；未覆盖行业按相同结构新增当前项目配置。
 2. 摄取事实及构建知识库：读 [知识与资产契约](references/knowledge-assets.md)。复用所附 RenWork V4 Schema 和 00–20 模块，不另建不兼容知识卡体系。
-3. 设计与实现：读 [品牌及页面模板](references/site-blueprints.md)，用行业配置决定页面顺序、参数表、素材需求与询盘字段。
+3. 设计与实现：读 [品牌及页面模板](references/site-blueprints.md) 和 [网页设计、排版与交互验收](references/web-design.md)，用行业配置决定页面顺序、参数表、素材需求与询盘字段。已融合 renwork-web-design-master 的可用方法和数学工具，无需另装该 Skill。
 4. SEO/GEO 及上线：读 [搜索与发布验收](references/search-release.md)。已按 2026-09-27 官方资料复核，另读 [最新平台核验](references/search-current.md)；在下一次实际建站时检查相关官方更新。
 5. 理解融合取舍或更新 Skill：读 [研究依据与融合差异](references/research.md) 及 [锁定来源](references/sources.json) 和 [V2 融合差异](references/fusion-v2.md)。
 
@@ -50,6 +50,16 @@ description: 从公司 Logo、简介和可用资料构建外贸 B2B 独立站，
 
 先产出公司画像、品牌方向、首页+代表产品页+询盘流程，再将同一规范扩展到完整站点。不要把这一顺序当作只交付三页的范围缩减。完整网站的页数由真实产品、证据、采购问题决定。
 
+## 设计与询盘必须贯通
+
+从采购任务选择信息密度和视觉重点：工程选型突出参数/图纸，材料型突出获准材质图与样品路径，OEM型突出定制流程，证据型突出适用边界与技术资料。不要把同一页换色称为行业设计。用一个清晰的视觉重点、语义字阶和节奏提升辨识度，不靠伪造数据或装饰堆叠。
+
+初次构建生成可编辑 `DESIGN.md` 和按语言/版式选择的字体、流式字阶、颜色及间距 token；已有设计文档不覆盖。Agent 将建议完善为实际品牌方向并实现对应页面。获准首屏图片使用 `hero_asset_id`；无图片时用清晰的产品/资源导航构图，不用示意工厂填空。
+
+首页→分类/产品→规格/证据→询盘形成真实路径。页面内的 `links` 区块链接实际页面，产品 CTA 将产品标题带到询盘草稿。关键 CTA 放在可理解的内容旁，移动端仍可触达；不堆叠重复按钮或自动弹窗。
+
+询盘分两种真实模式：默认 `email_draft` 帮买家整理需求并打开邮件草稿，需买家自行发送；已接入并批准真实服务后使用 `http`，有标签、字段错误、请求中防重、失败保留输入、回执和重试。HTTP 成功只证明接口接受，收件箱/CRM入库另验。没有服务配置时不得显示“自动收到询盘”。
+
 ## 一条命令与可编辑内容模型
 
 以本 Skill 目录为工作目录，先创建有独立私有资料目录的项目：
@@ -70,6 +80,9 @@ python3 scripts/validate_site.py /path/site-output --release --domain https://ex
 python3 tests/check_pipeline.py
 python3 tests/check_validator.py
 node tests/check_estimator.mjs
+node tests/check_inquiry.mjs
+python3 scripts/design_math.py contrast '#334155' '#ffffff'
+python3 scripts/design_math.py fluid 36 64 360 1440
 ```
 
 每次构建创建全新 site 输出目录，只有该目录可以部署。`--release` 是本地发布候选校验，不是授权部署，也不代表收录成功。未核实的企业身份、联系方式、事实卡、页面/素材会阻止发布候选构建；资料不足仍可继续生成草稿和其它成果。
@@ -78,10 +91,12 @@ node tests/check_estimator.mjs
 
 保留上游的规格对比、Good/Better/Best 方案、移动联系入口和装柜工具思路，但按行业及真实数据选择。方案分层不预设价格/MOQ/交期；装柜工具没有假包规和默认运费，计算体积与重量约束的容量下界，不能叫到岸价或最优装箱方案。移动 CTA 只连真实联系方式和实际文件。
 
-Agent 可在已批准的表单接收服务上实现原生 RFQ、上传、反垃圾、服务端校验和失败重试；基线生成器只提供邮箱联系，不附无后端的假成功表单。接收服务接通后再记录发送测试和最终收件。WebMCP 按最新支持状态、业务需要和授权选择，作为可选交互模块，不是 SEO 验收门槛。见 [采购组件](references/procurement-components.md)。
+生成器内置渐进增强 RFQ：默认邮件草稿模式，实际 HTTP 接收服务采用显式配置及批准。服务端仍需做校验、反垃圾和接收记录；文件上传只有私有存储与权限齐备时另行实现。接通后再记录获准的发送测试和最终收件。WebMCP 按最新支持状态、业务需要和授权选择，作为可选交互模块，不是 SEO 验收门槛。见 [采购组件](references/procurement-components.md)。
 
 ## 验收与交付
 
-按 [搜索与发布验收](references/search-release.md) 给出项目实测结果。至少验证真实行业字段和事实投影、移动端浏览与键盘操作、内部链接、canonical、Schema 与可见内容、询盘错误/成功路径。涉及价格、换算、筛选等逻辑时留最小可运行检查。
+按 [搜索与发布验收](references/search-release.md) 给出项目实测结果。新页面检查320/390/768/1440宽度、目标语言长文本、200%文字放大、键盘与询盘错误/成功路径；检查真实行业字段、事实投影、内链、canonical、Schema。对比度工具只验证给定不透明色值，浏览器未测则写未测。涉及价格、换算、筛选等逻辑时留最小可运行检查。
+
+以有效询盘为业务目标，分开记录CTA点击、开始填写、校验失败、接口接受、最终入库和有效询盘；只有接入实际分析且符合站点隐私配置才记录事件，不默认发送任何跟踪数据。不以漂亮页面或本地测试保证流量、AI引用和询盘数量。
 
 上线若已有明确授权则继续；若缺域名、收件目标或发布授权，完成本地可审查成果后只询问阻塞的具体事项。没有 GSC/Bing/分析平台权限时交付操作清单并记 NOT_RUN，不能宣称收录或 GEO 获客成功。

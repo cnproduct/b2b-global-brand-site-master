@@ -1,14 +1,15 @@
-# V2 运行契约与 V1 迁移
+# V2.1 运行契约与迁移
 
 ## 环境与初始化
 
-Python 3.10+；运行时只用标准库，Pillow 为 Logo 位图取色的可选已有依赖。未安装或 SVG 无法解析时明确记 neutral_fallback，不静默声称已提取。Node 18+ 仅用于装柜模块测试。
+Python 3.10+；运行时只用标准库，Pillow 为 Logo 位图取色的可选已有依赖。未安装或 SVG 无法解析时明确记 neutral_fallback，不静默声称已提取。Node 18+ 仅用于装柜与询盘模块测试。
 
 `orchestrator.py --name ... --intro-file ... --industry ... --logo ... --out ...` 初始化新项目并编译草稿。也支持 `--intro` 字符串；logo/domain/email 可缺省，不能借用示例值。`--brand-color '#163D48'` 可指定经审查的颜色。未知行业报错，Agent 应先识别行业或在资料中扩展配置。
 
 ```
 company-project/
   project.json                  # 身份、tenant、域名、联系信息和批准状态
+  DESIGN.md                     # 首次生成的设计建议，后续不覆盖
   industry.json                 # 行业采购建议，不是公司事实
   private/
     raw/                        # Logo/简介原件，绝不整体公开
@@ -71,7 +72,7 @@ python3 -m http.server 8000 --bind 127.0.0.1 --directory /path/company-project/b
 - `facts` 直接输出卡的 title/conclusion/conditions，`specifications` 用相同字段生成可横滑的语义表格。不会从模板补参数。
 - `editorial` 是纯文本，全部 HTML 转义。Agent 根据买家问题编写有用解释；如果涉及企业事实，同样改用 claim 引用或在人工审核时核对。布尔批准标记本身不是真实性证明。
 - title、description、heading、导航文字也属于审核对象，不能在未挂 claim 的标题里塞入“认证”“第一”“免费”等无依据承诺。
-- 基线编译器只自动提供保守 WebPage/Organization JSON-LD。需要 Product/Article/BreadcrumbList、hreflang、产品过滤、FAQ、视频、CRM表单时由 Agent 按页面模板与真实数据实现和测试，不能将基线编译器描述为完整 CMS 或所有 Schema 自动完成。
+- 基线编译器只自动提供保守 WebPage/Organization JSON-LD。需要 Product/Article/BreadcrumbList、hreflang、产品过滤、FAQ、视频、CRM接收后端时由 Agent 按页面模板与真实数据实现和测试，不能将基线编译器描述为完整 CMS 或所有 Schema 自动完成。
 - 10 类页面蓝图指导完整内容实现；六页默认稿仅是启动阶段，Agent 应补齐任务所需的真实页面，而不是机械维持六页。
 
 ## 事实、素材与发布候选
@@ -91,6 +92,37 @@ python3 scripts/orchestrator.py --project /path/company-project --release
 `--release` 生成可审查的本地发布候选，并不自动部署、发消息或修改爬虫策略。draft 含 noindex、禁止抓取及空sitemap；release输出规范URL与索引文件。`llms=true` 只生成精简公共导航，不导出完整内部卡。
 
 training_bot_policy 为 unspecified/allow/disallow，仅控制额外 GPTBot 规则；其它平台/Google独立控制由项目检查当前规则后配置。unspecified 不写额外训练bot指令，并不构成禁止训练。搜索目标与训练意愿都应在发布清单写明。
+
+## V2.1 设计与询盘字段
+
+兼容 V2 的 content/site.json；缺省采用邮件草稿模式，不自动接入服务或发信。
+
+- `page.hero_asset_id`：已批准素材台账内的图片 ID，与普通素材共享许可/哈希/事实撤销检查。不能是PDF；首屏图不懒加载。台账可提供真实的正整数 `width/height` 及准确 `alt_text`，不能猜产品尺寸或把图片像素当产品规格。
+- `page.in_navigation`：默认 true。产品详情可设 false，经分类/产品链接进入，避免把全部 SKU 塞入顶栏。当前页有 aria-current。
+- `page.type="product"` 的主要询盘 CTA 带产品标题到联系人页面；只预填空白需求框，不覆盖已输入内容。
+- `links` 区块包含 heading、reviewed_for_public 和 items；item 为 `{"slug":"products/item","label":"Product title","description":"Reviewed description","claim_ids":[]}`。目标必须是本项目真实页面，说明涉及事实时填写 claim_ids，发布前审核。
+- 页面文字、标题和图片保持原公开事实契约。基础界面按钮为英文；生成中文/其他语言网站时 Agent 还需翻译实际 UI 与文案，不把字体/RTL支持称作完整多语言站。
+
+`inquiry` 默认配置：
+
+```json
+{"mode":"email_draft"}
+```
+
+表单整理姓名、邮箱、需求，选填公司/国家/数量。提交按钮仅在增强脚本成功绑定后启用；脚本不可用时保留显式邮箱入口，不把原生表单误投到JSON端点。单击 Open email draft 打开邮件应用，用户自行确认发送；网页没有发送邮件，也不保存表单草稿到浏览器存储。无邮件应用时使用显式邮箱联系。
+
+HTTP 模式只有已部署真实接收端、确认数据使用说明后配置：
+
+```json
+{"mode":"http","endpoint":"/api/inquiry","endpoint_approved":true,
+ "privacy_notice":"Replace with a reviewed notice describing your actual data use and recipient."}
+```
+
+示例路径只是契约示意，包内不提供该后端。端点接受同源路径或明确HTTPS地址，不接受凭据、查询中的密钥、fragment或协议相对地址。前端 JSON POST 为 name/email/requirements/company/quantity/country；后端需实际校验/限流/防垃圾，持久接收后返回 2xx JSON `{"accepted":true,"reference":"actual-record-id"}`，失败返回非2xx。不要用任意200或演示编号冒充真实接收。
+
+跨域接收须正确配置CORS；同源使用实际CSRF策略；浏览器honeypot不是服务端反垃圾系统。前端15秒无确认可重试，但超时并不证明服务端未收到；跨重试/重载去重由真实后端按业务实施。前端仅阻止同一在途请求及已确认后同一载荷重复发送。不要把回执等同于邮件到达。
+
+本地/浏览器测试只向隔离的本地 mock 发送合成内容；真实外部发信或CRM写入须有该操作的授权。按钮尺寸、错误关联、焦点、缩放和中文/RTL检查见 [网页设计验收](web-design.md)。
 
 ## V1 迁移
 

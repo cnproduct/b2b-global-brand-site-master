@@ -14,3 +14,4 @@ jobs:
       - run: python3 tests/check_pipeline.py
       - run: python3 tests/check_validator.py
       - run: node tests/check_estimator.mjs
+      - run: node tests/check_inquiry.mjs

@@ -23,3 +23,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Web design integration (V2.1)
+
+`scripts/design_math.py` is redistributed from cnproduct/renwork-web-design-master, commit 457e9699167488e316d6e28400af2fed253283f7. The CSS foundation and design/typography/verification guidance were adapted into the existing theme and references/web-design.md. Copyright (c) 2026 cnproduct, MIT License; the full notice and permission text is included in the root LICENSE. The upstream SKILL.md was not copied verbatim. No third-party fonts, imagery or externally referenced skill packages are included.
