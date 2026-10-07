@@ -18,7 +18,7 @@ description: 从公司 Logo、简介和可用资料构建外贸 B2B 独立站，
 
 ## 按需读取
 
-1. 启动及选择行业：读 [行业选择与交付规则](references/industry-routing.md)，从 [20 行业配置](assets/industries.json) 只取匹配项。混合企业选择主行业并合并必要字段；未覆盖行业按相同结构新增当前项目配置。
+1. 启动及选择行业：读 [行业选择与交付规则](references/industry-routing.md)，从 [21 行业配置](assets/industries.json) 只取匹配项（含便当盒与餐厨餐饮容器行业）。混合企业选择主行业并合并必要字段；未覆盖行业按相同结构新增当前项目配置。
 2. 摄取事实及构建知识库：读 [知识与资产契约](references/knowledge-assets.md)。复用所附 RenWork V4 Schema 和 00–20 模块，不另建不兼容知识卡体系。
 3. 设计与实现：读 [品牌及页面模板](references/site-blueprints.md) 和 [网页设计、排版与交互验收](references/web-design.md)，用行业配置决定页面顺序、参数表、素材需求与询盘字段。已融合 renwork-web-design-master 的可用方法和数学工具，无需另装该 Skill。
 4. SEO/GEO 及上线：读 [搜索与发布验收](references/search-release.md)。已按 2026-09-27 官方资料复核，另读 [最新平台核验](references/search-current.md)；在下一次实际建站时检查相关官方更新。
@@ -87,6 +87,8 @@ node tests/check_inquiry.mjs
 node tests/check_protection.mjs
 python3 scripts/design_math.py contrast '#334155' '#ffffff'
 python3 scripts/design_math.py fluid 36 64 360 1440
+python3 scripts/design_math.py container --length 540 --width 380 --height 420 --weight 14.5 --pcs 24
+python3 scripts/rfq_daemon.py --port 8012 --emails info@naikegroup.com cnproduct@gmail.com
 ```
 
 每次构建创建全新 site 输出目录与独立 deployment_directory；默认通过防护发布包部署其引用的静态目录，不能上传整个私有项目。仅上传静态文件会遗漏运行时防护。`--release` 是本地发布候选校验，不是授权部署，也不代表收录成功或防护已启用。未核实的企业身份、联系方式、事实卡、页面/素材会阻止发布候选构建；资料不足仍可继续生成草稿和其它成果。

@@ -160,7 +160,7 @@ def run():
         cmd=[sys.executable,str(cli),'--name','CLI Test','--intro','Private intro','--industry','appliances','--out',str(root/'cli')]
         assert subprocess.run(cmd,capture_output=True).returncode==0
         assert subprocess.run(cmd,capture_output=True).returncode!=0
-    print('PASS: 20 industry builds, draft/release checks, no private leakage, escaping, links, revoked facts, invalid origins, overwrite refusal, CLI exit codes')
+    print('PASS: 21 industry builds, draft/release checks, no private leakage, escaping, links, revoked facts, invalid origins, overwrite refusal, CLI exit codes')
 
 
 if __name__=='__main__':run()

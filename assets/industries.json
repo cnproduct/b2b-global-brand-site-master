@@ -1046,6 +1046,61 @@
       "secondary_cta": "View Specifications",
       "red_lines": "不默认宠物食品营养适用性、治病功效、有机、无毒或承重数值；不得套儿童玩具标准",
       "missing_data_fallback": "先区分食品/非食品，收集对应用途与文件"
+    },
+    {
+      "id": "bento",
+      "name": "便当盒与餐厨餐饮容器",
+      "layout": "oem",
+      "buyers": [
+        "海外商超私模采购总监",
+        "亚马逊/DTC便当盒品牌买手",
+        "企业礼品与ESG福利分销商"
+      ],
+      "decision_path": "品类→分格材质→防漏/微波认证→OEM定制→装柜交期",
+      "product_fields": [
+        "材质(PP/SUS304/TA1钛/小麦秸秆)",
+        "容量与分格数",
+        "防漏结构(LSR硅胶二次注塑/卡扣)",
+        "食品接触安全(FDA 21 CFR/LFGB/BPA-Free)",
+        "耐温区间",
+        "微波/洗碗机/烤箱兼容性",
+        "外箱装箱规格与毛重",
+        "阶梯起订量(MOQ)"
+      ],
+      "evidence": [
+        "Disney FAMA / Coca-Cola SGP 验厂编码",
+        "SGS/TÜV FDA/LFGB 食品级测试报告",
+        "-50kPa 真空水下防漏与跌落测试机理",
+        "模具车间与高精注塑机群",
+        "20GP/40GP/40HQ 装柜容量参数表"
+      ],
+      "homepage_sections": [
+        "爆款与核心品类",
+        "防漏工程实验室",
+        "材质与大厂验厂资质",
+        "OEM/ODM模具定制流程",
+        "集装箱装柜计算器",
+        "直接采购RFQ"
+      ],
+      "visual_direction": "Bentgo 级美学与工业重工感融合：动态色彩色板、爆炸图热点、食品级实拍与权威验厂徽章",
+      "rfq_fields": [
+        "目标品类",
+        "材质偏好",
+        "预计起订量",
+        "定制要求(Logo/Pantone/模具)",
+        "目标交期/出货港口"
+      ],
+      "topic_clusters": [
+        "bento box wholesale manufacturer",
+        "leakproof bento box oem factory",
+        "microwave safe stainless steel bento",
+        "custom bento box with logo",
+        "bentgo style kids lunch box supplier"
+      ],
+      "primary_cta": "Request Wholesale Quote",
+      "secondary_cta": "View Leakproof Specs",
+      "red_lines": "不伪造大厂验厂编号、不把非食品级塑料/五金工具盒混充便当盒、不谎报无塑化剂/微波安全",
+      "missing_data_fallback": "无定制参数时提供标准模具现货规格与样品申请草稿"
     }
   ]
 }
