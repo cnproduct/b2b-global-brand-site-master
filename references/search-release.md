@@ -6,7 +6,7 @@
 
 1. 建立搜索意图 → 页面 → 买家下一步矩阵。关键词包括产品/应用/材料/参数/工艺/问题/采购流程，目标国家与语言是研究条件。没有工具数据不得编搜索量和难度。
 2. 每个公开页面有独立价值与可访问 URL；HTML 标题、H1、description、正文、图片替代文本及内部链接表达同一主题。不要塞关键词或机械替换同义词。
-3. 核对 HTTP 状态、HTTPS、redirect/canonical、一致的主域和路径、robots、noindex、sitemap 及重要资源可获取性。保留可工作的 `.html` URL；只有实际迁移收益才改，并建立单跳重定向。
+3. 核对 HTTP 状态、HTTPS、redirect/canonical、一致的主域和路径、robots、noindex、sitemap 及重要资源可获取性。**【Clean URLs 规范】所有新建站点默认去掉 `.html` 后缀（采用 `/about`、`/products`、`/contact` 等美观无扩展名 URL），canonical、sitemap.xml、内链统一不带 `.html`；服务器与边缘（Nginx / Cloudflare）默认配置 301 重定向将历史或直接请求的 `*.html` 自动重定向至 Clean URL，杜绝重复内容与权重分散；老站改版时建立对应的一对一单跳 301 重定向。**
 4. sitemap 只列可索引规范页面；lastmod 反映实质变更，不随每次构建刷新全部日期。不存在的分类/产品不进入 sitemap。
 5. JSON-LD 与可见内容相同。Organization / WebSite / BreadcrumbList 按需使用；Product、Article/TechArticle 只用于对应页面。无真实报价/评价时不造 Offer/AggregateRating 来通过富结果测试。合法 Schema 与符合某类富结果资格是两件事。
 6. sameAs 只链接同一公司实际拥有且已核实的档案，不伪造 Wikipedia/Wikidata/Crunchbase 页面。没有这些档案不妨碍建站。

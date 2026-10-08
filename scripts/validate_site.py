@@ -86,12 +86,23 @@ def https_origin(value):
     return 'https://' + host
 
 
-def page_path(relative):
+def allowed_page_paths(relative):
     if relative.name == 'index.html':
         parent = relative.parent.as_posix()
         path = '/' + ('' if parent == '.' else parent)
-        return quote(path.rstrip('/') + '/', safe='/')
-    return quote('/' + relative.as_posix(), safe='/')
+        return [quote(path.rstrip('/') + '/', safe='/')]
+    paths = []
+    if relative.suffix.lower() in ('.html', '.htm'):
+        parent = relative.parent.as_posix()
+        stem = relative.stem
+        clean_path = '/' + (stem if parent == '.' else f"{parent}/{stem}")
+        paths.append(quote(clean_path, safe='/'))
+    paths.append(quote('/' + relative.as_posix(), safe='/'))
+    return paths
+
+
+def page_path(relative):
+    return allowed_page_paths(relative)[0]
 
 
 def schema_nodes(value):
@@ -185,11 +196,15 @@ def audit_site(site_dir, release=False, domain=None):
             fail('indexing', f'{relative}: release page contains noindex/none.')
         if not release and not any(name == 'robots' and tokens & {'noindex', 'none'} for name, tokens in directives):
             fail('indexing', f'{relative}: draft page requires a robots noindex directive.')
-        expected = domain + page_path(relative) if domain else None
-        if release and expected:
-            expected_urls.add(expected)
-            if page.canonicals != [expected]:
-                fail('indexing', f'{relative}: canonical must be exactly {expected}.')
+        allowed_paths = allowed_page_paths(relative)
+        expected_options = [domain + p for p in allowed_paths] if domain else []
+        matched_canonical = None
+        if release and expected_options:
+            if page.canonicals and len(page.canonicals) == 1 and page.canonicals[0] in expected_options:
+                matched_canonical = page.canonicals[0]
+                expected_urls.add(matched_canonical)
+            else:
+                fail('indexing', f'{relative}: canonical must be one of {expected_options}, got {page.canonicals}.')
         webpage_nodes = []
         for payload in page.schemas:
             try:
@@ -213,8 +228,8 @@ def audit_site(site_dir, release=False, domain=None):
                 fail('schema', f'{relative}: WebPage name/description must match page metadata.')
             if node.get('inLanguage') != (page.languages[0] if page.languages else None):
                 fail('schema', f'{relative}: WebPage inLanguage must match html lang.')
-            if release and expected and node.get('url') != expected:
-                fail('schema', f'{relative}: WebPage url must match the canonical URL.')
+            if release and matched_canonical and node.get('url') != matched_canonical:
+                fail('schema', f'{relative}: WebPage url must match the canonical URL ({matched_canonical}).')
             if description and description not in normalized(''.join(page.main_text)):
                 fail('schema', f'{relative}: schema description must also be present in visible main content.')
     checked_links = 0
@@ -252,6 +267,12 @@ def audit_site(site_dir, release=False, domain=None):
                     target = path.parent / decoded
                 if target.is_dir():
                     target /= 'index.html'
+                elif not target.is_file():
+                    alt = target.parent / target.name.rstrip('/') if target.name else target
+                    if alt.with_suffix('.html').is_file():
+                        target = alt.with_suffix('.html')
+                    elif (target / 'index.html').is_file():
+                        target = target / 'index.html'
                 target = target.resolve()
                 if not target.is_relative_to(root):
                     raise ValueError('path escapes the site directory')

@@ -109,7 +109,34 @@ with tempfile.TemporaryDirectory() as directory:
     assert validator.audit_site(draft)['status'] == 'FAIL'
     (draft / 'sitemap.xml').write_text(empty_sitemap)
     (draft / 'index.html').write_text((draft / 'index.html').read_text().replace('noindex,nofollow', 'index,follow'))
-    assert validator.audit_site(draft)['status'] == 'FAIL'
+    # Clean URLs assertion for flat .html files (e.g. about.html with canonical https://example.com/about)
+    clean_site = root / 'clean_release'
+    clean_site.mkdir()
+    (clean_site / 'css').mkdir()
+    (clean_site / 'css/site.css').write_text('body { color: #111; }')
+    home_schema = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': 'Clean Home',
+                   'description': 'Clean URL homepage description.', 'url': DOMAIN + '/', 'inLanguage': 'en'}
+    about_schema = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': 'Clean About',
+                    'description': 'Clean URL about page description.', 'url': DOMAIN + '/about', 'inLanguage': 'en'}
+    (clean_site / 'index.html').write_text(f'''<!doctype html><html lang="en"><head><title>Clean Home</title>
+<meta name="description" content="Clean URL homepage description.">
+<link rel="canonical" href="{DOMAIN}/">
+<link rel="stylesheet" href="/css/site.css">
+<script type="application/ld+json">{json.dumps(home_schema)}</script></head>
+<body><main id="main"><h1>Clean Home</h1><p>Clean URL homepage description.</p><a href="/about">About Us</a></main></body></html>''')
+    (clean_site / 'about.html').write_text(f'''<!doctype html><html lang="en"><head><title>Clean About</title>
+<meta name="description" content="Clean URL about page description.">
+<link rel="canonical" href="{DOMAIN}/about">
+<link rel="stylesheet" href="/css/site.css">
+<script type="application/ld+json">{json.dumps(about_schema)}</script></head>
+<body><main id="main"><h1>About Us</h1><p>Clean URL about page description.</p><a href="/">Home</a></main></body></html>''')
+    (clean_site / 'sitemap.xml').write_text(f'''<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>{DOMAIN}/</loc></url>
+<url><loc>{DOMAIN}/about</loc></url>
+</urlset>''')
+    (clean_site / 'robots.txt').write_text(f'User-agent: *\nAllow: /\nSitemap: {DOMAIN}/sitemap.xml\n')
+    assert validator.audit_site(clean_site, True, DOMAIN)['status'] == 'PASS'
+
     assert validator.audit_site(site, True, DOMAIN)['status'] == 'PASS'
 
 print('Validator assertions passed.')

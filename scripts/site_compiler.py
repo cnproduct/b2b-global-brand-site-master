@@ -169,6 +169,10 @@ def protection_bundle(project, destination, meta, inquiry):
                 paths.add(directory)
                 if directory != '/':
                     paths.add(directory.rstrip('/'))
+            elif path.endswith('.html') and path != '/index.html':
+                clean = path[:-5]
+                paths.add(clean)
+                paths.add(clean + '/')
     endpoint = inquiry.get('endpoint', '') if inquiry['mode'] == 'http' else ''
     inquiry_path = endpoint if endpoint.startswith('/') else None
     if inquiry_path in paths:
