@@ -103,8 +103,16 @@ python3 scripts/rfq_daemon.py --port 8012 --emails info@naikegroup.com cnproduct
 
 站点防护是默认发布验收项：配置已生成、边缘已部署、实际拦截/限流、正规抓取可达分别记录。`private/protection-status.json` 随构建重置，线上未测不得PASS；不要把robots当访问权限，不因防复制自动禁止全部AI访问。没有部署权限则完成可审查发布包并明确线上状态NOT_RUN。
 
-按 [搜索与发布验收](references/search-release.md) 给出项目实测结果。新页面检查320/390/768/1440宽度、目标语言长文本、200%文字放大、键盘与询盘错误/成功路径；检查真实行业字段、事实投影、内链、canonical、Schema。对比度工具只验证给定不透明色值，浏览器未测则写未测。涉及价格、换算、筛选等逻辑时留最小可运行检查。
+按 [搜索与发布验收](references/search-release.md) 给出项目实测结果。新页面检查320/390/768/1440宽度、目标语言长文本、200%文字放大、键盘与询盘错误/成功路径；检查真实行业字段、事实投影、内链、canonical、Schema。**全站默认执行 Clean URLs 规范（全面剥离 .html 后缀）**：所有站内内链（`href="./"`、`href="products"`）、Canonical、og:url、JSON-LD `@id`/`url` 与 `sitemap.xml` 严禁出现 `.html`；静态部署标配 `vercel.json` (`cleanUrls: true`)、`nginx.conf` (`try_files $uri $uri.html $uri/ =404;`) 或 `.htaccess` 伪静态映射。对比度工具只验证给定不透明色值，浏览器未测则写未测。涉及价格、换算、筛选等逻辑时留最小可运行检查。
 
 以有效询盘为业务目标，分开记录CTA点击、开始填写、校验失败、接口接受、最终入库和有效询盘；只有接入实际分析且符合站点隐私配置才记录事件，不默认发送任何跟踪数据。不以漂亮页面或本地测试保证流量、AI引用和询盘数量。
 
 上线若已有明确授权则继续；若缺域名、收件目标或发布授权，完成本地可审查成果后只询问阻塞的具体事项。没有 GSC/Bing/分析平台权限时交付操作清单并记 NOT_RUN，不能宣称收录或 GEO 获客成功。
+
+## 🌐 全站默认无 HTML 后缀规范 (Clean URLs Policy)
+
+所有生成的独立站与门户，默认禁止在内链或公开 URL 中暴露 `.html`：
+- **内链**：首页用 `href="./"` 或 `href="/"`，二级页用 `href="products"`，详情与工具页用 `href="calculator"`，锚点用 `href="products#kids"`；
+- **SEO/GEO**：Sitemap `<loc>`、`<link rel="canonical">`、`<meta property="og:url">` 与 JSON-LD 结构化数据全量采用 Clean URLs；
+- **服务器适配**：输出包默认装配 `vercel.json`、`nginx.conf` 与 `.htaccess` 无后缀重写配置。
+
