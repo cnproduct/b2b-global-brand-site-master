@@ -266,7 +266,12 @@ def audit_site(site_dir, release=False, domain=None):
                 else:
                     target = path.parent / decoded
                 if target.is_dir():
-                    target /= 'index.html'
+                    if (target / 'index.html').is_file():
+                        target /= 'index.html'
+                    elif target.with_suffix('.html').is_file():
+                        target = target.with_suffix('.html')
+                    else:
+                        target /= 'index.html'
                 elif not target.is_file():
                     alt = target.parent / target.name.rstrip('/') if target.name else target
                     if alt.with_suffix('.html').is_file():
