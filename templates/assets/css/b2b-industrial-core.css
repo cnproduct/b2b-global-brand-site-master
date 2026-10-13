@@ -1,6 +1,9 @@
 /* Editorial B2B foundation. Brand and type roles come from generated tokens.css. */
 *, *::before, *::after { box-sizing: border-box; }
-[hidden] { display: none !important; }
+/* Defensive anti-FOUC & off-canvas isolation */
+[hidden], dialog:not([open]), .modal:not(.active), .drawer:not(.active), .mobile-drawer:not(.active), .compass-modal-overlay:not(.active) {
+  display: none !important;
+}
 body {
   margin: 0;
   background: var(--brand-surface-card, #fff);

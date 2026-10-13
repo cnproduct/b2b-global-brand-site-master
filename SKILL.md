@@ -116,3 +116,19 @@ python3 scripts/rfq_daemon.py --port 8012 --emails info@naikegroup.com cnproduct
 - **SEO/GEO**：Sitemap `<loc>`、`<link rel="canonical">`、`<meta property="og:url">` 与 JSON-LD 结构化数据全量采用 Clean URLs；
 - **服务器适配**：输出包默认装配 `vercel.json`、`nginx.conf` 与 `.htaccess` 无后缀重写配置。
 
+## 🛡️ 防排版乱码与样式崩坏规范 (Anti-FOUC & Layout Stabilization Policy)
+
+针对海外独立站发布后常见的“排版错乱、弹窗/抽屉裸露溢出、带 emoji 列表铺屏、乱码”问题，强制执行以下四大防错基线：
+1. **静态资产内容哈希 / 版本化缓存穿透 (Cache-Busting)**：
+   - 严禁在 HTML 中输出无版本号的裸 `<link rel="stylesheet" href="/css/site.css">`；
+   - 必须为 CSS/JS 自动附加内容 SHA-256 哈希或构建版本号（如 `/css/site.css?v={hash}`），彻底规避 CDN（如 Cloudflare Edge）默认 1 年超长缓存导致“新 HTML 引用旧 CSS”引发的样式灾难；
+2. **隐藏式组件防御性隐藏 (Defensive Hidden Off-Canvas Isolation)**：
+   - 任何移动抽屉（Mobile Drawer）、指南针全站导航（Compass Modal）、询盘弹窗、侧边栏或下拉菜单，在 HTML 中必须具备 `style="display: none;"` 或 `hidden` 属性，并在 `<head>` 关键 CSS 中声明 `display: none !important;`；
+   - 杜绝因 CSS 异步加载延迟或缓存失效时，抽屉菜单直接以默认流展示在桌面屏幕中央（形成大串无样式 bullet 列表与 emoji 溢出）；
+3. **字符集与字体编码安全 (UTF-8 & Font Safety)**：
+   - HTML 顶端前 1024 字节内必须严格声明 `<meta charset="utf-8">`；
+   - 导航与菜单优先采用 SVG 矢量图标或标准语义化排版，严禁孤立堆砌未经字体兜底的生僻 Unicode Emoji，避免跨操作系统（如 Windows/Linux）因缺少彩色字形渲染出方块乱码（□/⍰）；
+4. **服务器 HTTP 响应头分级治理 (Server Cache Headers Protocol)**：
+   - HTML 页面必须下发 `Cache-Control: no-cache, no-store, must-revalidate`；
+   - 带版本号的 CSS/JS 配置 `Cache-Control: public, max-age=604800, must-revalidate`，杜绝死锁。
+

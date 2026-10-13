@@ -289,6 +289,8 @@ def build(project, release=False, site_out=None):
     (destination / 'css').mkdir()
     write_tokens_css(tokens, destination / 'css/tokens.css', language, layout)
     shutil.copy2(ROOT / 'templates/assets/css/b2b-industrial-core.css', destination / 'css/site.css')
+    tokens_hash = hashlib.sha256((destination / 'css/tokens.css').read_bytes()).hexdigest()[:8]
+    site_hash = hashlib.sha256((destination / 'css/site.css').read_bytes()).hexdigest()[:8]
     if assets:
         (destination / 'media').mkdir()
     for path, url, asset in assets.values():
@@ -375,7 +377,7 @@ def build(project, release=False, site_out=None):
         (page_dir / 'index.html').write_text(f'''<!doctype html>
 <html lang="{e(language)}" dir="{'rtl' if language.split('-')[0].lower() in ('ar','fa','he','ur') else 'ltr'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(page['title'])}</title><meta name="description" content="{e(page['description'])}">{robot}{canonical}
-<link rel="stylesheet" href="/css/tokens.css"><link rel="stylesheet" href="/css/site.css">{schema_html}</head>
+<link rel="stylesheet" href="/css/tokens.css?v={tokens_hash}"><link rel="stylesheet" href="/css/site.css?v={site_hash}"><style>[hidden],.modal:not(.active),.drawer:not(.active),.mobile-drawer:not(.active){{display:none!important}}</style>{schema_html}</head>
 <body><a class="skip" href="#main">Skip to content</a>{draft_banner}<header><a class="brand" href="/">{brand}</a><nav aria-label="Main navigation">{nav}</nav>{header_action}</header>
 <main id="main" tabindex="-1" data-layout="{layout}">{hero}{section_nav}{''.join(content)}</main>
 <footer><p>© {e(meta['company'])}</p>{f'<a href="{e(mailto(email))}">{e(email)}</a>' if email else ''}</footer></body></html>''', encoding='utf-8')
