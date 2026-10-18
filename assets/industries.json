@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.3.0",
   "status": "design_blueprints_not_company_facts",
   "industries": [
     {
@@ -1101,6 +1101,61 @@
       "secondary_cta": "View Leakproof Specs",
       "red_lines": "不伪造大厂验厂编号、不把非食品级塑料/五金工具盒混充便当盒、不谎报无塑化剂/微波安全",
       "missing_data_fallback": "无定制参数时提供标准模具现货规格与样品申请草稿"
+    },
+    {
+      "id": "limestone",
+      "name": "天然石灰石与建筑景观石材",
+      "layout": "materials",
+      "buyers": [
+        "海外景观建筑师(Landscape Architects)",
+        "高端私宅与泳池总承包商(Pool & Villa Contractors)",
+        "国家级石材批发商与工程分销商(Stone Distributors)"
+      ],
+      "decision_path": "空间场景→表面防滑工艺→ASTM/CE/ГОСТ力学参数→文化双轨选色→重货20GP配载与寄样",
+      "product_fields": [
+        "文化双轨命名(中英文意境与工艺)",
+        "表面处理工艺(Tumbled/Antique/Distressed/Sandblasted/Brushed)",
+        "吸水率与体积密度(ASTM C97)",
+        "干湿态抗压与弯曲强度(ASTM C170/C880)",
+        "湿态摆锤防滑等级(AS 4586 P4/P5 / DIN R10-R12)",
+        "抗冻融循环与耐火等级(ASTM C666 / ГОСТ F100 / EN A1)",
+        "标准规格与厚度(20mm/30mm/法式四拼French Pattern/泳池收口Coping)",
+        "20GP重货单柜极限装载面积与木箱配载"
+      ],
+      "evidence": [
+        "ASTM C97/C170/C880/C666 权威实验室物理检测报告",
+        "欧盟 CE DoP、澳洲 AS 4586 防滑与独联体 ГОСТ 30629 对标表",
+        "水头自营工厂排锯、自动磨线与五轴数控桥切机实拍",
+        "矿山原石微距纹理与真实铺装场景 1:1 像素级对齐图",
+        "ISPM 15 熏蒸木箱包装规范与厦门港 26.5 吨重货装柜测算表"
+      ],
+      "homepage_sections": [
+        "五大表面工艺矩阵",
+        "29款双轨文化石材精选",
+        "ASTM/CE/ГОСТ硬核工程参数",
+        "重货20GP集装箱配载计算器",
+        "水头矿山加工基地与全球工程交付",
+        "免费岩石样块申领与工程RFQ"
+      ],
+      "visual_direction": "Eco Outdoor 极简建筑杂志级留白 + Polycor 工程技术权威：微距岩石肌理与顶奢庭院/泳池实景 1:1 严苛对齐",
+      "rfq_fields": [
+        "应用空间(泳池池畔/户外庭院/室内大厅/外墙干挂)",
+        "目标表面工艺与防滑要求",
+        "预计铺装面积(m²)与厚度(20mm/30mm)",
+        "配套加工件(Drop-face泳池收口/踏步/French Pattern)",
+        "目的港或中亚/欧亚铁路站点"
+      ],
+      "topic_clusters": [
+        "tumbled limestone pavers pool coping",
+        "french pattern limestone tiles wholesale",
+        "ASTM C97 low water absorption limestone supplier",
+        "custom natural stone pavers factory China",
+        "freeze thaw resistant exterior limestone tiles"
+      ],
+      "primary_cta": "Request Free Stone Samples",
+      "secondary_cta": "Download ASTM & CAD Specs",
+      "red_lines": "严禁特写微距图与场景渲染图材质色泽脱节、严禁按轻泡货体积算柜导致超重爆柜(20GP限重26.5吨)、不伪造工程检测数值",
+      "missing_data_fallback": "缺具体项目尺寸时提供标准 600x400mm / French Pattern 模数及 20GP 单柜经济配载建议"
     }
   ]
 }

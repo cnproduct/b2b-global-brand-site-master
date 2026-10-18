@@ -1,76 +1,73 @@
-# B2B Global Brand Site Master · V2.2
+# B2B Global Brand Site Master · V2.3
 
-从简单 Logo、企业简介和现有资料，持续完成外贸 B2B 品牌、企业知识库、数字资产与专业独立站。V2.1 将 `renwork-industry-site-master` 的事实治理、行业采购蓝图与 `renwork-web-design-master` 的视觉、排版和交互验收融合为同一执行入口，服务清晰的产品选择与询盘路径。
+从前置情报标杆发现、公司 Logo、企业简介和现有资料，持续构建外贸 B2B 品牌、企业知识库、数字资产与世界级行业独立站。V2.3 完整融合了 `b2b-limestone-geo-site-builder`（天涯石业 `tianyalimestone.com`）与 `b2b-bento-geo-site-builder`（耐克便当盒 `custombentofactory.com`）实战淬炼的 **“8 大构建阶段：从前置情报发现到全行业通用 SOP”**、**GEO 五层吸流端点矩阵**、**双模集装箱装柜算力**与 **6 大防错军规**。
 
-**21 类行业蓝图 · 10 类页面模板 · 21 模块知识体系 · 四种采购版式 · 可用 RFQ 组件 · 同源事实驱动 HTML / Schema / 搜索文件。**
+**22 类行业蓝图 · 全行业 8 阶段 SOP · 全球三大巨头对标模型 · 文化双轨重命名 · 21 模块知识底座 · 双模装柜计算器 · GEO 五层端点 (`/llms-full.txt` & `/ai/*.json`) · 默认边缘防护。**
 
-只有少量资料也能开始：自动生成可运行草稿和资料缺口，再由 Agent 完成研究、品牌设计、真实文案与页面。工厂、认证、参数、客户、价格等未知信息不会从行业模板变成企业事实。生成器不是完整 CMS；Skill 指导 Agent 完成企业项目所需的功能与交付。
+---
+
+## 🏛️ 8 大构建阶段：从前置情报发现到全行业通用 SOP
+
+| 阶段 | 阶段名称 | 核心交付与执行机制 |
+|---|---|---|
+| **阶段零** | **全球标杆排查与前置情报调研** | 穿透细分品类 **“全球三大巨头模型”**：① 技术工程规范权威（吸纳 ASTM/FDA/ISO 参数与 CAD/BIM 结构）、② 高端视觉与溢价天花板（吸纳留白比例与字阶）、③ 场景长尾词之王（吸纳 Topic Clusters 分类架构） |
+| **阶段一** | **概念起意与品牌基因挖掘** | 锚定中国核心产业带地理坐标、出海港口距离、自营产线设备与真实产能；聚焦高毛利核心品类，未知事实进入 `private/gaps.md` |
+| **阶段二** | **1:1 架构对标与文化双轨重命名** | 借助中国传统文化（营造法式、二十四节气）或现代工业美学建立 `[文化主名] [工艺/功能] [品类词]` 双轨体系，彻底剥离对标站 Trademark；执行**图实一致性铁律**（微距实拍与场景图色差 $\Delta E < 5$） |
+| **阶段三** | **工程硬指标与物理测试事实锚定** | 拒绝空洞形容词，绑定经核准的权威测试标准（如石材 `ASTM C97/C170/AS 4586`、餐厨 `FDA/LFGB/-50kPa 防漏`、机械 `ISO 2768`） |
+| **阶段四** | **海运双模集装箱装柜测算引擎** | `design_math.py` 提供**外箱体积/毛重模式 (`container`)** 与**重货限重硬瓶颈模式 (`stone-container`，20GP 限重 26.5 吨)**，杜绝重货按体积算柜引发的超重爆柜 |
+| **阶段五** | **静态编译器架构与零视觉变动保真** | 同一套核准事实卡驱动 HTML、JSON-LD、Sitemap 与 AI 端点；强制执行 Clean URLs（无 `.html` 后缀）与 CSS 内容哈希防缓存崩坏（Anti-FOUC） |
+| **阶段六** | **2026 全球 AI Bot 吸流量 GEO 五层矩阵** | 开启 `llms: true` 发布构建时，自动生成 `/llms.txt`、`/llms-full.txt` 及 `/ai/summary.json`、`/ai/products.json`、`/ai/faq.json`、`/ai/vendor-comparison.json` |
+| **阶段七** | **第一方 RFQ 询盘全链路与三段式验收** | 默认零依赖 `email_draft`；生产环境支持 Cloudflare Worker `/api/inquiry` + Turnstile 服务端验签 + 蜜罐，执行“假 token 403 $\rightarrow$ 真机提交 $\rightarrow$ 邮箱收件”三段式验收 |
+| **阶段八** | **默认边缘防护、防错军规与多区域扩展** | 默认生成 Cloudflare Workers 防护发布包；内置 [6 大失败案例防错军规](references/failure-cases-and-guardrails.md)；支持俄语/中亚（CIS/EAEU）Yandex SEO 与 ГОСТ 标准扩展 |
+
+完整提示词链条与跨行业 5 步母模板见 [全行业标杆发现与 8 大构建阶段通用 SOP](references/benchmark-discovery-methodology.md) 与 [GEO 五层吸流手册](references/geo-ai-citation-playbook.md)。
+
+---
 
 ## 直接使用
 
-将本仓库作为一个 Skill 文件夹安装到所用 Agent 的 skills 目录，以 [SKILL.md](SKILL.md) 为入口。Codex 默认位置：`~/.codex/skills/b2b-global-brand-site-master/`。
+将本仓库作为一个 Skill 文件夹安装到所用 Agent 的 skills 目录，以 [SKILL.md](SKILL.md) 为入口。
 
 ```text
 使用 $b2b-global-brand-site-master。
-根据这个 Logo、企业简介和已有资料，为公司建立完整的外贸独立站。
-识别主营行业和采购路径，完成品牌规范、21模块知识底座、内容与数字资产、
-行业页面和代码，执行 SEO/GEO 与询盘验收。未知事实进入内部缺口清单。
-先产出首页、代表产品页和询盘流程，再扩展完整站点，不停在方案阶段。
+按照 8 大构建阶段 SOP，先排查该核心品类的全球三大标杆（工程权威、视觉天花板、长尾词之王），
+再根据公司 Logo、企业简介和已有资料，完成品牌规范、文化双轨产品命名、21模块知识底座、
+行业页面与 GEO 五层知识端点（/llms-full.txt 与 /ai/*.json），执行 Clean URLs 与询盘验收。
 ```
-
-Python 3.10+；运行时无强制第三方依赖。已安装 Pillow 时可提取栅格 Logo 颜色，否则明确记录回退；SVG 需单独解析或转换，不冒充已取色。
 
 在 Skill 目录运行：
 
 ```bash
-python3 scripts/orchestrator.py --name "Example Company" \
-  --intro "We supply industrial components." \
-  --industry components --out /tmp/example-company-project
-
+# 查看全部 22 个行业蓝图
 python3 scripts/sitekit.py industries
+
+# 初始化企业项目并生成初版草稿
+python3 scripts/orchestrator.py --name "Example Company" \
+  --intro "We quarry and process architectural limestone pavers." \
+  --industry limestone --out /tmp/example-company-project
+
+# 编译项目与发布候选 (release 模式下若 llms=true 自动产出 /llms-full.txt 与 /ai/*.json)
+python3 scripts/orchestrator.py --project /tmp/example-company-project
+python3 scripts/orchestrator.py --project /tmp/example-company-project --release
+
+# 设计数学与双模集装箱装柜算力
+python3 scripts/design_math.py safe-url https://example.com stone-flooring/limestone
+python3 scripts/design_math.py container --length 540 --width 380 --height 420 --weight 14.5 --pcs 24
+python3 scripts/design_math.py stone-container --area 480 --thickness 20 --density 2620
 ```
 
-Logo 可用 `--logo /path/logo.png` 提供；域名、邮箱、主色可选。初始六页是 **noindex 草稿**，同时生成可编辑 `DESIGN.md`、字体/色彩/字阶 token 和可继续扩展的行业版式；完整品牌和内容由 Agent 根据企业资料完成。Agent 按行业资料编辑 `content/site.json`、核实知识卡并补齐页面。详细字段、素材批准、生成器范围及旧版迁移见 [运行契约](references/runtime.md)。
+---
 
-```bash
-python3 scripts/orchestrator.py --project /path/company-project
-python3 scripts/orchestrator.py --project /path/company-project --release
-```
+## 22 类行业采购蓝图
 
-每次构建返回新的静态目录和 `deployment_directory` 防护发布包。默认用发布包部署其引用的静态资产，不能上传整个含 `private/` 的企业项目。`--release` 生成并检查本地发布候选，不自动部署，不代表已收录或线上防护已启用。
-
-V2.2 对所有行业默认生成 Cloudflare Workers 边缘防护：仅访问本次公开文件、匿名读取限流、询盘独立限流/请求边界、防iframe镜像嵌套和版权标识。保持公开正文、图片及搜索文件正常可抓取，不禁右键、不隐藏正文、不按自报爬虫名放行；公开内容无法彻底禁止复制。其他主机按现有栈落实同等防护，不能把静态上传当防护部署。运行范围、正规爬虫、询盘后端与实测要求见 [默认防护契约](references/site-protection.md)。
-
-## 深度融合后的能力
-
-| 工作层 | 内容与执行机制 |
-|---|---|
-| 品牌与网页设计 | DESIGN.md、行业视觉、Logo/颜色来源、语义token、真实端点流式字阶、中英/日韩字体和RTL布局基础；浏览器验证阅读与操作 |
-| 企业知识 | 复用 RenWork V4 七状态、00–20 模块、来源/时效/敏感度；同一事实出口服务所有页面 |
-| 行业与内容 | 买家角色、决策路径、参数字段、证据要求、页面顺序、RFQ字段和缺资料策略 |
-| 数字资产 | 原始素材、许可、哈希、AI来源、事实关联与公开范围；仅复制本次页面引用的获准文件 |
-| 网站实现 | 四种差异化采购版式、获准首屏媒体、产品/资源链接区块、语义规格表、当前导航与区块锚点；产品CTA携带询盘上下文 |
-| 采购转化 | 默认整理邮件草稿；已配置服务用HTTP RFQ，持久标签、字段错误、失败保留与重试、请求防重和实际回执；可选装柜工具 |
-| SEO / GEO | 页面意图、内链、canonical、robots、sitemap、同源结构化数据；llms.txt / WebMCP按需使用 |
-| 质量与运营 | 可执行文件/链接/锚点/索引状态检查；搜索展示、AI引用、访问、询盘分别验收 |
-
-不生成默认证书、虚构工程师、假手机号、假价格，或重复文本凑 `llms.txt` 长度。无接收服务时明确使用邮件草稿模式，不能显示已发送或已收件。不存在“100 分即保证被 AI 引用”的验收。
-
-## 网页设计与询盘如何协同
-
-网页设计已落实到共享生成器：有素材时用获准图片建立首屏重点，无素材时用产品和资源导航；参数与条件可直接阅读，内链把买家带到实际产品页，产品上下文继续带入询盘。默认使用本地/系统字体，无新增前端框架、字体服务或跟踪脚本。
-
-设计目标是降低理解和提交需求的阻力。实际获客仍依赖真实产品、内容、流量、接收服务和销售跟进；完整RFQ后端、收件和有效询盘须按项目验证。工具不会承诺一键获得询盘。上游设计入口存在重复拼接，融合时采用经审读的方法和参考文件，未继承固定风格禁令或整站无障碍保证。
-
-## 行业模板
-
-以下是采购蓝图，不是 21 套已在真实客户上线验证的皮肤。行业知识不代表目标公司的能力；真实公司仍需核实 SKU、材料、标准和市场要求。
+以下是采购内容与交互蓝图（完整字段见 [assets/industries.json](assets/industries.json)）：
 
 | 行业 ID | 范围 | 采购路径 |
 |---|---|---|
 | `machinery` | 工业机械与自动化 | 工况→机型→系统配套→验收→服务 |
 | `components` | 五金与精密零部件 | 图纸→材料→公差→工艺→批量 |
 | `building-materials` | 建材与装饰材料 | 应用→材质→性能→安装→样板 |
+| `limestone` | 天然石灰石与建筑景观石材 | 空间场景→表面防滑工艺→ASTM/CE/ГОСТ力学参数→文化双轨选色→重货20GP配载与寄样 |
 | `sanitaryware` | 卫浴洁具与水暖 | 类型→尺寸接口→表面→市场条件→样品 |
 | `hygiene` | 吸收性卫生用品与湿巾 | 使用场景→尺码规格→材料结构→包装→贴牌 |
 | `footwear` | 鞋类制造与出口 | 用途→鞋楦尺码→材料结构→打样→测试 |
@@ -90,18 +87,7 @@ V2.2 对所有行业默认生成 Cloudflare Workers 边缘防护：仅访问本�
 | `pet-products` | 宠物用品与宠物食品 | 动物与用途→尺寸/配料→材料/储存→安全→包装 |
 | `bento` | 便当盒与餐厨餐饮容器 | 品类→分格材质→防漏/微波认证→OEM定制→装柜交期 |
 
-完整字段见 [行业数据](assets/industries.json)；10 类页面和品牌交付见 [页面蓝图](references/site-blueprints.md)；视觉、排版和操作验收见 [网页设计规范](references/web-design.md)。
-
-## SEO / GEO 的更新依据
-
-核验日期 **2026-09-27**，后续项目仍需复查官方更新：
-
-- Google AI 搜索仍重视基础 SEO、原创且有用的信息，不要求专用 AI Schema、固定字数或 `llms.txt`。见 [Google 官方指南](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)。
-- 纳入 Google 生成式 AI 展示报告/独立控制及 Bing AI Performance 更新；以目标账号实际字段为准。曝光、引用与询盘不得混算。见 [Google 报告](https://support.google.com/webmasters/answer/16984139)、[Bing 更新](https://blogs.bing.com/search/2026/6/New-AI-Visibility-Insights-in-Bing-Webmaster-Tools-Intents-Topics-Citation-Share-Compare/)。
-- 搜索爬虫、训练爬虫、用户触发访问分开处理；不把开放 GPTBot 作为 ChatGPT 搜索的必要条件。见 [OpenAI 爬虫](https://developers.openai.com/api/docs/bots)。
-- `llms.txt` 是可选公共目录；WebMCP 是按当前支持情况选择的交互能力。FAQ 为买家提供信息，不承诺已停用的 Google FAQ 富媒体展现。
-
-完整的结论、时效冲突和原始链接见 [官方核验表](references/search-current.md)、[发布清单](references/search-release.md) 与 [锁定来源](references/sources.json)。
+---
 
 ## 验证和维护
 
@@ -114,10 +100,6 @@ node tests/check_protection.mjs
 python3 scripts/design_math.py self-test
 ```
 
-Node 18+ 用于估算器和询盘组件测试。检查覆盖 21 行业生成（含 bento 便当盒与餐具）、事实撤销、内部资料隔离、HTML转义、资产/域名边界、真实链接、草稿/发布状态、20GP/40GP/40HQ 装柜计算及守护服务。
+检查覆盖 22 行业生成（含 `bento` 便当盒餐厨与 `limestone` 天然石灰石建材）、GEO 五层机器可读端点（`/llms.txt`、`/llms-full.txt`、`/ai/*.json`）、事实撤销、内部资料隔离、HTML 转义、Clean URLs、双模装柜算力（轻泡外箱 + 重货石材 20GP 限重）及边缘防护。
 
-防护检查覆盖所有行业默认配置生成、公开内容一致、私有路径隔离、UA伪装、限流及故障恢复策略、询盘请求边界。V2.2另用 Wrangler 4.135.0 在本地 workerd 验证真实静态响应和原生限流；这不代表云端WAF或客户域名已验收。
-
-新增询盘检查覆盖产品预填、邮件草稿、HTTP实际回执、错误恢复、防重复和超时；网络只使用mock，未向第三方发送真实询盘。这些检查只证明对应本地行为；浏览器审查、公网HTTP、表单收件、GSC收录、AI引用与转化必须在实际企业项目另外运行。完整变更与迁移说明见 [融合记录](references/fusion-v2.md)。
-
-[MIT License](LICENSE) · [第三方许可](THIRD_PARTY_NOTICES.md)。未复制无明确许可的 SEO 优化器源码。
+[MIT License](LICENSE) · [第三方许可](THIRD_PARTY_NOTICES.md)。

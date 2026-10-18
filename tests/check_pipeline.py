@@ -65,7 +65,9 @@ def run():
         assert 'GPTBot\nDisallow: /' in (site/'robots.txt').read_text()
         assert 'source_refs' not in ''.join(f.read_text() for f in site.rglob('*') if f.is_file())
         assert (site/'css/tokens.css').is_file() and (site/'js/sourcing_estimator.js').is_file()
-        assert (site/'llms.txt').is_file()
+        assert (site/'llms.txt').is_file() and (site/'llms-full.txt').is_file()
+        assert (site/'ai/summary.json').is_file() and (site/'ai/products.json').is_file()
+        assert (site/'ai/faq.json').is_file() and (site/'ai/vendor-comparison.json').is_file()
         contact_html=(site/'contact/index.html').read_text()
         assert 'data-mode="email_draft"' in contact_html and 'Open email draft' in contact_html
         assert (site/'js/inquiry.js').is_file()
@@ -160,7 +162,7 @@ def run():
         cmd=[sys.executable,str(cli),'--name','CLI Test','--intro','Private intro','--industry','appliances','--out',str(root/'cli')]
         assert subprocess.run(cmd,capture_output=True).returncode==0
         assert subprocess.run(cmd,capture_output=True).returncode!=0
-    print('PASS: 21 industry builds, draft/release checks, no private leakage, escaping, links, revoked facts, invalid origins, overwrite refusal, CLI exit codes')
+    print('PASS: 22 industry builds, GEO 5-layer endpoints, draft/release checks, no private leakage, escaping, links, revoked facts, invalid origins, overwrite refusal, CLI exit codes')
 
 
 if __name__=='__main__':run()

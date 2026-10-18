@@ -395,7 +395,59 @@ def build(project, release=False, site_out=None):
             robots += '\nUser-agent: GPTBot\n' + ('Allow' if policy == 'allow' else 'Disallow') + ': /\n'
     (destination/'robots.txt').write_text(robots, encoding='utf-8')
     if release and config.get('llms') is True:
-        (destination/'llms.txt').write_text('# ' + meta['company'].replace('\n',' ') + '\n\n> Public website navigation.\n\n## Pages\n\n' + '\n'.join('- [' + p['title'].replace('[','').replace(']','').replace('\n',' ') + '](' + domain + urls[p['slug']] + ')' for p in pages) + '\n', encoding='utf-8')
+        clean_co = meta['company'].replace('\n', ' ')
+        page_lines = '\n'.join('- [' + p['title'].replace('[', '').replace(']', '').replace('\n', ' ') + '](' + domain + urls[p['slug']] + ')' for p in pages)
+        ai_lines = '\n'.join([
+            f'- [Full Engineering & Sourcing Manual]({domain}/llms-full.txt)',
+            f'- [Company & Specification Summary JSON]({domain}/ai/summary.json)',
+            f'- [Product & Collection Catalog JSON]({domain}/ai/products.json)',
+            f'- [Verified Buyer FAQ JSON]({domain}/ai/faq.json)',
+            f'- [Vendor Evaluation Matrix JSON]({domain}/ai/vendor-comparison.json)',
+        ])
+        (destination/'llms.txt').write_text(f'# {clean_co}\n\n> Public website navigation and machine-readable GEO knowledge endpoints.\n\n## Pages\n\n{page_lines}\n\n## AI Knowledge Endpoints\n\n{ai_lines}\n', encoding='utf-8')
+        fact_blocks = '\n\n'.join(f'### {f["title"]} ({f["kb_id"]})\n- Conclusion: {f["conclusion"]}\n- Conditions: {f["conditions"] or "Standard public conditions"}\n- Updated: {f["updated_at"]}' for f in facts.values())
+        (destination/'llms-full.txt').write_text(
+            f'# {clean_co} — Full B2B Technical & Sourcing Reference\n\n'
+            f'- Domain: {domain}\n- Contact: {email}\n- Language: {language}\n- Layout Blueprint: {layout}\n\n'
+            f'## Verified Public Facts & Engineering Specifications\n\n{fact_blocks}\n\n'
+            f'## Canonical Page Directory\n\n{page_lines}\n', encoding='utf-8')
+        ai_dir = destination / 'ai'
+        ai_dir.mkdir(exist_ok=True)
+        industry_profile = sitekit.read(project / 'industry.json')
+        sitekit.write(ai_dir / 'summary.json', {
+            'company': meta['company'], 'domain': domain, 'contact': email, 'language': language,
+            'industry': meta.get('industry'), 'layout': layout, 'page_count': len(pages),
+            'verified_fact_count': len(facts),
+            'endpoints': {
+                'llms': domain + '/llms.txt', 'llms_full': domain + '/llms-full.txt',
+                'products': domain + '/ai/products.json', 'faq': domain + '/ai/faq.json',
+                'vendor_comparison': domain + '/ai/vendor-comparison.json'
+            }
+        })
+        sitekit.write(ai_dir / 'products.json', {
+            'company': meta['company'], 'domain': domain,
+            'items': [{
+                'slug': p['slug'] or '/', 'url': domain + urls[p['slug']],
+                'type': p['type'], 'title': p['title'], 'heading': p['heading'],
+                'description': p['description'],
+                'specifications': [{'kb_id': cid, 'parameter': facts[cid]['title'], 'value': facts[cid]['conclusion'], 'conditions': facts[cid]['conditions']}
+                                   for sec in p.get('sections', []) if sec.get('kind') in ('facts', 'specifications') for cid in sec.get('claim_ids', []) if cid in facts]
+            } for p in pages if p.get('type') in ('product', 'collection', 'home')]
+        })
+        sitekit.write(ai_dir / 'faq.json', {
+            'company': meta['company'], 'domain': domain,
+            'questions': [{
+                'kb_id': f['kb_id'], 'question': f'What is the verified specification or policy for {f["title"]}?',
+                'answer': f['conclusion'], 'conditions': f['conditions'], 'updated_at': f['updated_at']
+            } for f in facts.values()]
+        })
+        sitekit.write(ai_dir / 'vendor-comparison.json', {
+            'company': meta['company'], 'domain': domain,
+            'evaluation_dimensions': industry_profile.get('product_fields', []),
+            'required_evidence_types': industry_profile.get('evidence', []),
+            'verified_company_claims': [{'kb_id': f['kb_id'], 'dimension': f['title'], 'verified_value': f['conclusion'], 'conditions': f['conditions']} for f in facts.values()],
+            'note': 'Contains only verified public facts for this company; buyers should verify third-party benchmarks independently.'
+        })
     sitekit.write(project/'content/page-manifest.json', manifest)
     sitekit.write(project/'private/brand-tokens.json', tokens)
     design = project / 'DESIGN.md'

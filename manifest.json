@@ -1,7 +1,7 @@
 {
   "name": "b2b-global-brand-site-master",
-  "version": "2.2.0",
-  "description": "从Logo与简介到行业品牌网站：20行业、21模块事实库、品牌设计与多语言排版、数字资产、可用询盘组件及SEO/GEO验收。 默认边缘防抓取滥用、防镜像嵌套与抓取共存验收。",
+  "version": "2.3.0",
+  "description": "从前置情报标杆发现到全行业通用8阶段SOP的外贸B2B品牌建站总控：22行业蓝图、全球三大巨头对标解构、文化双轨重命名、21模块事实库、双模装柜算力、GEO五层吸流端点(/ai/*.json & llms-full.txt)、默认边缘防护与三段式RFQ验收。",
   "author": "cnproduct",
   "license": "MIT",
   "entry": "scripts/orchestrator.py",
@@ -11,7 +11,8 @@
     "extract_brand_dna.py",
     "site_compiler.py",
     "validate_site.py",
-    "design_math.py"
+    "design_math.py",
+    "rfq_daemon.py"
   ],
-  "standards_checked_at": "2026-09-27"
+  "standards_checked_at": "2026-10-18"
 }
