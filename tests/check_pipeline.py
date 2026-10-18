@@ -13,6 +13,10 @@ from site_compiler import build,starter,origin,mailto
 from validate_site import audit_site
 from extract_brand_dna import self_test as brand_test
 from design_math import self_test as design_test
+from scheduled_content_engine import self_test as scheduled_test
+from layout_typography_auditor import audit_directory
+import contextlib
+import io
 
 
 def rejected(function):
@@ -22,7 +26,7 @@ def rejected(function):
 
 
 def run():
-    sitekit.self_test();brand_test();design_test()
+    sitekit.self_test();brand_test();design_test();scheduled_test()
     with tempfile.TemporaryDirectory() as temporary:
         root=Path(temporary);intro=root/'intro.txt';intro.write_text('INTERNAL_CANARY: no claims approved. <script>alert(1)</script>',encoding='utf-8')
         for profile in sitekit.profiles():
@@ -59,6 +63,8 @@ def run():
         sitekit.write(p/'content/site.json',config)
         site=build(p,True);report=audit_site(site,True,'https://example.com')
         assert report['status']=='PASS',report
+        with contextlib.redirect_stdout(io.StringIO()):
+            assert audit_directory(site, strict=True)
         html=(site/'index.html').read_text()
         assert '<script>not executable</script>' not in html and '&lt;script&gt;' in html
         assert 'noindex' not in html

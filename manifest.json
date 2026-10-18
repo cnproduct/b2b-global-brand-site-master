@@ -1,7 +1,7 @@
 {
   "name": "b2b-global-brand-site-master",
-  "version": "2.3.0",
-  "description": "从前置情报标杆发现到全行业通用8阶段SOP的外贸B2B品牌建站总控：22行业蓝图、全球三大巨头对标解构、文化双轨重命名、21模块事实库、双模装柜算力、GEO五层吸流端点(/ai/*.json & llms-full.txt)、默认边缘防护与三段式RFQ验收。",
+  "version": "3.0.0",
+  "description": "外贸B2B出海官网建站与通用Skill蒸馏大一统总控(V3.0)：深度融合renwork-web-create-skill与b2b-limestone-geo-site-builder。涵盖三轨路由(Mode A买家洞察原创与8阶段SOP / Mode B 1:1取证复刻 / Mode C通用Skill七步蒸馏)、跨境产品情报DVI引擎、Anthropic反AI-Slop两轮设计、Vercel 12维界面审计、22行业蓝图、21模块事实库、双模装柜算力、GEO五层端点(/ai/*.json & llms-full.txt)、30天排期智库发布引擎与默认边缘防护。",
   "author": "cnproduct",
   "license": "MIT",
   "entry": "scripts/orchestrator.py",
@@ -12,7 +12,11 @@
     "site_compiler.py",
     "validate_site.py",
     "design_math.py",
-    "rfq_daemon.py"
+    "rfq_daemon.py",
+    "layout_typography_auditor.py",
+    "scheduled_content_engine.py",
+    "site_forensics.py",
+    "record_learning.py"
   ],
   "standards_checked_at": "2026-10-18"
 }
