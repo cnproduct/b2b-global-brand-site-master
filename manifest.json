@@ -1,13 +1,14 @@
 {
   "name": "b2b-global-brand-site-master",
-  "version": "3.0.0",
-  "description": "外贸B2B出海官网建站与通用Skill蒸馏大一统总控(V3.0)：深度融合renwork-web-create-skill与b2b-limestone-geo-site-builder。涵盖三轨路由(Mode A买家洞察原创与8阶段SOP / Mode B 1:1取证复刻 / Mode C通用Skill七步蒸馏)、跨境产品情报DVI引擎、Anthropic反AI-Slop两轮设计、Vercel 12维界面审计、22行业蓝图、21模块事实库、双模装柜算力、GEO五层端点(/ai/*.json & llms-full.txt)、30天排期智库发布引擎与默认边缘防护。",
+  "version": "3.1.0",
+  "description": "外贸B2B出海官网建站、SEO/GEO询盘获客与通用Skill蒸馏大一统总控(V3.1)：深度融合b2b-global-brand-site-master、b2b-limestone-geo-site-builder、renwork-web-create-skill与b2b-seo-geo-site-master四大体系。涵盖三轨路由(Mode A/B/C)、8阶段SOP、docs/seo/与.claude/CLAUDE.md四阶段唯一事实源协同、6大采购意图词树与Hub-and-Spoke内链缝合、0-100分GEO可引用性评分器(citability-score)、批量SKU审计(catalog-audit)、三级风险逆转询盘卡、LinkedIn/Medium/YouTube品牌提及分发包、7态证据化外链台账、30天排期智库引擎、Vercel 12维UI体检与Cloudflare默认边缘防护。",
   "author": "cnproduct",
   "license": "MIT",
   "entry": "scripts/orchestrator.py",
   "tools": [
     "orchestrator.py",
     "sitekit.py",
+    "seo_geo_matrix.py",
     "extract_brand_dna.py",
     "site_compiler.py",
     "validate_site.py",

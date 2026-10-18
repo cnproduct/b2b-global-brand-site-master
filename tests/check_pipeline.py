@@ -14,6 +14,7 @@ from validate_site import audit_site
 from extract_brand_dna import self_test as brand_test
 from design_math import self_test as design_test
 from scheduled_content_engine import self_test as scheduled_test
+from seo_geo_matrix import self_test as seo_geo_test, score_geo_citability
 from layout_typography_auditor import audit_directory
 import contextlib
 import io
@@ -26,7 +27,7 @@ def rejected(function):
 
 
 def run():
-    sitekit.self_test();brand_test();design_test();scheduled_test()
+    sitekit.self_test();brand_test();design_test();scheduled_test();seo_geo_test()
     with tempfile.TemporaryDirectory() as temporary:
         root=Path(temporary);intro=root/'intro.txt';intro.write_text('INTERNAL_CANARY: no claims approved. <script>alert(1)</script>',encoding='utf-8')
         for profile in sitekit.profiles():
@@ -164,11 +165,14 @@ def run():
         rejected(lambda: build(p,False,site))
         for domain in ('https://evil.test/path','https://user:pass@evil.test','javascript:alert(1)','https://good.test/?q=x','https://-bad.test'):
             rejected(lambda: origin(domain))
+        assert score_geo_citability(special_site/'index.html')['metrics']['clean_url_violations'] == 0
         cli=Path(__file__).resolve().parents[1]/'scripts/orchestrator.py'
         cmd=[sys.executable,str(cli),'--name','CLI Test','--intro','Private intro','--industry','appliances','--out',str(root/'cli')]
         assert subprocess.run(cmd,capture_output=True).returncode==0
+        assert (root/'cli/docs/seo/keyword-matrix.json').is_file()
+        assert (root/'cli/.claude/CLAUDE.md').is_file()
         assert subprocess.run(cmd,capture_output=True).returncode!=0
-    print('PASS: 22 industry builds, GEO 5-layer endpoints, draft/release checks, no private leakage, escaping, links, revoked facts, invalid origins, overwrite refusal, CLI exit codes')
+    print('PASS: 22 industry builds, docs/seo SSOT workspace, GEO 5-layer endpoints, draft/release checks, no private leakage, escaping, links, revoked facts, invalid origins, overwrite refusal, CLI exit codes')
 
 
 if __name__=='__main__':run()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One entry point: private evidence -> brand -> static pages -> local validation."""
+"""One entry point: private evidence -> brand -> 4-phase docs/seo/ SSOT workspace -> static pages -> local validation."""
 import argparse
 import json
 import sys
@@ -8,6 +8,7 @@ from pathlib import Path
 import sitekit
 from site_compiler import build, origin, starter, EMAIL
 from validate_site import audit_site
+from seo_geo_matrix import init_b2b_seo_workspace
 
 ALIASES = {'stone_cladding':'building-materials','consumer_electronics':'electronics',
            'auto_parts':'automotive','eco_packaging':'packaging','solar_energy':'energy',
@@ -16,7 +17,7 @@ ALIASES = {'stone_cladding':'building-materials','consumer_electronics':'electro
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--project', help='Rebuild an existing V2 project into a fresh site directory')
+    parser.add_argument('--project', help='Rebuild an existing V2/V3/V4 project into a fresh site directory')
     parser.add_argument('--name')
     intro = parser.add_mutually_exclusive_group()
     intro.add_argument('--intro')
@@ -25,6 +26,7 @@ def main():
     parser.add_argument('--domain')
     parser.add_argument('--email')
     parser.add_argument('--logo')
+    parser.add_argument('--seed', help='Optional primary product seed keyword for docs/seo/ initialization')
     parser.add_argument('--out', help='New private project directory; refuses to overwrite')
     parser.add_argument('--site-out', help='Optional new static output directory; refuses to overwrite')
     parser.add_argument('--brand-color')
@@ -57,6 +59,9 @@ def main():
             config = starter(project)
             config['primary_color'] = args.brand_color
             sitekit.write(project/'content/site.json',config)
+            profile = sitekit.read(project/'industry.json')
+            seed_kw = args.seed or (profile.get('topic_clusters', [industry])[0] if profile.get('topic_clusters') else industry)
+            init_b2b_seo_workspace(project, args.name, seed_kw, industry, meta.get('markets') or ['Global'])
         destination = build(project,args.release,args.site_out)
         meta = sitekit.read(project/'project.json')
         report = audit_site(destination,args.release,origin(meta.get('domain')))
@@ -71,6 +76,7 @@ def main():
             'Use the edge bundle to deploy only its referenced site assets. Static-only uploads omit runtime protection. Never upload the whole project.\n',encoding='utf-8')
         print(json.dumps({'site_directory':str(destination),'local_checks':report['status'],
                           'deployment_directory':state['deployment_directory'],'protection_runtime':'NOT_RUN',
+                          'seo_ssot_directory':str(project/'docs/seo'),
                           'mode':'release_candidate' if args.release else 'draft','deployed':False},ensure_ascii=False,indent=2))
         return 0 if report['status']=='PASS' else 1
     except (OSError,ValueError,TypeError,KeyError) as error:
